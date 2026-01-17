@@ -213,6 +213,30 @@ flags 有下列几种情况
 
 
 
+### strlen
+
+- 返回字符串长度
+
+```c
+相关函数
+头文件 #include <string.h>
+定义函数 size_t strlen (const char *s);
+函数说明 strlen()用来计算指定的字符串 s 的长度, 不包括结束字符"\0".
+返回值 返回字符串 s 的字符数.
+范例 /*取得字符串 str 的长度 */
+#include <string.h>
+main()
+{
+char *str = "12345678";
+printf("str length = %d\n", strlen(str));
+}
+执行 str length = 8
+```
+
+
+
+
+
 ## day08
 
 ### malloc
@@ -317,5 +341,42 @@ main()
 }
 
 执行 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+```
+
+
+
+### puts
+
+```c
+puts
+puts() writes the string s and a trailing newline to stdout.
+puts() 函数会将字符串 s 以及其后的换行符输出到标准输出设备上。
+```
+
+
+
+## day10
+
+### strcat
+
+- 连接两字符串
+
+```c
+头文件 #include <string.h>
+定义函数 char *strcat(char *dest, const char *src);
+函数说明 strcat()会将参数 src 字符串拷贝到参数 dest 所指的字符串尾. 第一个参数 dest 要有足够的空间来
+容纳要拷贝的字符串.
+返回值 返回参数 dest 的字符串起始地址
+范例
+	#include <string.h>	
+    main()
+    {
+        char a[30] = "string(1)";
+        char b[] = "string(2)";
+        printf("before strcat() : %s\n", a);
+        printf("after strcat() : %s\n", strcat(a, b));
+    }
+执行 before strcat() : string(1)
+	after strcat() : string(1)string(2)
 ```
 
