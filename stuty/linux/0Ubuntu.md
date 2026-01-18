@@ -10,7 +10,7 @@ windows系统的文件夹本身就是一个容器，所有文件夹之间存在�
 
 Linux系统的目录是一棵树，所有的目录之间不存在大小包含关系，只有索引关系
 
-![0linuxfile](.\img\0linuxfile.png)
+![0linuxfile](./img/0linuxfile.png)
 
 - 字符界面/终端介绍
 
@@ -145,7 +145,7 @@ print working directory
 
    ps：高版本的Linux一般使用的工具不同需要自己去Linux内安装对应的工具，但是对于VMware的设置是一样的。
 
-![0linuxsharefile1](F:\github\Embedded\stuty\linux\img\0linuxsharefile1.png)
+![0linuxsharefile1](F:/github/Embedded/stuty/linux/img/0linuxsharefile1.png)
 
 3. Linux终端中切换到共享目录：
 

@@ -45,7 +45,7 @@ while(1);
 
 fflush:强制刷新<span style="color:red;">输出</span>缓冲区
 
-![1buffer1](.\img\1buffer1.png)
+![1buffer1](./img/1buffer1.png)
 
   printf()  ---> 输出字符串到终端下
 
@@ -498,7 +498,7 @@ printf("ret:%d\n",ret);
 
 
 
-![1sizeof1](.\img\1sizeof1.png)
+![1sizeof1](./img/1sizeof1.png)
 
 
 
