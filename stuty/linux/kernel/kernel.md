@@ -1,4 +1,4 @@
 
 
-![kernel1](..\img\kernel1.png)
+![kernel1](../img/kernel1.png)
 
