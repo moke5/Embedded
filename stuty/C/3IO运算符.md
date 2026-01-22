@@ -112,6 +112,8 @@ printf("b:%10#x\n", x);       //结果为      0x14
 printf("f=%f\n", f);          //结果为3.141566
 printf("f=%.2f\n", f);        //结果为3.14
 
+printf("%-4d", a);			// 左对齐
+
 //输出多个数据
 printf("a:%d, b:%d\n", a, b);
 printf("a:%d, b:%d, f:%f\n", a, b, f);
@@ -465,11 +467,15 @@ printf("ret:%d a:%d b:%d\n",ret,a,b);
 
 3）sizeof运算符
 
-​	用来计算某种类型或者变量所占的字节数
+- **用来计算某种类型或者变量所占的字节数**
 
 比如：
 
-sizeof(int)
+```c
+sizeof(int)  = 4(B) = 4*8(32 bit)
+```
+
+
 
 4)逗号运算符（，）  优先级最低的，  左->右
 
