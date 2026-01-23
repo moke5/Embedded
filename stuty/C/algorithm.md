@@ -9,7 +9,7 @@
 ```c
 int binarySearch(int *arr, int size, int target)
 {
-    int left = arr[0], right = arr[size - 1];
+    int left = 0, right = size - 1;
     while (left <= right)
     {
         // 使用(right + left)可能会越界
