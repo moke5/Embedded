@@ -145,7 +145,7 @@ print working directory
 
    ps：高版本的Linux一般使用的工具不同需要自己去Linux内安装对应的工具，但是对于VMware的设置是一样的。
 
-![0linuxsharefile1](F:/github/Embedded/stuty/linux/img/0linuxsharefile1.png)
+![0linuxsharefile1](./img/0linuxsharefile1.png)
 
 3. Linux终端中切换到共享目录：
 
