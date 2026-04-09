@@ -4,3 +4,48 @@
 
 
 
+### 居中
+
+<div align="center">
+    <p>
+        居中
+    </p>
+</div>
+
+
+
+
+
+```html
+<div align="center">
+    <p>
+        居中
+    </p>
+</div>
+```
+
+
+
+### 颜色
+
+<span style="color:red;">红色</span>
+
+```html
+<span style="color:red;"></span>
+```
+
+
+
+### 图片
+
+```html
+<img src="" width="950"/>
+```
+
+
+
+
+
+
+
+
