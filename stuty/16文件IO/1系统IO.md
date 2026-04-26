@@ -4,6 +4,10 @@
 
 ### **文件的概念**
 
+> 任何文件操作都必须先打开
+>
+> 但 `stdin` 、 `stdout` 和 `stderr` 属于**程序启动时自动为你打开**的特殊文件
+
 在Linux系统语境下，文件（file）一般有两个基本含义：
 
 - 狭义：指普通的文本文件，或二进制文件。包括日常所见的源代码、word文档、压缩包、图片、视频文件等等。
@@ -91,6 +95,8 @@ brw-r--r-- 1 gec gec 5, 1  Sep  12:38 block
 
 ## 系统IO基本API
 
+> Unix/Linux 系统头文件设计的一个核心原则：**按功能领域划分，而非按操作对象划分**。
+
 文件描述符（File Descriptor）：是用户进程视角的非负整数索引，本质是进程内指向「文件描述符表」的指针，通过它间接访问内核中的文件资源，避免用户态直接操作内核数据结构。
 
 文件描述符表（是数组），内部都是指针指向对应的打开文件表项（元素），文件描述符就是数组对应的下标。（一般情况下文件描述符时1023）
@@ -98,6 +104,20 @@ brw-r--r-- 1 gec gec 5, 1  Sep  12:38 block
 打开文件表：在表中的每个元素都是一个结构体：记录文件的当前状态（偏移量、打开标志）以及指向inode的指针，注意一个文件可对应
 
 ### **1. 文件的打开与关闭**
+
+#### open
+
+> >  fcntl.h	file control 文件控制
+> >
+> > 提供对已打开文件描述符的**控制**（如设置非阻塞标志、复制描述符、文件锁），以及打开新文件。
+>
+> > sys/types.h
+> >
+> > 定义如 `mode_t`、`pid_t` 等系统数据类型，这些类型是系统调用函数的参数所必需的
+>
+> > **`sys/stat.h`** 文件属性查询与修改
+> >
+> > 定义文件权限相关的宏()，如 `S_IRUSR` (所有者读权限)、`S_IWUSR` (所有者写权限) 等，这些宏在 `open` 需要**创建新文件**时使用
 
 - 打开文件：
 
@@ -155,6 +175,12 @@ int main(void)
 
 
 
+#### close
+
+> unistd.h Unix Standard
+>
+> 基础系统调用：文件 I/O、进程控制、环境、系统配置等
+
 - 关闭文件：
 
 <div align="center">
@@ -170,6 +196,8 @@ int main(void)
 
 
 ### **2. 标准库函数的错误处理**
+
+> `<errno.h>` 定义了一个全局（严格说是线程局部）整数变量 `errno`，以及一系列表示错误原因的宏（如 `EACCES`、`ENOENT`、`EINVAL` 等）。
 
 在所有的库函数中，如果调用过程出错了，那么该函数除了会返回一个特定的数据来告诉用户调用失效之外，还都会去修改一个大家共同的全局错误码errno，我们可以通过这个错误码，来进一步确认究竟是什么错误。
 
@@ -299,7 +327,9 @@ gec@ubuntu:~$ ./a.out ELF-V4.tar.gz
 
 
 
-<span style="color:red;">fd</span>:
+> fd
+>
+> 每个进程能打开的文件描述符数量有上限（`ulimit -n` 查看）。
 
 查看某个进程的所有 fd（比如自己的 shell 进程）
 
@@ -334,6 +364,8 @@ read(STDIN_FILENO,buf,sizeof(buf)-1); //如果没有输入数据，就会阻塞�
 
 ### **4. 文件的读写操作**
 
+#### read、write
+
 <div align="center">
     <img src="./img/image-20260206111726972.png">
 </div>
@@ -351,22 +383,22 @@ read(STDIN_FILENO,buf,sizeof(buf)-1); //如果没有输入数据，就会阻塞�
 - 读取文件内容：
 
 ```c
-// 1. 将文件 a.txt 中的内容读出来，并显示到屏幕上
-int fd = open("a.txt", O_RDWR);
+    // 1. 将文件 a.txt 中的内容读出来，并显示到屏幕上
+    int fd = open("a.txt", O_RDWR);
 
-char buf[100];
-int n;
-while(1)
-{
-    bzero(buf, 100);
-    n = read(fd, buf, 100); // 每次最多读取100个字节
+    char buf[100];
+    int n;
+    while(1)
+    {
+        bzero(buf, 100);
+        n = read(fd, buf, 100); // 每次最多读取100个字节
 
-    if(n == 0) // 读完退出
-        break;
+        if(n == 0) // 读完退出
+            break;
 
-    printf("%s", buf);
-}
-close(fd);
+        printf("%s", buf);
+    }
+    close(fd);
 ```
 
 
@@ -374,18 +406,18 @@ close(fd);
 - 写入文件内容：
 
 ```c
-// 2. 将键盘输入的内容，写入文件 a.txt
-int fd = open("a.txt", O_RDWR);
+    // 2. 将键盘输入的内容，写入文件 a.txt
+    int fd = open("a.txt", O_RDWR);
 
-char buf[100];
-bzero(buf, 100);
+    char buf[100];
+    bzero(buf, 100);
 
-// 从键盘输入数据
-fgets(buf, 100, stdin);
+    // 从键盘输入数据
+    fgets(buf, 100, stdin);
 
-// 将输入的数据写入文件
-write(fd, buf, strlen(buf));
-close(fd);
+    // 将输入的数据写入文件
+    write(fd, buf, strlen(buf));
+    close(fd);
 ```
 
 
@@ -484,6 +516,8 @@ int main(int argc, char **argv) // ./main a.txt
 
 ### **6. 文件的读写位置**
 
+#### lseek
+
 对文件进行常规的读写操作的时候，系统会自动调整读写位置，以便于让我们顺利地顺序读写文件，但如果有需要，文件的读写位置是可以任意调整的，调整函数接口如下：
 
 <div align="center">
@@ -544,6 +578,8 @@ ssize_t size = leesk(fd, SEEK_END);
 
 ### **2. ioctl()**
 
+> Input/Output Control
+
 该函数是沟通应用层和驱动层的有力武器，底层开发人员在为硬件设备编写驱动的时候，常常将某些操作封装为一个函数，并为这些接口提供一个所谓的命令字，应用层开发者可以通过 ioctl() 函数配合命令字，非常迅捷地绕过操作系统中间层层机构直达驱动层，调用对应的功能。
 
 从这个意义上讲，函数 ioctl() 像是一个通道，只提供函数调用路径，具体的功能由所谓命令字决定，下面是函数的接口规范说明：
@@ -573,6 +609,18 @@ int main(void)
     // 通过命令字 VIDIC_STREAMON 及其携带参数 vtype 启动摄像头
     enum v4l2_buf_type vtype= V4L2_BUF_TYPE_VIDEO_CAPTURE;
     ioctl(cam, VIDIOC_STREAMON, &vtype);
+}
+```
+
+
+
+```c
+int main() {
+    struct winsize ws;
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == 0) {
+        printf("行数: %d, 列数: %d\n", ws.ws_row, ws.ws_col);
+    }
+    return 0;
 }
 ```
 
@@ -674,7 +722,7 @@ fcntl(sockfd, F_SETOWN, getpid());
 
 示例代码1，映射普通文件：
 
-```
+```c
 int main()
 {
     // 以只读方式打开一个文件
