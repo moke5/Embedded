@@ -899,3 +899,79 @@ gec@ubuntu:$ ls -l
 -rwxrwxrwx 1 root root   4 Apr 26 22:17 n.bin
 -rwxrwxrwx 1 root root   1 Apr 26 22:17 n.txt
 ```
+
+
+
+## code
+
+### read、write -> copy
+
+```c
+typedef struct MyArgs {
+    int argc;
+    char **argv;
+}MyArgs;
+
+int copy_file(MyArgs *args) {
+    int fd_from = -1, fd_to = -1;
+    ssize_t nread, nwrite;
+    char buffer[BLKSIZE];
+    char *bp;    
+
+    if (args->argc != 3) {
+        fprintf(stderr, "use : %s <rsc> <det>\n", args->argv[0]);
+        return -1;
+    }
+
+    fd_from = open(args->argv[1], O_RDONLY);
+    if (fd_from == -1) {
+        fprintf(stderr, "open failed [%s]:%s\n", args->argv[1], strerror(errno));
+        return -1;
+    }
+
+    fd_to = open(args->argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd_to == -1) {
+        fprintf(stderr, "create file failed [%s]: %s\n", args->argv[2], strerror(errno));
+        close(fd_from);
+        return -1;
+    }
+
+    // copy
+    while (1) {
+        while (((nread=read(fd_from, buffer, BLKSIZE)) == -1) && (errno == EINTR));
+        
+        if (nread == -1) {
+            perror("read resource file failed");
+            goto error;
+        }
+        
+        if (nread == 0) {
+            printf("文件复制完成 ✅\n");
+            break;
+        }
+
+        bp = buffer;
+        while (nread > 0) {
+            while(((nwrite = write(fd_to, bp, nread)) == -1) && (errno == EINTR));
+
+            if (nwrite <= 0) {
+                perror("write error");
+                goto error;
+            }
+
+            nread -= nwrite;
+            bp += nwrite;
+        }
+    }
+
+    close(fd_from);
+    close(fd_to);
+    return 0;
+
+error:
+    close(fd_from);
+    close(fd_to);
+    return -1;
+}
+```
+
