@@ -40,3 +40,17 @@ tasklist | findstr "PID号"
 taskkill /F /PID pid
 ```
 
+
+
+#### 服务
+
+
+
+##### 运行服务
+
+- 需要管理员权限
+
+```shell
+net start mysql
+```
+

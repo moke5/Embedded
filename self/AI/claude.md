@@ -1,8 +1,12 @@
 # Claude Code
 
+[toc]
+
 
 
 ## claude code
+
+claude-howto
 
 
 
@@ -65,17 +69,70 @@ CLAUDE.md太长会被忽略
 
 ### command
 
+> 常用命令
 
 
-##### 切换模型
+
+#### 常用模式
+
+> shift + tab 切换
 
 ```
-/model
+plan 计划模式
+自动模式
 ```
 
 
 
+#### 记录
 
+```
+/resume
+```
+
+聊天记录列表
+
+
+
+#### ESC
+
+> 双ESC回退
+
+
+
+#### 提炼并压缩上下文
+
+```
+/compact
+```
+
+
+
+#### 清空上下文
+
+```
+/clear
+```
+
+
+
+### SKILL
+
+```
+ .claude/skills/xxx/SKILL.md 
+```
+
+
+
+### MCP
+
+> 通用扩展协议
+
+
+
+### HOOKS
+
+> 自动化的触发机制
 
 
 
@@ -95,5 +152,4 @@ CLAUDE.md太长会被忽略
 set ANTHROPIC_API_KEY=<your-key>
 echo %ANTHROPIC_API_KEY%
 ```
-
 
