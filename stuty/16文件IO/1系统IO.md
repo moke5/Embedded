@@ -203,6 +203,8 @@ brw-r--r-- 1 gec gec 5, 1  Sep  12:38 block
 当设置O_CREAT 这个flag时，open就要设置第三个参数八进制mode，表示文件权限
 
 > 权限会受限于umask，默认的umask值：0002，临时修改umask值 `umask 0000`
+>
+> ulimit -n
 
 文件的实际权限 = 原始权限 & (~umask)
 
@@ -642,7 +644,7 @@ int main(void)
 
 ```c
 int pdf = open("", O_RDONLY);
-ssize_t size = leesk(fd, SEEK_END);
+ssize_t size = leesk(fd, 0, SEEK_END);
 ```
 
 
