@@ -160,6 +160,8 @@ gcc b.c -o b
 
 ### **6. 隐式规则**
 
+> 头文件发生变化不会自动推导
+
 `Makefile` 会根据目标和依赖简单地自动推导出编译语句，这种情况叫隐式规则，比如：
 
 ```makefile
@@ -930,3 +932,22 @@ Makefile的详细的语法非常多，本章只是一个引子，但对于认识
 
 点击下载官方文档：[GNU make中文手册.pdf](http://vm.yueqian.com.cn:8886/group1/M00/00/09/rBJlJmKeBnaAFF4cABSX3jQpiOc925.pdf?token=null&ts=null&filename=GNU make中文手册.pdf)
 
+
+
+## 其他
+
+
+
+### 模板
+
+```
+
+```
+
+
+
+### vscode插件
+
+vscode-makefile-term
+
+在每个target上方出现执行按钮
