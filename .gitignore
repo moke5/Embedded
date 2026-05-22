@@ -53,3 +53,12 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# 忽略整个 Obsidian 配置目录
+.obsidian/
+
+# Claude Code 配置目录
+.claude/
+
+
+/README.md
