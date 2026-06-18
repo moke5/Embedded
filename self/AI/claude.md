@@ -1,5 +1,7 @@
 # Claude Code
 
+## 目录
+
 [toc]
 
 
@@ -7,6 +9,28 @@
 ## claude code
 
 claude-howto
+
+
+
+### Claude code run
+
+使用魔塔免费api
+
+启动
+
+```
+ccr code
+```
+
+
+
+如果 `ccr code` 启动不了。
+
+```
+ccr stop
+ccr start
+// 使用的是3456端口
+```
 
 
 
@@ -165,13 +189,8 @@ plan 计划模式
 > claude 用不了，但是账户还在
 
 ```
-<your-key>
-```
-
-
-
-```
-set ANTHROPIC_API_KEY=<your-key>
-echo %ANTHROPIC_API_KEY%
+# 在系统环境变量或本地配置中设置，勿写入仓库
+# set ANTHROPIC_API_KEY=<your-key>
+# echo %ANTHROPIC_API_KEY%
 ```
 

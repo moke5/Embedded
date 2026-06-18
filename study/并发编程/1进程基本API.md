@@ -24,7 +24,7 @@
 
 因此，在整个Linux系统中，所有的进程都起源于相同的初始进程，它们之间形成一棵倒置的进程树，就像家族族谱，可以使用命令pstree查看这些进程的关系：
 
-```shell
+```
 gec@ubuntu:~$ 
 gec@ubuntu:~$ pstree
 systemd─┬─ModemManager───2*[{ModemManager}]
@@ -153,6 +153,8 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 
 ### **1. 进程的创建**
 
+> fork：fd table会被复制，而ofd不会，因为ofd是内核维护的内核对象
+
 ```c
 #include <sys/types.h>
 #include <unistd.h>
@@ -227,6 +229,12 @@ bash-┬ (终端shell进程)
 
 ### **2. 进程的回收**
 
+#### wait
+
+> wait等待Zombie
+>
+> 获取已退出子进程的信息
+
 ```c
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -245,36 +253,28 @@ pid_t wait(int *wstatus);
     - 子进程的退出状态（包括退出值、终止信号等）将被放入wstatus所指示的内存中，若wstatus指针为NULL，则代表当前进程放弃其子进程的退出状态。
 - 示例代码：
 
-```
+```c
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <unistd.h> 
 #include <sys/wait.h> 
 
-int main()
-{
-    if(fork() == 0)
-    {
+int main() {
+    if(fork() == 0)     {
         printf("[%d]: 我将在3秒后正常退出，退出值是88\n", getpid());
 
-        for(int i=3; i>=0; i--)
-        {
+        for(int i=3; i>=0; i--)         {
             fprintf(stderr, " ======= %d =======%c", i, i==0?'\n':'\r');
             sleep(1);
         }
-
         exit(88);
-    }
-
-    else
-    {
+    } else {
         printf("[%d]: 我正在试图回收子进程的资源...\n", getpid());
 
         int status;
         wait(&status);
 
-        if(WIFEXITED(status))
-        {
+        if(WIFEXITED(status)) {
             printf("[%d]: 子进程正常退出了，其退出值是：%d\n", getpid(), WEXITSTATUS(status));
         }
     }
@@ -285,7 +285,7 @@ int main()
 
 执行结果是：
 
-```
+```shell
 gec@ubuntu:$ ./a.out
 [3611]: 我正在试图回收子进程的资源...
 [3612]: 我将在3秒后正常退出，退出值是88
@@ -307,7 +307,9 @@ gec@ubuntu:$
 
 回收僵尸子进程资源除了可以使用上述接口之外，以下函数接口也经常被用到：
 
-```
+#### waitpid
+
+```c
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -329,13 +331,50 @@ pid 和 options 这两个参数的取值和作用详见下表：
 |  0   | 等待本进程所在的进程组中的任意一个子进程        | WUNTRACED  | 当子进程暂停时函数返回                    |
 |  >0  | 等待指定pid的子进程                             | WCONTINUED | 当子进程收到信号SIGCONT继续运行时函数返回 |
 
-
 **注意：**
 options的取值，可以是0，也可以是上表中各个不同的宏的位或运算取值。
 
+
+
+#### exit和\_exit
+
+
+
+<img src="./img/image-20260529171534278.png" width="50%">
+
+#### atexit注册
+
+> **注册一个函数，让程序**正常退出**时**自动调用这个函数
+
+**注册顺序 vs 调用顺序**
+
+后注册的函数 **先执行**（栈结构：后进先出）。
+
+**触发条件**
+
+只有**正常退出**才会调用：
+
+- `return 0` 从 `main` 返回
+
+- exit() 函数
+
+    
+
+    不会触发：
+
+- 程序崩溃（段错误、除零）
+
+- `abort()` 强制终止
+
+- 系统杀死进程
+
+
+
 ### **3. 加载并执行指定程序**
 
-```
+
+
+```c
 #include <unistd.h>
 
 extern char **environ;
@@ -366,7 +405,7 @@ int execvpe(const char *file, char *const argv[], char *const envp[]);
 
 以 `execl(const char *path, const char *arg, ...)` 为例，参数path是需要加载的指定程序，而arg则是该程序运行是的命令行参数，值得注意的是，命令行参数包括程序名本身，并且全部是字符串。例如
 
-```
+```bash
 gec@ubuntu:$ ./a.out 123 abc
 ```
 
@@ -374,7 +413,7 @@ gec@ubuntu:$ ./a.out 123 abc
 
 上述命令用execl来指定则是：
 
-```
+```bash
 execl("./a.out", "./a.out", "123", "abc", NULL);
 ```
 
@@ -387,33 +426,27 @@ execl("./a.out", "./a.out", "123", "abc", NULL);
 
 - 示例代码：
 
-```
+```c
 // child.c
-
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <unistd.h> 
 #include <sys/wait.h> 
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     // 倒数 n 秒
-    for(int i=atoi(argv[1]); i>0; i--)
-    {
+    for(int i=atoi(argv[1]); i>0; i--) {
         printf("%d\n", i);
         sleep(1);
     }
-
-    // 程序退出，返回 n
-    exit(atoi(argv[1]));
+    exit(atoi(argv[1]));	// 程序退出，返回 n
 }
 ```
 
 
 
-```
+```c
 // main.c
-
 #include <stdio.h> 
 #include <unistd.h> 
 #include <sys/wait.h> 
@@ -421,31 +454,24 @@ int main(int argc, char **argv)
 int main()
 {
     // 子进程
-    if(fork() == 0)
-    {
+    if(fork() == 0) {
         printf("加载新程序之前的代码\n");
 
         // 加载新程序，并传递参数3
         execl("./child", "./child", "3", NULL);
-
         printf("加载新程序之后的代码\n");
     }
-
     // 父进程
-    else
-    {
+    else {
         // 等待子进程的退出
         int status;
         int ret = waitpid(-1, &status, 0);
 
-        if(ret > 0)
-        {
+        if(ret > 0) {
             if(WIFEXITED(status))
                 printf("[%d]: 子进程[%d]的退出值是:%d\n",
                         getpid(), ret, WEXITSTATUS(status));
-        }
-        else
-        {
+        } else {
             printf("暂无僵尸子进程\n");
         }
     }
@@ -456,7 +482,7 @@ int main()
 
 程序运行结果：
 
-```
+```shell
 gec@ubuntu:$ gcc child.c -o child
 gec@ubuntu:$ gcc main.c -o main
 gec@ubuntu:$ ./main
@@ -476,9 +502,130 @@ gec@ubuntu:$
 
 
 
+## 僵尸进程
+
+> Zombie
+>
+> 保留：PID、exit_code、exit_reason、status
+>
+> 不保留：VM、fd table
+
+### **1. 概念**
+
+僵尸进程指的是处于僵尸态的进程，这种进程无法进行调度，但其所占用的系统资源并未被释放。僵尸态是进程生命周期的必经阶段，是无法避免的，但为了节约系统资源，应尽快清理腾出僵尸态进程所占用的内存资源。
+
+### **2. 产生的原因**
+
+当一个程序的代码流程从main函数返回后，进程就结束了，但此时不能立即退出，因为还需要向其父进程汇报执行的结果和死亡的原因，又因为已无法被调度，因此进程只能以一种被动的姿态躺倒，等待其创建者（父进程）前来获取其执行结果和死亡原因。
+
+以下代码可以查看处于僵尸态的进程：
+
+```c
+// zombie.c
+int main() {
+    // 子进程退出（变僵尸）
+    if(fork() == 0)
+        return 0;
+
+    // 父进程不退出
+    pause();
+    return 0;
+}
+```
 
 
 
+执行上述代码，并使用ps命令查看进程状态：
+
+```
+gec@ubuntu:~$ ./zombie
+gec@ubuntu:~$ ps ajx
+... ...
+  8390   8422   8422   8422 pts/2      8439 Ss    1000   0:00 bash
+  8422   8439   8439   8422 pts/2      8439 S+    1000   0:00 ./zombie
+  8439   8440   8439   8422 pts/2      8439 Z+    1000   0:00 [zombie] <defunct>
+  8406   8441   8441   8406 pts/1      8441 R+    1000   0:00 ps ajx
+gec@ubuntu:~$ ps ajx
+```
+
+
+
+由上述结果可见，zombie父进程处于睡眠状态[S+]，而其子进程[zombie]<defunct>处于僵尸态[Z+]。
+
+### **3. 释放僵尸进程**
+
+上述实验中，如果父进程一直对其子进程不管不顾，那么其子进程的确会长期处于僵尸态，浪费系统资源。僵尸进程只有当以下情形之一发生时，才会释放其资源：
+
+- 父进程对其调用 wait()/waitpid()。
+- 父进程退出，被孤儿进程组收养。
+
+#### **3.1 方法一：父进程直接退出**
+
+这应该不算什么方法，父进程的退出只是便于让系统中的孤儿进程组收养其孤儿进程，进而在该孤儿进程编程僵尸后由系统负责回收并释放其系统资源。
+
+#### **3.2 方法二：子进程等待父进程对其执行wait()/waitpid()**
+
+这是最浅显的做法，wait()/waitpid()函数有如下三个功效：
+
+1. 释放对应僵尸子进程的系统资源
+2. 获取对应僵尸子进程的退出状态
+3. 阻塞父进程（可选）
+
+上述功效中的第一项即可满足我们目前的需求，比如在如上代码中，只要父进程代码做如下修改即可避免僵尸的产生：
+
+```
+// no-zombie.c
+int main()
+{
+    // 子进程退出（变僵尸）
+    if(fork() == 0)
+        return 0;
+
+    // 父进程调用wait()释放子进程资源
+    wait(NULL);
+    pause();
+    return 0;
+}
+```
+
+
+
+此办法看似简单，但并不实用，因为一般而言父进程很难预知子进程退出的时机，当父进程执行wait()/waitpid()的时候，要么进入漫长的等待，要么子进程尚未变僵尸，因此让父进程去时刻主动关注子进程的状态和回收资源是不切实际的，而且父进程的后代进程可能不止一个，大家任务各有长短，父进程本身也可能处于循环任务之中，因此该办法仅供参考。
+
+#### **3.3 方法三：子进程主动告知父进程前来收尸**
+
+这是最常见的做法，让变成僵尸的子进程主动通知其父进程，既省却了父进程监控子进程的麻烦，又可以让子进程的僵尸状态尽可能保证在最短时间内处理。
+
+具体而言，子进程在进入僵尸态时，会自动向父进程发送信号SIGCHILD，而父进程可以利用异步信号响应函数来及时处理这些僵尸子进程。参考代码如下：
+
+```
+void cleanup(int sig)
+{
+    // 僵尸子进程会被自动清除
+    wait(NULL);
+}
+
+int main()
+{
+    // 在产生子进程之前，准备好处理它们的SIGCHILD信号
+    signal(SIGCHLD, cleanup);
+
+
+    // 子进程退出，成为僵尸进程
+    if(fork() == 0)
+        return 0;
+
+    // 父进程干自己的活，无需关注子进程
+    while(1)
+        pause();
+
+    return 0;
+}
+```
+
+
+
+注意，由于pause()函数会在收到信号后退出，为了能查看父进程在清除子进程资源后仍在运行，上述代码中使用了循环来执行pause()函数。
 
 
 

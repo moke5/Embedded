@@ -62,3 +62,9 @@ dkms.conf
 
 
 /README.md
+
+*.png
+*.jpg
+*.jpeg
+物联网通信技术.md
+物联网中间件.md

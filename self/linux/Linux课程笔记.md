@@ -345,6 +345,45 @@ FinalShell登陆终端后，默认的工作目录就是用户的HOME目录
 
 # Linux常用操作
 
+## 配置文件
+
+| **分类**            | **配置文件路径**            | **作用/描述**                                                |
+| ------------------- | --------------------------- | :----------------------------------------------------------- |
+| **终端与环境变量**  | `~/.bashrc` (或 `~/.zshrc`) | **最常用！** 用户的 Shell 初始化脚本，用来改别名（alias）、加环境变量。 |
+|                     | `/etc/profile`              | 全局的环境变量配置，对所有用户生效。                         |
+| **网络配置**        | `/etc/hosts`                | 本地 IP 与域名的映射表（常用于本地测试或屏蔽网站）。         |
+|                     | `/etc/resolv.conf`          | 配置 DNS 服务器地址。                                        |
+|                     | `/etc/netplan/*.yaml`       | Ubuntu 的网络接口配置文件（如静态 IP）。                     |
+| **远程连接**        | `~/.ssh/config`             | 客户端配置，用来简化 VS Code 或终端的 SSH 连接命令。         |
+|                     | `/etc/ssh/sshd_config`      | **SSH 服务端配置**，用来修改 SSH 端口、禁止 root 登录等。    |
+| **系统与磁盘**      | `/etc/fstab`                | 开机自动挂载硬盘、U盘或网络共享目录的配置文件。              |
+| **软件源 (Ubuntu)** | `/etc/apt/sources.list`     | APT 包管理器的镜像源列表（换国内源就改这里）。               |
+
+- **铁律一：改前先备份！** 在修改任何系统文件前，先复制一份副本。例如： `sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak` 如果改挂了，随时能一键还原。
+
+```bash
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+```
+
+
+
+- **法则二：让配置生效**
+    - 修改了 `~/.bashrc` 等脚本，需要运行 `source ~/.bashrc` 才能立即生效（或者重启终端）。
+    - 修改了系统服务（如 SSH），需要重启服务：`sudo systemctl restart sshd`。
+
+```bash
+source ~/.bashrc
+sudo systemctl restart sshd
+```
+
+
+
+- **法则三：善用查看命令**
+    - 不想打开文件，只想看内容？用 `cat /etc/hosts`。
+    - 配置文件太长？用 `less /etc/ssh/sshd_config`（按 `q` 退出）。
+
+
+
 ## 软件安装
 
 - CentOS系统使用：
