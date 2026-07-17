@@ -1,3 +1,11 @@
+# Linux
+
+[toc]
+
+
+
+
+
 内核对象
 
 ```
@@ -129,27 +137,75 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 
 
+### ssh
+
+- who	最直观
+
+```
+who （列出所有登录会话）
+
+统计总行数（总登录终端数）：
+who | wc -l
+```
 
 
 
+- w 命令（带负载、执行命令，信息更全）
+
+```
+w
+# 统计数量
+w | tail -n +2 | wc -l
+```
 
 
 
+- 只看远程 SSH 终端（/dev/pts/）
+
+```bash
+// pts 是 ssh、图形界面打开的伪终端
+# 列出所有ssh终端
+ls /dev/pts/
+
+# 统计ssh伪终端数量
+ls /dev/pts/ | grep -v ptmx | wc -l
+```
 
 
 
+-  只看本地物理终端 tty
+
+```
+ls /dev/tty[0-9] | wc -l
+```
 
 
 
+- users 简化统计（只输出用户名，一行一个会话）
+
+```
+users | tr ' ' '\n' | wc -l
+```
 
 
 
+- 查看所有终端关联进程（ps 方式）
+
+查看所有终端进程
+
+```
+ps -ef | grep -E 'tty|pts' | grep -v grep
+# 统计总数
+ps -ef | grep -E 'tty|pts' | grep -v grep | wc -l
+```
 
 
 
+单独统计 SSH 伪终端 pts
 
-
-
+```
+ps -ef | grep pts | grep -v grep | wc -l
+```
 
 
 
