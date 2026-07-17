@@ -66,5 +66,7 @@ dkms.conf
 *.png
 *.jpg
 *.jpeg
+*.gif
+*.bmp
 物联网通信技术.md
 物联网中间件.md
