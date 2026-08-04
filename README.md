@@ -2,6 +2,64 @@
 
 使用typora的笔记仓库
 
+obsidian AI 仓库
+
+```
+D:\git\obsidian\AI
+```
+
+> 把今天讨论的内容归档到 D:\git\obsidian\AI，按 CLAUDE.md 规则操作
+
+
+
+阿里云：
+
+```
+8.138.35.212
+```
+
+
+
+>  [!note]
+>
+> 提醒
+
+
+
+> [!tip]
+>
+> 建议
+
+
+
+> [!IMPORTANT]
+>
+> 重要
+
+
+
+> [!WARNING]
+>
+> 警告
+
+
+
+> [!CAUTION]
+>
+> 注意
+
+
+
+```mermaid
+graph TD
+A[任务来源]
+A --> B[任务队列]
+B --> C[工作线程池]
+B --> D[同步机制]
+D --> E[mutex]
+D --> F[condition]
+```
+
 
 
 ### 图片

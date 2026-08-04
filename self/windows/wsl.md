@@ -43,6 +43,8 @@ wsl --install --web-download
 wsl --import Ubuntu D:\WSL\Ubuntu D:\WSL\Ubuntu\ubuntu.wsl
 ```
 
+
+
 ```
 # 
 wsl --list
@@ -61,55 +63,35 @@ wsl --set-version Ubuntu 2
 
 
 
-### 换源
+### 确认你的 Linux 系统版本
 
-```bash
-sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+```
+cat /etc/os-release
 ```
 
 
 
-```bash
-sudo tee /etc/apt/sources.list << EOF
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
-EOF
+### 导出导入
+
+- 导出
+
+```
+wsl --export Ubuntu-22.04 D:\Ubuntu_v1.tar
 ```
 
 
 
-如果还有一部分网络走官网的
+- 导入
 
-```bash
-# 
-ls /etc/apt/sources.list.d/
-
-sudo sed -i 's@//.*archive.ubuntu.com@//mirrors.tuna.tsinghua.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
-sudo sed -i 's@//.*security.ubuntu.com@//mirrors.tuna.tsinghua.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
+```
+wsl --import Ubuntu-WSL2 D:\app\VMware\wsl\Ubuntu2 D:\Ubuntu_v1.tar --version 2
 ```
 
 
 
+- 删除
+
 ```
-sudo apt clean
-sudo apt update
+del D:\Ubuntu_v1.tar
 ```
-
-
-
-### 启动问题
-
-- 问题原因
-
-1. WSL 默认调用 `dash` 作为终端解释器，`dash` 不会加载 `.bashrc`，且不兼容 bash 提示符配置语法，终端仅显示 `$`。
-2. 初始 `/etc/wsl.conf` 未指定启动解释器，系统持续使用默认的 `dash`。
-3. 仅修改 `.profile`、`.bashrc` 无法生效，启动环境未使用 bash。
-
-- 解决操作
-
-1. 编辑 `/etc/wsl.conf`，添加配置 `shell=/bin/bash`，强制 WSL 启动 bash。
-2. 执行 `chsh -s /bin/bash`，修改账户默认解释器为 bash。
-3. 执行 `wsl --shutdown`，重启 WSL 使全部配置生效。
 

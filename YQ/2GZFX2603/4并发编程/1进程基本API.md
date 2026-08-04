@@ -1,8 +1,8 @@
-# 进程基本API
+# **进程基本API**
 
 [toc]
 
-## 进程与程序
+## **进程与程序**
 
 ### **1. 基本概念**
 
@@ -24,7 +24,7 @@
 
 因此，在整个Linux系统中，所有的进程都起源于相同的初始进程，它们之间形成一棵倒置的进程树，就像家族族谱，可以使用命令pstree查看这些进程的关系：
 
-```
+```bash
 gec@ubuntu:~$ 
 gec@ubuntu:~$ pstree
 systemd─┬─ModemManager───2*[{ModemManager}]
@@ -140,6 +140,36 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 
 ![image-20260517163607939](./img/image-20260517163607939.png)
 
+```bash
+就绪态、执行态、挂起态、暂停态、僵尸态、死亡态
+
+查看：
+/proc/PID/status
+ps -o pid,stat,cmd -p PID
+```
+
+
+
+| 状态          | Linux | 含义                |
+| ------------- | ----- | ------------------- |
+| 就绪态        | R     | Runnable，可执行    |
+| 执行态        | R     | 正在CPU执行         |
+| 阻塞态/等待态 | S/D   | 睡眠等待            |
+| 暂停态        | T     | 被停止              |
+| 僵尸态        | Z     | 进程结束但PCB未释放 |
+| 死亡态        | 无    | 已经不存在          |
+
+- 特殊位（Ss，I<）
+
+| 字符 | 含义           |
+| ---- | -------------- |
+| s    | session leader |
+| +    | 前台进程组     |
+| l    | 多线程         |
+| <    | 高优先级       |
+| N    | 低优先级       |
+| L    | 锁定内存页     |
+
 - 解析：
     - 所有进程（除了系统初始进程systemd之外），都有一个父进程。
     - 父进程通过调用fork()函数，将自身复制一份形成一个子进程。
@@ -147,12 +177,12 @@ systemd─┬─ModemManager───2*[{ModemManager}]
     - 当进程退出时（不管是主动退出还是被动退出），进入僵尸态（EXIT_ZOMBIE），僵尸态下的进程无法运行，也无法被调度，但其所占据的系统资源未被释放。僵尸态是进程的必经状态，编程过程中不能避免僵尸态，但要避免进程长时间处于僵尸态。
     - 僵尸态进程要等待其父进程对其资源进程回收后，才能变成死亡态（EXIT_DEAD），死亡态的进程所有占据的系统资源可以被系统随时回收。
 
-
-
 ## 进程基本API
 
 ### **1. 进程的创建**
 
+> [!note]
+>
 > fork：fd table会被复制，而ofd不会，因为ofd是内核维护的内核对象
 
 ```c
@@ -161,8 +191,6 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 
 pid_t fork(void);
 ```
-
-
 
 - 主要功能：
     - 将当前的进程复制一份，然后这两个进程同时从本函数的下一语句开始执行。
@@ -173,25 +201,22 @@ pid_t fork(void);
 - 示例代码：
 
 ```c
-1	#include <stdio.h> 
-2	#include <unistd.h> 
-3	
-4	int main()
-5	{
-6	    printf("[]fork之前\n");
-7	
-8	    pid_t pid = fork();
-9	    // 以上函数执行成功后
-10	    // 父子进程都将从下面的语句开始执行，不分先后
-11	
-12	    // 以下语句会被执行两遍
-13	    // 在父进程中，pid将是子进程的PID
-14	    // 在子进程中，pid将是0
-	    printf("[%d]: pid=%d\n", getpid(), pid);
+#include <stdio.h> 
+#include <unistd.h> 
+
+int main() {
+    printf("[]fork之前\n");
+
+    pid_t pid = fork();
+    // 以上函数执行成功后
+    // 父子进程都将从下面的语句开始执行，不分先后
+
+    // 以下语句会被执行两遍
+    // 在父进程中，pid将是子进程的PID
+    // 在子进程中，pid将是0
+    printf("[%d]: pid=%d\n", getpid(), pid);
 }
 ```
-
-
 
 以上程序执行结果是：
 
@@ -201,8 +226,6 @@ gec@ubuntu:$ ./a.out
 [5140]: pid=5141
 gec@ubuntu:$ [5141]: pid=0
 ```
-
-
 
 对以上程序的输出结果，有几点需要做出说明：
 
@@ -221,11 +244,7 @@ bash-┬ (终端shell进程)
         a.out (程序中的子进程，是bash的孙子进程)
 ```
 
-
-
 - 在上述层级关系中，中间的那个a.out一旦退出，bash就认为它所创建的进程结束了，此时不管有没有孙子进程，bash都立即输出 “gec@ubuntu:$” 的信息，这就是为什么进程[5141]的输出信息被挤到后面的原因。
-
-
 
 ### **2. 进程的回收**
 
@@ -241,8 +260,6 @@ bash-┬ (终端shell进程)
 
 pid_t wait(int *wstatus);
 ```
-
-
 
 - 主要功能：
     - 阻塞当前进程。
@@ -260,17 +277,16 @@ pid_t wait(int *wstatus);
 #include <sys/wait.h> 
 
 int main() {
-    if(fork() == 0)     {
+    if(fork() == 0) {
         printf("[%d]: 我将在3秒后正常退出，退出值是88\n", getpid());
 
-        for(int i=3; i>=0; i--)         {
+        for(int i=3; i>=0; i--) {
             fprintf(stderr, " ======= %d =======%c", i, i==0?'\n':'\r');
             sleep(1);
         }
         exit(88);
     } else {
         printf("[%d]: 我正在试图回收子进程的资源...\n", getpid());
-
         int status;
         wait(&status);
 
@@ -280,8 +296,6 @@ int main() {
     }
 }
 ```
-
-
 
 执行结果是：
 
@@ -315,8 +329,6 @@ gec@ubuntu:$
 
 pid_t waitpid(pid_t pid, int *wstatus, int options);
 ```
-
-
 
 - 与wait()的区别：
     - 可以通过参数 pid 用来指定想要回收的子进程。
@@ -372,8 +384,6 @@ options的取值，可以是0，也可以是上表中各个不同的宏的位或
 
 ### **3. 加载并执行指定程序**
 
-
-
 ```c
 #include <unistd.h>
 
@@ -387,8 +397,6 @@ int execv(const char *path, char *const argv[]);
 int execvp(const char *file, char *const argv[]);
 int execvpe(const char *file, char *const argv[], char *const envp[]);
 ```
-
-
 
 - 主要功能：
     - 给进程加载指定的程序，如果成功，进程的整个内存空间都被覆盖。
@@ -451,8 +459,7 @@ int main(int argc, char **argv) {
 #include <unistd.h> 
 #include <sys/wait.h> 
 
-int main()
-{
+int main() {
     // 子进程
     if(fork() == 0) {
         printf("加载新程序之前的代码\n");
@@ -502,11 +509,13 @@ gec@ubuntu:$
 
 
 
-## 僵尸进程
+## **僵尸进程**
 
+> [!note]
+>
 > Zombie
 >
-> 保留：PID、exit_code、exit_reason、status
+> 保留（PCB）：PID、exit_code、exit_reason、status
 >
 > 不保留：VM、fd table
 
@@ -573,10 +582,9 @@ gec@ubuntu:~$ ps ajx
 
 上述功效中的第一项即可满足我们目前的需求，比如在如上代码中，只要父进程代码做如下修改即可避免僵尸的产生：
 
-```
+```C
 // no-zombie.c
-int main()
-{
+int main() {
     // 子进程退出（变僵尸）
     if(fork() == 0)
         return 0;
@@ -598,18 +606,15 @@ int main()
 
 具体而言，子进程在进入僵尸态时，会自动向父进程发送信号SIGCHILD，而父进程可以利用异步信号响应函数来及时处理这些僵尸子进程。参考代码如下：
 
-```
-void cleanup(int sig)
-{
+```C
+void cleanup(int sig) {
     // 僵尸子进程会被自动清除
     wait(NULL);
 }
 
-int main()
-{
+int main() {
     // 在产生子进程之前，准备好处理它们的SIGCHILD信号
     signal(SIGCHLD, cleanup);
-
 
     // 子进程退出，成为僵尸进程
     if(fork() == 0)
@@ -629,5 +634,24 @@ int main()
 
 
 
+## QA
 
+【1】问：进程和程序有什么区别吗？
+【1】答：有区别。一般而言，程序（program）是一个静态的文件，而进程（process）是该文件被加载到内存后运行的动态过程。一个比较好的比喻是，程序就像菜谱，是一本菜肴制作步骤清单，而进程是厨师根据这本菜谱，并使用各种烹饪厨具制作这份菜肴的过程。
+
+【2】问：下面的代码是不是产生了3个子进程？
+
+```C
+int main() {
+    pid_t p1 = fork();
+    pid_t p2 = fork();
+    pid_t p3 = fork();
+}
+```
+
+
+
+【2】答：不是。每次fork()之后，进程都会在调用处分裂为两个进程，新出现的进程被称为子进程，从分裂出继续往下运行，因此在上述代码中，程序最开始的父进程的确是产生了三个子进程，但第一个子进程继续运行下面的代码有产生了2个孙子进程，而第一个孙子进程在第三条语句中还产生了玄孙进程，第二个子进程会产生第三个孙子进程，因此加上最开始的祖先进程，总共产生了8条进程。
+
+所以fork()不能随便写如循环中，否则很容易会形成进程炸弹，使得系统崩溃。
 

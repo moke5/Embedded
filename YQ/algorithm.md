@@ -1,3 +1,9 @@
+# code
+
+[toc]
+
+
+
 [hello算法](https://www.hello-algo.com/)
 
 ## 查找
@@ -156,5 +162,13 @@ int main() {
         printf("GCD of %d and %d is %d\n", a, b, gcd(a, b));
         return 0;
 }
+```
+
+
+
+#### 目录遍历
+
+```
+
 ```
 

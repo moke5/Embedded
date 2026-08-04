@@ -296,7 +296,7 @@ while(1) {
 
 ![image-20260716101832833](./img/image-20260716101832833.png)
 
-**解决方法就是把O_CLOEXEC 改成 FD_CLOEXEC，****因为当前编译器不支持** **O_CLOEXEC** **标志。对应需要修改的.c位置：**
+**解决方法就是把O_CLOEXEC 改成 FD_CLOEXEC，**因为当前编译器不支持*O_CLOEXEC** **标志。对应需要修改的.c位置：**
 
 **lv_drivers/indev/evdec.v的145行**
 
