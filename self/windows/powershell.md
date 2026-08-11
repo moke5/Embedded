@@ -31,8 +31,6 @@ Get-ChildItem | Select-Object Name, @{
 
 ## WIFI
 
-
-
 ### 获取网卡信息
 
 ```powershell

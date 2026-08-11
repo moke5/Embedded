@@ -45,8 +45,7 @@ wsl --import Ubuntu D:\WSL\Ubuntu D:\WSL\Ubuntu\ubuntu.wsl
 
 
 
-```
-# 
+```powershell
 wsl --list
 ```
 

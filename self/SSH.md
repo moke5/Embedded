@@ -23,3 +23,12 @@ sudo systemctl enable --now ssh
 # 查看22端口监听
 ss -tulpn | grep 22
 ```
+
+
+
+### 连接
+
+```
+ssh name@ip
+```
+

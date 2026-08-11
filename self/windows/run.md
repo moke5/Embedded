@@ -1,7 +1,5 @@
 # win + r
 
-> > enter : 运行
->
 > >  ctrl + shift + enter : 以管理员身份运行
 >
 > ​	在弹出的 **UAC（用户账户控制）** 窗口点击 **是**，即可以管理员权限启动
@@ -31,8 +29,6 @@ PowerShell Start-Process 命令名 -Verb RunAs
 
 - 🔧 系统核心与设置
 
-
-
 ```
 winver          // 查看Windows版本与激活
 msinfo32        // 系统详细信息
@@ -52,8 +48,6 @@ secpol.msc		// 本地安全策略（专业版/企业版）
 
 - 🛠️ 管理工具
 
-
-
 ```
 compmgmt.msc    // 计算机管理
 devmgmt.msc     // 设备管理器
@@ -69,8 +63,6 @@ lusrmgr.msc     // 用户和组
 
 
 - 📝 常用工具
-
-
 
 ```
 regedit         // 注册表
@@ -117,7 +109,7 @@ Windows 允许你通过变量名来指代经常变动的路径，这在写脚本
 
 - 常见变量：
     - `%temp%`：直接跳转到当前用户的临时文件夹（清理垃圾必用）。
-    - `%appdata%`：跳转到 `C:\Users\用户名\AppData\Roaming`（很多软件配置藏在这里）。
+    - `%appdata%`：跳转到 `C:\Users\用户名\AppData\Roaming`（软件配置）。
     - `%userprofile%`：跳转到当前用户的主目录。
     - `%windir%`：跳转到 Windows 安装目录（通常是 C:\Windows）。
 
