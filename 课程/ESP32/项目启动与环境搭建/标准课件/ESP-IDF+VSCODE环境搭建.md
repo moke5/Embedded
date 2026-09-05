@@ -120,6 +120,10 @@ ESP32-S3 的 USB 串口可用于下载程序和 ESP 监控器之间的交互。�
 
 在上图中，点击“ADVANCED”进入高级配置界面，如下图所示：
 
+- 4设置ESP-IDF TOOLS路径有问题
+
+不需要\tools，只到Espressif
+
 ![img](./img/57924.png)
 
 配置 ESP-IDF 插件完成后，点击上图“Configure Tools”选项执行配置操作。配置 ESP-IDF 插件需要进行三个流程，等待第一个流程配置完成，此时进入 ESP-IDF Tools 配置流程，如下图所示：

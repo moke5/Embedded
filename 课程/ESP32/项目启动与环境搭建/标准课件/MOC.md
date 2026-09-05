@@ -16,5 +16,5 @@
 
 [7Espressif-IDE环境搭建](Espressif-IDE环境搭建.md)
 
-
+[8启动过程](启动过程.md)
 
