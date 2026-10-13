@@ -16,7 +16,7 @@ UDP协议不需要连接，因此服务端只需要一个套接字便可与任�
 
 #### **1.1 IO模型**
 
-所谓服务器IO模型，指的是当一个服务端网络程序需要同时处理多个套接字时，采取什么策略去妥善处理它们。由于网络数据的到达是无法预见的，因此不能像读取本地数据那样直接读取，要考虑如果数据不能及时到达应该如何处理的问题。
+所谓服务器IO模型，指的是当**一个服务端网络程序需要同时处理多个套接字**时，采取什么策略去妥善处理它们。由于网络数据的到达是无法预见的，因此不能像读取本地数据那样直接读取，要考虑如果数据不能及时到达应该如何处理的问题。
 
 一般而言，服务端IO模型包括：
 
@@ -52,15 +52,11 @@ fcntl(sockfd, F_SETFL, state);
 
 ```C
 ////////////////////////////////////////////////////////
-//
 //  Copyright(C), 2005-2022, GEC Tech. Co., Ltd.
 //  www.yueqian.com.cn  ALL RIGHT RESERVED
-//
 //  文件: nonBlockUDP.c
 //  描述: 基于UDP协议的非阻塞轮询方式，接收对端数据
-//
 ///////////////////////////////////////////////////////
-
 int main(int argc, char const *argv[])
 {
     // 创建UDP套接字并绑定地址
@@ -81,22 +77,17 @@ int main(int argc, char const *argv[])
     while(1)
     {
         bzero(buf, 100);
-
         socklen_t len = sizeof(clientAddr);
         bzero(&clientAddr, len);
-
         // 等待UDP数据
         int n = recvfrom(sockfd, buf, 100, 0,(struct sockaddr *)&clientAddr, &len);
-
         // 资源暂时不可得
         if(n == -1 && errno == EAGAIN)
             continue;
-
         // 正常读到数据
         else if(n > 0)
             printf("收到：%s\n", buf);
     }
-
     close(sockfd);
     return 0;
 }
@@ -327,6 +318,8 @@ int main(int argc, char const *argv[])
 
 所谓多路复用，指的是**通过某个特定的接口（比如 `select()`、`poll()` 等），来同时监听多路阻塞IO**，这就达到既无需多进程多线程，又可以同时处理多个阻塞套接字的目的。
 
+> I/O多路复用(I/O Multiplexing) 是一种让**单个线程**同时监听**多个文件描述符**的技术。
+
 ### **2. 准备知识**
 
 对于某套接字 `sockfd`，其就绪状态有三种：
@@ -444,7 +437,23 @@ if(FD_ISSET(connfd, &rset))
     recv(connfd, buf, SIZE, MSG_OOB);
 ```
 
+
+
+缺点：
+
+fd 数量受限：`fd_set` 用位图实现，默认最多 **1024** 个 fd（FD_SETSIZE）。
+
+O(n) 轮询：内核每次都要遍历所有 fd 检查是否就绪，fd 越多越慢。
+
+重复拷贝：每次调用都要把整个 fd_set 从用户态拷到内核态
+
+![img](./img/image-20260916143947749.png)
+
+
+
 #### **3.2 `poll()`**
+
+> poll 用**结构体数组**替代位图，没有数量上限，但本质仍是**O(n) 轮询**。
 
 函数 `poll()` 实现与 `select()` 基于完全一样的功能，只是参数的组织形式不同，下面是该函数的详细接口说明：
 
@@ -532,7 +541,9 @@ if(fds[1].revents & POLLPRI)
 
 
 
-### epoll
+**关键结论：**poll 只是解决了 fd 数量限制，O(n) 扫描和重复拷贝两个性能瓶颈依然存在。真正的飞跃要等 epoll。
+
+
 
 **ppoll 扩展**
 
@@ -653,7 +664,7 @@ sudo vim /etc/systemd/system.conf
 
  
 
-**4.多路复用epoll** 
+### **4.多路复用epoll** 
 
 **4.1概念**
 
@@ -665,10 +676,12 @@ epoll是Linux下多路复用IO接口select/poll的增强版本，它能显著提
 
 **1）epoll_create**
 
-```
+```C
 #include <sys/epoll.h> 
 int epoll_create(int size);		
 ```
+
+> 在内核创建一个 epoll 实例（红黑树 + 就绪链表）。
 
 函数作用：
 
@@ -686,10 +699,12 @@ size：创建的红黑树的监听节点数量。（仅供内核参考）
 
 **2）epoll_ctl**
 
-```
+```C
 #include <sys/epoll.h> 
 int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event); 
 ```
+
+> 增/删/改监控的 fd，只拷贝一个fd 到内核。
 
 函数作用：
 
@@ -707,11 +722,11 @@ int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
 
 ​			EPOLL_CTL_DEL   从监听红黑树上删除结点，也就是取消该文件描述符的监听
 
- fd	:       待监听的文件描述符
+ 	fd:       待监听的文件描述符
 
 ​        event：	告诉内核需要监听的事件 ，传入struct epoll_event结构体 的地址
 
-```
+```C
 struct epoll_event { 
     __uint32_t events; /* Epoll events */ 
     epoll_data_t data; /* User data variable */ 
@@ -736,10 +751,12 @@ EPOLLONESHOT：只监听一次事件，当监听完这次事件之后，如果�
 
 **3）epoll_wait**
 
-```
+```C
 #include <sys/epoll.h> 
 int epoll_wait(int epfd, struct epoll_event *events,int maxevents, int timeout); 
 ```
+
+> 直接返回就绪链表中的事件，复杂度 O(1)。
 
 函数作用：
 
@@ -773,7 +790,7 @@ epfd：		为epoll_creat的句柄
 
 **4.3epoll多路复用服务器 实例**
 
-```
+```C
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h> 
@@ -790,105 +807,103 @@ epfd：		为epoll_creat的句柄
  
 int main(int argc, char *argv[]) 
 { 
-    	int i, j, maxi, listenfd, connfd, sockfd; 
-    	int nready, efd, res; 
- ssize_t n; 
-        char buf[MAXLINE], str[INET_ADDRSTRLEN]; 
- socklen_t clilen; 
-    	int client[OPEN_MAX]; 
-    	struct sockaddr_in cliaddr, servaddr; 
-    	struct epoll_event tep, ep[OPEN_MAX]; 
+    int i, j, maxi, listenfd, connfd, sockfd; 
+    int nready, efd, res; 
+    ssize_t n; 
+    char buf[MAXLINE], str[INET_ADDRSTRLEN]; 
+    socklen_t clilen; 
+    int client[OPEN_MAX]; 
+    struct sockaddr_in cliaddr, servaddr; 
+    struct epoll_event tep, ep[OPEN_MAX]; 
  
 	listenfd = socket(AF_INET, SOCK_STREAM, 0); 
  
-        bzero(&servaddr, sizeof(servaddr)); 
+    bzero(&servaddr, sizeof(servaddr)); 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY); 
 	servaddr.sin_port = htons(SERV_PORT); 
  
-        bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr)); 
- 
-        listen(listenfd, 20); 
- 
- 
-         for (i = 0; i < OPEN_MAX; i++) 
+    bind(listenfd, (struct sockaddr *) &servaddr, sizeof(servaddr)); 
+
+    listen(listenfd, 20); 
+
+
+    for (i = 0; i < OPEN_MAX; i++) 
 		client[i] = -1; 
 	maxi = -1; 
  
-    	//创建一颗监听红黑树
-        efd = epoll_create(OPEN_MAX); 
-        if (efd == -1) 
+    //创建一颗监听红黑树
+    efd = epoll_create(OPEN_MAX); 
+    if (efd == -1) 
 		perr_exit("epoll_create"); 
- 
 	tep.events = EPOLLIN; 
-        tep.data.fd = listenfd;
-        //将连接套接字 添加到 红黑树中 
+    tep.data.fd = listenfd;
+    //将连接套接字 添加到 红黑树中 
  
 	res = epoll_ctl(efd, EPOLL_CTL_ADD, listenfd, &tep); 
-    	if (res == -1) 
+    if (res == -1) 
 		perr_exit("epoll_ctl"); 
  
-         while (1) {
-                 //阻塞监听 红黑树上的文件描述符 的状态 
-		nready = epoll_wait(efd, ep, OPEN_MAX, -1); /* 阻塞监听 */ 
-		if (nready == -1) 
-			perr_exit("epoll_wait"); 
- 
-		for (i = 0; i < nready; i++) { 
-			if (!(ep[i].events & EPOLLIN)) 
-				continue;
-                        //连接套接字 的状态发生变化，说明有新客户端连接 
-			if (ep[i].data.fd == listenfd) { 
-				clilen = sizeof(cliaddr); 
-				connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen); 
-				printf("received from %s at PORT %d\n", 
-						inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), 
-						ntohs(cliaddr.sin_port)); 
-				for (j = 0; j < OPEN_MAX; j++) { 
-					if (client[j] < 0) { 
-						client[j] = connfd; /* save descriptor */ 
-						break; 
-					} 
-				} 
- 
-				if (j == OPEN_MAX) 
-					perr_exit("too many clients"); 
-				if (j > maxi) 
-					maxi = j; 		/* max index in client[] array */ 
- 
-				tep.events = EPOLLIN; 
-				tep.data.fd = connfd;
-                                //将连接上来的新客户端文件描述符 加入到监听红黑树中 
-				res = epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &tep); 
-				if (res == -1) 
-					perr_exit("epoll_ctl"); 
-			} else {
-                               //红黑树中 有客户端发来数据 
-				sockfd = ep[i].data.fd; 
-				n = read(sockfd, buf, MAXLINE);
-                                //客户端断开连接 
-				if (n == 0) { 
-					for (j = 0; j <= maxi; j++) { 
-						if (client[j] == sockfd) { 
-							client[j] = -1; 
-							break; 
-						} 
-					} 
-					res = epoll_ctl(efd, EPOLL_CTL_DEL, sockfd, NULL); 
-					if (res == -1) 
-						perr_exit("epoll_ctl"); 
- 
-					close(sockfd); 
-					printf("client[%d] closed connection\n", j); 
-				} else { 
-					for (j = 0; j < n; j++) 
-						buf[j] = toupper(buf[j]); 
-					Writen(sockfd, buf, n); 
-				} 
-			} 
+    while (1) {
+        //阻塞监听 红黑树上的文件描述符 的状态 
+        nready = epoll_wait(efd, ep, OPEN_MAX, -1); /* 阻塞监听 */ 
+        if (nready == -1) 
+            perr_exit("epoll_wait"); 
+
+        for (i = 0; i < nready; i++) { 
+            if (!(ep[i].events & EPOLLIN)) 
+                continue;
+            //连接套接字 的状态发生变化，说明有新客户端连接 
+            if (ep[i].data.fd == listenfd) { 
+                clilen = sizeof(cliaddr); 
+                connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen); 
+                printf("received from %s at PORT %d\n", 
+                       inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), 
+                       ntohs(cliaddr.sin_port)); 
+                for (j = 0; j < OPEN_MAX; j++) { 
+                    if (client[j] < 0) { 
+                        client[j] = connfd; /* save descriptor */ 
+                        break; 
+                    } 
+                } 
+
+                if (j == OPEN_MAX) 
+                    perr_exit("too many clients"); 
+                if (j > maxi) 
+                    maxi = j; 		/* max index in client[] array */ 
+
+                tep.events = EPOLLIN; 
+                tep.data.fd = connfd;
+                //将连接上来的新客户端文件描述符 加入到监听红黑树中 
+                res = epoll_ctl(efd, EPOLL_CTL_ADD, connfd, &tep); 
+                if (res == -1) 
+                    perr_exit("epoll_ctl"); 
+            } else {
+                //红黑树中 有客户端发来数据 
+                sockfd = ep[i].data.fd; 
+                n = read(sockfd, buf, MAXLINE);
+                //客户端断开连接 
+                if (n == 0) { 
+                    for (j = 0; j <= maxi; j++) { 
+                        if (client[j] == sockfd) { 
+                            client[j] = -1; 
+                            break; 
+                        } 
+                    } 
+                    res = epoll_ctl(efd, EPOLL_CTL_DEL, sockfd, NULL); 
+                    if (res == -1) 
+                        perr_exit("epoll_ctl"); 
+
+                    close(sockfd); 
+                    printf("client[%d] closed connection\n", j); 
+                } else { 
+                    for (j = 0; j < n; j++) 
+                        buf[j] = toupper(buf[j]); 
+                    Writen(sockfd, buf, n); 
+                } 
+            } 
 		} 
-        }
-        
+    }
         close(listenfd); 
         close(efd); 
         return 0; 
@@ -897,24 +912,21 @@ int main(int argc, char *argv[])
 
  
 
-**5.epoll和select/poll的底层机制区别**
+### **5.epoll和select/poll的底层机制区别**
 
-```
-1.select,poll和epoll都需要不停地监控所有要监控地描述符,知道有描述符就绪为止,期间会有睡眠和唤醒地多次交替，但是epoll
-在描述符就绪时,调用回调函数,把就绪地描述符放入就绪红黑树中,并唤醒epoll_wait的进程。虽然都有睡眠和唤醒的交替,但是select和poll
-在唤醒后要去遍历所有监控的描述符,找出其中就绪的部分。而epoll唤醒后只需要读取就绪红黑树即可,节省了大量的操作。
+1.select,poll和epoll都需要不停地监控所有要监控地描述符,知道有描述符就绪为止,期间会有睡眠和唤醒地多次交替，但是epoll在描述符就绪时,调用回调函数,把就绪地描述符放入就绪红黑树中,并唤醒epoll_wait的进程。虽然都有睡眠和唤醒的交替,但是select和poll在唤醒后要去遍历所有监控的描述符,找出其中就绪的部分。而epoll唤醒后只需要读取就绪红黑树即可,节省了大量的操作。
+
 2.select和poll在每次调用时都要把所有监控的描述符从用户态拷贝到内核态,而epoll只要拷贝一次(epoll_ctl)即可,这样也节省了不少开销
-```
 
  
 
-**6.网络超时处理**
+### **6.网络超时处理**
 
 ​	IO多路复用自带超时功能，在普通的网络通信中如何实现超时。
 
 socket属性中带有超时的设置影响(read recv recvfrom accept)
 
-```
+```C
 struct timeval tv;
 tv.tv_sec = xxx;
 tv.tv_usec = yyy;

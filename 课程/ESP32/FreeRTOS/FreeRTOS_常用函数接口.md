@@ -4,7 +4,7 @@
 
 ## **一、任务管理**
 
-**1. xTaskCreatePinnedToCore**
+### **1. xTaskCreatePinnedToCore**
 
 ```C
 BaseType_t xTaskCreatePinnedToCore(
@@ -50,7 +50,7 @@ BaseType_t xTaskCreatePinnedToCore(
 
 **AFFINITY，**英/əˈfɪnəti/，亲和。
 
-**2. vTaskDelete**
+### **2. vTaskDelete**
 
 ```C
 void vTaskDelete(TaskHandle_t xTaskToDelete);
@@ -72,7 +72,7 @@ void vTaskDelete(TaskHandle_t xTaskToDelete);
 
 - 从空闲任务（Idle Task）中会回收被删除任务的资源，因此确保空闲任务有足够的CPU时间。
 
-**3. vTaskSuspend**
+### **3. vTaskSuspend**
 
 ```C
 void vTaskSuspend(TaskHandle_t xTaskToSuspend);
@@ -92,7 +92,7 @@ void vTaskSuspend(TaskHandle_t xTaskToSuspend);
 
 - 挂起自身时，当前任务会在调用后立即停止执行，直到被其他任务恢复。
 
-**4. vTaskResume**
+### **4. vTaskResume**
 
 ```C
 void vTaskResume(TaskHandle_t xTaskToResume);
@@ -114,7 +114,7 @@ void vTaskResume(TaskHandle_t xTaskToResume);
 
 - 不能在中断服务程序（ISR）中调用此函数，中断中应使用vTaskResumeFromISR。
 
-**5. vTaskDelay**
+### **5. vTaskDelay**
 
 ```C
 void vTaskDelay(const TickType_t xTicksToDelay);
@@ -138,7 +138,7 @@ void vTaskDelay(const TickType_t xTicksToDelay);
 
 ## **二、时间与时钟**
 
-**6. pdMS_TO_TICKS**
+### **6. pdMS_TO_TICKS**
 
 ```C
 #define pdMS_TO_TICKS(xTimeInMS) ((TickType_t)(((TickType_t)(xTimeInMS) * (TickType_t)configTICK_RATE_HZ) / (TickType_t)1000))
@@ -154,7 +154,7 @@ void vTaskDelay(const TickType_t xTicksToDelay);
 
 - **注意事项**：在ESP-IDF中，configTICK_RATE_HZ通常配置为100（即每10ms一个tick），但可调整。使用该宏可避免硬编码，确保代码在不同Tick频率下仍正确。
 
-**7. xTaskGetTickCount**
+### **7. xTaskGetTickCount**
 
 ```C
 TickType_t xTaskGetTickCount(void);
@@ -170,7 +170,7 @@ TickType_t xTaskGetTickCount(void);
 
 ## **三、信号量（Semaphore）**
 
-**8. xSemaphoreCreateBinary**
+### **8. xSemaphoreCreateBinary**
 
 ```C
 SemaphoreHandle_t xSemaphoreCreateBinary(void);
@@ -194,7 +194,7 @@ SemaphoreHandle_t xSemaphoreCreateBinary(void);
 
 - 在中断中可使用xSemaphoreGiveFromISR。
 
-**9. xSemaphoreCreateCounting**
+### **9. xSemaphoreCreateCounting**
 
 ```C
 SemaphoreHandle_t xSemaphoreCreateCounting(
@@ -225,7 +225,7 @@ SemaphoreHandle_t xSemaphoreCreateCounting(
 
 - 计数值不会超过uxMaxCount。
 
-**10. xSemaphoreTake**
+### **10. xSemaphoreTake**
 
 ```C
 BaseType_t xSemaphoreTake(
@@ -254,7 +254,7 @@ BaseType_t xSemaphoreTake(
 
 - 中断中应使用xSemaphoreTakeFromISR，但通常不建议在中断中阻塞等待。
 
-**11. xSemaphoreGive**
+### **11. xSemaphoreGive**
 
 ```C
 BaseType_t xSemaphoreGive(SemaphoreHandle_t xSemaphore);
@@ -280,7 +280,7 @@ BaseType_t xSemaphoreGive(SemaphoreHandle_t xSemaphore);
 
 ## **四、互斥锁（Mutex）**
 
-**12. xSemaphoreCreateMutex**
+### **12. xSemaphoreCreateMutex**
 
 ```C
 SemaphoreHandle_t xSemaphoreCreateMutex(void);
@@ -304,7 +304,7 @@ SemaphoreHandle_t xSemaphoreCreateMutex(void);
 
 - 获取和释放必须成对出现，且由同一个任务完成。
 
-**13. xSemaphoreCreateRecursiveMutex**
+### **13. xSemaphoreCreateRecursiveMutex**
 
 ```C
 SemaphoreHandle_t xSemaphoreCreateRecursiveMutex(void);
@@ -322,7 +322,7 @@ SemaphoreHandle_t xSemaphoreCreateRecursiveMutex(void);
 
 - **注意事项**：递归互斥锁适用于函数递归调用或同一任务的不同函数间需要先后获取同一锁的场景。
 
-**14. xSemaphoreTakeRecursive**
+### **14. xSemaphoreTakeRecursive**
 
 ```C
 BaseType_t xSemaphoreTakeRecursive(
@@ -347,7 +347,7 @@ BaseType_t xSemaphoreTakeRecursive(
 
 - **注意事项**：获取次数必须与释放次数匹配，否则锁永远不会完全释放。
 
-**15. xSemaphoreGiveRecursive**
+### **15. xSemaphoreGiveRecursive**
 
 ```C
 BaseType_t xSemaphoreGiveRecursive(SemaphoreHandle_t xMutex);
@@ -369,7 +369,7 @@ BaseType_t xSemaphoreGiveRecursive(SemaphoreHandle_t xMutex);
 
 ## **五、事件标志组（Event Group）**
 
-**16. xEventGroupCreate**
+### **16. xEventGroupCreate**
 
 ```C
 EventGroupHandle_t xEventGroupCreate(void);
@@ -387,7 +387,7 @@ EventGroupHandle_t xEventGroupCreate(void);
 
 - **注意事项**：在ESP32-S3上，默认支持24个事件位（configUSE_24_BIT_EVENT_GROUPS为1），可同时等待多个事件。
 
-**17. xEventGroupSetBits**
+### **17. xEventGroupSetBits**
 
 ```C
 EventBits_t xEventGroupSetBits(
@@ -408,7 +408,7 @@ EventBits_t xEventGroupSetBits(
 
 - **注意事项**：中断中应使用xEventGroupSetBitsFromISR，该函数会通过中断安全的队列机制在任务上下文中执行设置操作。
 
-**18. xEventGroupWaitBits**
+### **18. xEventGroupWaitBits**
 
 ```C
 EventBits_t xEventGroupWaitBits(
@@ -444,7 +444,7 @@ EventBits_t xEventGroupWaitBits(
 
 ## **六、消息队列（Queue）**
 
-**19. xQueueCreate**
+### **19. xQueueCreate**
 
 ```C
 QueueHandle_t xQueueCreate(
@@ -469,9 +469,9 @@ QueueHandle_t xQueueCreate(
 
 - **注意事项**：消息大小不宜过大，否则拷贝开销会较大。如需传递大数据，通常传递指针而非数据本身。
 
-**20. xQueueSend / xQueueSendToBack**
+### **20. xQueueSend / xQueueSendToBack**
 
-```
+```C
 BaseType_t xQueueSend(
     QueueHandle_t xQueue,
     const void * pvItemToQueue,
@@ -497,7 +497,7 @@ BaseType_t xQueueSend(
 
 - **注意事项**：中断中应使用xQueueSendFromISR（或xQueueSendToBackFromISR）。
 
-**21. xQueueReceive**
+### **21. xQueueReceive**
 
 ```C
 BaseType_t xQueueReceive(
@@ -525,7 +525,7 @@ BaseType_t xQueueReceive(
 
 - **注意事项**：如果只需要查看队首消息而不移除，可使用xQueuePeek。中断中应使用xQueueReceiveFromISR。
 
-**22. xQueueSendFromISR（中断安全版本示例）**
+### **22. xQueueSendFromISR（中断安全版本示例）**
 
 ```C
 BaseType_t xQueueSendFromISR(
@@ -555,7 +555,7 @@ BaseType_t xQueueSendFromISR(
 
 ## **七、队列集（Queue Set）**
 
-**23. xQueueCreateSet**
+### **23. xQueueCreateSet**
 
 ```C
 QueueSetHandle_t xQueueCreateSet(const UBaseType_t uxEventQueueLength);
@@ -577,7 +577,7 @@ QueueSetHandle_t xQueueCreateSet(const UBaseType_t uxEventQueueLength);
 
 - **注意事项**：队列集的长度计算需要非常精确，否则可能导致事件丢失。如果不确定，可保守地设置为所有队列长度之和加上信号量数量的2倍。
 
-**24. xQueueAddToSet**
+### **24. xQueueAddToSet**
 
 ```C
 BaseType_t xQueueAddToSet(
@@ -604,7 +604,7 @@ BaseType_t xQueueAddToSet(
 
 - **注意事项**：**被添加的队列或信号量必须为空**（即没有待处理的消息或信号量计数值为0），否则添加会失败。添加后，该队列/信号量就专属于该集合，不能再单独使用。
 
-**25. xQueueSelectFromSet**
+### **25. xQueueSelectFromSet**
 
 ```C
 QueueSetMemberHandle_t xQueueSelectFromSet(
@@ -635,7 +635,7 @@ QueueSetMemberHandle_t xQueueSelectFromSet(
 
 ## **八、内存管理（ESP32-S3特有）**
 
-**26. xTaskCreateWithCaps**
+### **26. xTaskCreateWithCaps**
 
 ```C
 BaseType_t xTaskCreateWithCaps(

@@ -146,7 +146,7 @@ void app_main(void)
 
 鼠标选中 bsp_lcd_init() 函数，位于 esp32_s3_gec.c 文件中。
 
-```
+```C
 // LCD显示初始化函数，用于完成液晶屏的完整初始化流程
 esp_err_t bsp_lcd_init(void)
 {
@@ -181,7 +181,7 @@ bsp_display_backlight_on() 用来控制液晶屏 LED 背光，通过调节 PWM �
 
 bsp_display_new() 函数用于初始化液晶屏驱动，该函数也位于 esp32_s3_gec.c 文件中。
 
-```
+```C
 // 液晶屏初始化函数，用于初始化SPI总线和LCD驱动芯片
 esp_err_t bsp_display_new(void)
 {
@@ -300,7 +300,7 @@ esp_lcd_panel_mirror() 函数控制 xy 方向是否镜像。第 2 个参数控�
 
 显示背景色的函数 lcd_set_color，这个函数也位于 esp32_s3_gec.c 文件中，代码如下所示：
 
-```
+```C
 // 设置液晶屏颜色函数，用于将整个屏幕填充为指定的颜色
 void lcd_set_color(uint16_t color)
 {
@@ -349,7 +349,7 @@ esp_lcd_panel_draw_bitmap() 函数，第 1 个参数指向液晶屏句柄，第 
 
 lcd_draw_pictrue() 函数用来显示一张图片，这个代码定义也位于 esp32_s3_gec.c 中。
 
-```
+```C
 // 显示图片函数，用于在LCD屏幕的指定位置显示图片
 void lcd_draw_pictrue(int x_start, int y_start, int image_width, int image_height, const unsigned char *gImage)
 {
@@ -791,7 +791,7 @@ tags:                             # 标签
 
  
 
-**二、调色板**
+## **二、调色板**
 
 lcd_set_color() 函数设置背景色，背景色是一个 16 位数，格式为 RGB565。
 
@@ -821,7 +821,7 @@ lcd_set_color(0x669E);
 
  
 
-**三、图片取模**
+## **三、图片取模**
 
 如果想显示自己的图片，按照下面步骤实现。一共需要两步，先制作图片的数组文件，再修改程序让图片显示。制作图片数组文件，我们需要借助一款软件：PortHelper。
 
@@ -871,15 +871,15 @@ const unsigned char g_image_logo_gec_182x96[34944]={
 
 最后编译下载，会看到液晶屏显示图片。
 
-**四、ESP-LCD架构设计**
+## **四、ESP-LCD架构设计**
 
-**4.1 函数**
+### **4.1 函数**
 
 **文件来源：esp-idf-v5.2.2\components\esp_lcd\src\esp_lcd_panel_ops.c**
 
 **4.1.1 LCD面板初始化函数**
 
-```
+```C
 // LCD面板初始化函数，用于初始化LCD面板的内部寄存器和配置
 // 功能说明：配置LCD面板的工作参数，设置显示模式、颜色格式等初始化参数
 // 设计思路：调用面板驱动提供的init回调函数，完成LCD芯片的软件初始化
@@ -904,7 +904,7 @@ esp_err_t esp_lcd_panel_init(esp_lcd_panel_handle_t panel)
 
 **4.1.2 LCD面板删除函数**
 
-```
+```C
 // LCD面板删除函数，用于释放LCD面板占用的资源
 // 功能说明：释放LCD面板相关的内存资源和硬件资源，清理驱动层的数据结构
 // 设计思路：调用面板驱动提供的del回调函数，完成资源的释放和清理
@@ -931,7 +931,7 @@ esp_err_t esp_lcd_panel_del(esp_lcd_panel_handle_t panel)
 
 **4.1.3 LCD面板复位函数**
 
-```
+```C
 // LCD面板复位函数，用于对LCD面板进行硬件复位操作
 // 功能说明：通过硬件复位信号将LCD面板恢复到初始状态，清除所有配置和显示内容
 // 设计思路：调用面板驱动提供的reset回调函数，实现硬件层面的复位操作
@@ -959,7 +959,7 @@ esp_err_t esp_lcd_panel_reset(esp_lcd_panel_handle_t panel)
 
 **4.1.4 LCD面板绘制位图函数**
 
-```
+```C
 // LCD面板绘制位图函数，用于在指定区域显示图像数据
 // 功能说明：将RGB格式的图像数据绘制到LCD屏幕的指定矩形区域
 // 设计思路：通过SPI或并口接口将图像数据传输到LCD的显存中
@@ -991,7 +991,7 @@ esp_err_t esp_lcd_panel_draw_bitmap(esp_lcd_panel_handle_t panel, int x_start, i
 
 **4.1.5 LCD面板镜像设置函数**
 
-```
+```D
 // LCD面板镜像设置函数，用于设置屏幕显示的镜像模式
 // 功能说明：控制LCD屏幕在水平或垂直方向进行镜像显示
 // 设计思路：通过修改LCD驱动芯片的寄存器配置，实现显示内容的镜像翻转
@@ -1020,7 +1020,7 @@ esp_err_t esp_lcd_panel_mirror(esp_lcd_panel_handle_t panel, bool mirror_x, bool
 
 **4.1.6 LCD面板坐标交换函数**
 
-```
+```C
 // LCD面板坐标交换函数，用于交换X轴和Y轴的显示方向
 // 功能说明：将屏幕的X轴和Y轴进行交换，实现横屏和竖屏的切换
 // 设计思路：通过修改LCD驱动芯片的寄存器配置，交换显示的坐标轴
@@ -1048,7 +1048,7 @@ esp_err_t esp_lcd_panel_swap_xy(esp_lcd_panel_handle_t panel, bool swap_axes)
 
 **4.1.7 LCD面板间隙设置函数**
 
-```
+```C
 // LCD面板间隙设置函数，用于设置屏幕显示区域之间的间隙
 // 功能说明：配置LCD屏幕显示区域之间的水平和垂直间隙距离
 // 设计思路：通过修改LCD驱动芯片的寄存器，设置显示区域的偏移量
@@ -1075,7 +1075,7 @@ esp_err_t esp_lcd_panel_set_gap(esp_lcd_panel_handle_t panel, int x_gap, int y_g
 
 **4.1.8 LCD面板颜色反转函数**
 
-```
+```C
 // LCD面板颜色反转函数，用于反转显示颜色的极性
 // 功能说明：将LCD显示的颜色进行反转，实现显示效果的翻转
 // 设计思路：通过修改LCD驱动芯片的寄存器配置，反转RGB数据的显示逻辑
@@ -1103,7 +1103,7 @@ esp_err_t esp_lcd_panel_invert_color(esp_lcd_panel_handle_t panel, bool invert_c
 
 **4.1.9 LCD面板显示开关函数**
 
-```
+```C
 // LCD面板显示开关函数，用于控制LCD屏幕的显示状态
 // 功能说明：开启或关闭LCD屏幕的显示功能，控制屏幕是否输出图像
 // 设计思路：通过修改LCD驱动芯片的显示控制寄存器，控制显示的开关状态
@@ -1131,7 +1131,7 @@ esp_err_t esp_lcd_panel_disp_on_off(esp_lcd_panel_handle_t panel, bool on_off)
 
 **4.1.10 LCD面板显示关闭函数**
 
-```
+```C
 // LCD面板显示关闭函数，用于关闭LCD屏幕的显示功能
 // 功能说明：关闭LCD屏幕的显示，使屏幕进入不显示状态
 // 设计思路：通过调用显示开关函数，传入关闭标志来实现显示关闭
@@ -1156,7 +1156,7 @@ esp_err_t esp_lcd_panel_disp_off(esp_lcd_panel_handle_t panel, bool off)
 
 **4.1.11** **LCD面板睡眠模式函数**
 
-```
+```C
 // LCD面板睡眠模式函数，用于控制LCD屏幕的睡眠状态
 // 功能说明：将LCD屏幕设置为睡眠模式或唤醒，实现低功耗或正常工作状态的切换
 // 设计思路：通过修改LCD驱动芯片的睡眠控制寄存器，控制LCD的工作模式
@@ -1186,7 +1186,7 @@ esp_err_t esp_lcd_panel_disp_sleep(esp_lcd_panel_handle_t panel, bool sleep)
 
  
 
-**4.2 分层架构设计**
+### **4.2 分层架构设计**
 
 ESP-IDF 的 esp_lcd 框架分为三个层级:
 

@@ -64,7 +64,7 @@ wsl --set-version Ubuntu 2
 
 ### 确认你的 Linux 系统版本
 
-```
+```powershell
 cat /etc/os-release
 ```
 
@@ -74,7 +74,7 @@ cat /etc/os-release
 
 - 导出
 
-```
+```powershell
 wsl --export Ubuntu-22.04 D:\Ubuntu_v1.tar
 ```
 
@@ -82,7 +82,7 @@ wsl --export Ubuntu-22.04 D:\Ubuntu_v1.tar
 
 - 导入
 
-```
+```powershell
 wsl --import Ubuntu-WSL2 D:\app\VMware\wsl\Ubuntu2 D:\Ubuntu_v1.tar --version 2
 ```
 
@@ -90,7 +90,7 @@ wsl --import Ubuntu-WSL2 D:\app\VMware\wsl\Ubuntu2 D:\Ubuntu_v1.tar --version 2
 
 - 删除
 
-```
+```powershell
 del D:\Ubuntu_v1.tar
 ```
 
@@ -98,11 +98,9 @@ del D:\Ubuntu_v1.tar
 
 ## 版本切换与服务修复
 
-> 来自原 `xun/2026/wslv.md`（P4 个人档案迁移并入）。
-
 ### WSL1 / WSL2 版本切换
 
-```
+```powershell
 wsl --set-version Ubuntu 1    # 切到 WSL1
 wsl -l -v                     # VERSION 变为 1 即成功
 wsl --set-version Ubuntu 2    # 切回 WSL2
@@ -112,7 +110,7 @@ wsl -d Ubuntu
 
 ### WSL 起不来时的修复序列
 
-```
+```powershell
 # 强制关闭所有WSL实例
 wsl --shutdown
 # 重启WSL底层服务
@@ -124,7 +122,7 @@ wsl -l -v
 
 ### 功能损坏时重装 WSL 主功能（dism）
 
-```
+```powershell
 # 先关闭多余功能
 dism.exe /online /disable-feature /featurename:VirtualMachinePlatform /norestart
 dism.exe /online /disable-feature /featurename:HypervisorPlatform /norestart

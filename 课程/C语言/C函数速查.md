@@ -376,7 +376,7 @@ puts() 函数会将字符串 s 以及其后的换行符输出到标准输出设�
 
 相关函数 printf, sprintf 
 
-头文件 #include <stdio.h> 
+头文件 \#include <stdio.h> 
 
 定义函数 int sprintf(char *str, const char * format, ...); 
 

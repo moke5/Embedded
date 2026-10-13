@@ -62,7 +62,7 @@ scanf("%\[^\n]", str)
 
 研究一个函数：  1、百度    2、查看linux中文C手册       3、man手册（英文）
 
-头文件：	#include 
+头文件：	\#include 
 
 函数原型：int printf(const char * format, ...);  变参  函数
 
@@ -115,7 +115,7 @@ printf("a:%d, b:%d, f:%f\n", a, b, f);
 
 ### scanf
 
-头文件:    #include 
+头文件:    \#include 
 
 函数原型: int scanf(const char * format, ...);
 

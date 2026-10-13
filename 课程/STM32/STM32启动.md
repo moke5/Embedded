@@ -60,7 +60,7 @@ Stack_Mem       SPACE   Stack_Size    ; 栈顶地址，初始化MSP的值
 __initial_sp
 ```
 
-- EQU： 用来定义一个常量，**类似**于C语言的 #define，定义常量。
+- EQU： 用来定义一个常量，**类似**于C语言的 \#define，定义常量。
 - AREA： 声明一个段。STACK是段名，NOINIT表示不初始化为0，READWRITE可读可写，ALIGN(对齐方式)=3表示按8($2^3$​)字节对齐。
 
 > ;这行代码是告诉编译器，让它开辟一个名为STACK的内存段，NOINIT表示这块内存不用清零，READWRITE表示可读可写，ALIGN表示对齐方式，这里是按照2的3次方，也就是8字节对齐。
@@ -354,8 +354,6 @@ __user_initial_stackheap
 
 
 
-
-
 ## MAP
 
 .map 文件是编译器链接时生成的一个文件，它主要包含了交叉链接信息。通过.map 文件，我们可以知道整个工程的函数调用关系、FLASH 和 RAM 占用情况及其详细汇总信息，能具体到单个源文件（.c/.s）的占用情况，根据这些信息，我们可以对代码进行优化。.map 文件可以分为以下 5 个组成部分： 
@@ -369,8 +367,6 @@ __user_initial_stackheap
 4. Memory Configuration
      根据.ld文件中MEMORY来划分的内存区域：名称、起始地址、长度
 5. Linker script and memory map   链接器脚本和内存映射
-
-
 
 ![image-20260823162856765](./img/image-20260823162856765.png)
 
@@ -391,10 +387,6 @@ Cortex-M3 有 4GB 的统一地址空间（0x00000000 ~ 0xFFFFFFFF），ST 把它
 
 
 
-
-
-
-
 | 章节                               | 作用                                          | 当你什么场景用                                    |
 | :--------------------------------- | :-------------------------------------------- | :------------------------------------------------ |
 | **Component: armlink**             | 头部：用的哪版链接器（5.06 update 6）         | 排查工具版本问题                                  |
@@ -404,8 +396,6 @@ Cortex-M3 有 4GB 的统一地址空间（0x00000000 ~ 0xFFFFFFFF），ST 把它
 | **Memory Map of the image**        | 地址→内容的完整"内存地图"，按地址从低到高     | 看某地址到底放的是什么数据                        |
 | **Image component sizes**          | 就是你贴的底部统计表                          | 看 ROM/RAM 分配                                   |
 | **Grand/ELF/ROM Totals**           | 汇总数据                                      |                                                   |
-
-
 
 ## RDP 读保护（Read‑out Protection）
 
@@ -420,8 +410,6 @@ RDP 是**选项字节 (Option Bytes) 里面的硬件安全机制**，不是软�
 | **Level2**                   | 永久锁死 | ❌完全失效                                                    | ❌串口 ISP 也废掉，芯片报废，无法救回，千万不要碰STMicroele... |
 
 > ⚠️关键点：**RDP1 降级回 Level0，芯片硬件自动 Mass‑Erase 整片 Flash，这是硬件强制，软件绕不开**，防止黑客临时解锁盗取代码意法半导体。
-
-
 
 ```
 No target Connected
@@ -449,6 +437,4 @@ __HAL_AFIO_REMAP_SWJ_NOJTAG();
                                                AFIO->MAPR = tmpreg;              \
                                                }while(0u)
 ```
-
-
 

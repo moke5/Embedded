@@ -68,8 +68,6 @@ ODRy[15:0]：端口输出数据(y = 0…15) (Port output data)
 
 
 
-
-
 #### 4种最大输出速度
 
 - 低速，2MHz
@@ -487,13 +485,6 @@ int main(void)
 ```
 
 
-
-### 4.4 演示
-
-  当上述程序成功烧录到粤嵌STM32F429开发板后，则看到D3灯持续闪烁，演示效果如下。
-
-
-![img](./img/rBJlJmJidzyAOlo3AAJ3lE2IdJU055.gif)
 
 ## 5 函数接口及使用
 

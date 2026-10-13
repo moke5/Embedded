@@ -42,9 +42,11 @@ I2C协议使用总线抢占制进行数据传输。它只有两根通信线，�
 
 **起始信号：**SCL在高电平的状态下，SDA的电平由高转低，表示开始一次通信。
 
-| ![img](./img/58107.png)**起始信号** | `void IIC_Start(void)``{``    SDA_OUT();//设置SDA为输出模式``    SDA(1);``    SCL(1);         ``    delay_us(5);``    SDA(0);``    delay_us(5);``    SCL(0);``    delay_us(5);         ``}` |
-| ----------------------------------- | ------------------------------------------------------------ |
-|                                     |                                                              |
+![img](./img/58107.png)
+
+| **起始信号** | `void IIC_Start(void)``{``    SDA_OUT();//设置SDA为输出模式``    SDA(1);``    SCL(1);         ``    delay_us(5);``    SDA(0);``    delay_us(5);``    SCL(0);``    delay_us(5);         ``}` |
+| ------------ | ------------------------------------------------------------ |
+|              |                                                              |
 
 **停止信号：**SCL在高电平的状态下，SDA的电平由低转高，表示结束这次通信。主设备在发送停止信号后不能再向从设备发送任何数据，除非再次发送起始信号。
 
@@ -161,7 +163,6 @@ ESP32S3有两个硬件I2C控制器（也称为端口），负责处理两条I2C�
 ## **八、I2C的应用**
 
 ```C
-/*
       使用IIC通信顺序分为 3 个部分【起始部分】【时序部分】【结束部分】
                 
                 
@@ -179,8 +180,6 @@ ESP32S3有两个硬件I2C控制器（也称为端口），负责处理两条I2C�
      【结束部分】相关函数：
                     esp_err_t i2c_master_cmd_begin(i2c_port_t i2c_num, i2c_cmd_handle_t cmd_handle, TickType_t ticks_to_wait);
                     void i2c_cmd_link_delete(i2c_cmd_handle_t cmd_handle);
-                                                                
-*/
 ```
 
 ### **8.1 初始化 I2C 接口**
@@ -643,11 +642,11 @@ ESP_ERROR_CHECK(i2c_master_bus_add_device(bus_handle, &dev_cfg, &dev_handle));
 
 这是最根本的解决办法。如果你的项目代码直接调用了 I2C 驱动，你应该主动进行迁移。
 
-1. **修改包含的头文件**：将 #include "driver/i2c.h" 替换为 #include "driver/i2c_master.h"。
+1. **修改包含的头文件**：将 \#include "driver/i2c.h" 替换为 \#include "driver/i2c_master.h"。
 
-1. **更新 CMakeLists.txt**：在 CMakeLists.txt 中，将 REQUIRES driver 替换为 REQUIRES esp_driver_i2c 。
+2. **更新 CMakeLists.txt**：在 CMakeLists.txt 中，将 REQUIRES driver 替换为 REQUIRES esp_driver_i2c 。
 
-1. **重写代码逻辑**：新版驱动的 API 发生了很大变化，你需要重写 I2C 初始化、读写等流程。
+3. **重写代码逻辑**：新版驱动的 API 发生了很大变化，你需要重写 I2C 初始化、读写等流程。
 
 - **核心变化**：不再需要创建命令链表 (i2c_cmd_link_xxx)，直接调用新的函数即可 。
 

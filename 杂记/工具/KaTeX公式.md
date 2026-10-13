@@ -70,7 +70,8 @@ $$
 \sum_{k=1}^{n} k \quad \int_{0}^{t} f(x)dx
 $$
 ```
-$\displaystyle\sum_{k=1}^{n} k \quad \int_{0}^{t} f(x)dx$
+
+$$\displaystyle\sum_{k=1}^{n} k \quad \int_{0}^{t} f(x)dx$$
 
 ## 7 多行对齐（写公式推导必备，`&`为对齐点，`\\`换行）
 ```latex
