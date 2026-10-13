@@ -5,6 +5,7 @@
 
 > Typora 编辑，Obsidian 兼容。主线方向：嵌入式 Linux、C/C++、STM32、物联网。
 > 双远程：GitHub + Gitee。**纯文本备份仓**：配图存本地同级 `img/`（gitignore 不入库），远程只备文本。
+> AI 助手进入本仓库请先读 [AGENTS.md](./AGENTS.md)。
 
 [toc]
 
@@ -16,6 +17,7 @@
 | `课程/` | 培训课程系统笔记，13 个主题目录（C语言、数据结构、Linux 系统编程、STM32、LVGL 等），入口见 [课程/MOC.md](./课程/MOC.md) |
 | `项目/` | 实践项目：比赛（STM32 超声波测距、ESP32 摄像头）                                                   |
 | `杂记/` | 工具、环境、Linux、技术专题、收藏类零散笔记，入口见 [杂记/MOC.md](./杂记/MOC.md)                            |
+| `模板/` | 笔记模板与 frontmatter 规范，说明见 [模板/模板说明.md](./模板/模板说明.md)                                  |
 
 
 

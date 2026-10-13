@@ -20,7 +20,7 @@
 ## 环境
 
 - [wsl](./环境/wsl.md) — WSL2 安装、导入导出、版本切换与服务修复
-- [终端中文乱码](./环境/终端中文乱码.md) — WSL2/终端输出中文乱码的定位与修复
+- [终端中文乱码](./环境/终端中文乱码.md) — Linux/Windows 两侧中文乱码的定位与修复（locale、chcp 与 Get-Content 陷阱）
 - [bat环境变量启动](./环境/bat环境变量启动.md) — bat 脚本切换 JAVA_HOME 启动 jar、快捷方式调用
 - [docker](./环境/docker.md)
 - [ssh](./环境/ssh.md) — ubuntu openssh-server 安装与连接
