@@ -8,7 +8,10 @@
 - [Typora语法速查](./工具/Typora语法速查.md) — 基础语法、Callout、公式、Mermaid、图片、主题定制
 - [KaTeX公式](./工具/KaTeX公式.md)
 - [vscode](./工具/vscode.md) — 终端快捷键、remote-ssh
+- [vim](./工具/vim.md) — 模式与键位、常用操作、.vimrc 配置与插件
 - [powershell](./工具/powershell.md) — 文件大小、网卡开关、开机时间
+- [bash](./工具/bash.md) — 脚本语法、引号与展开、判断循环函数、.bashrc 配置
+- [bash快捷键](./工具/bash快捷键.md) — 命令行编辑：删除、光标移动、剪切环、历史搜索、vi/Emacs 模式
 - [git克隆精简](./工具/git克隆精简.md) — --depth / --single-branch / --no-tags
 - [分辨率速查](./工具/分辨率速查.md)
 

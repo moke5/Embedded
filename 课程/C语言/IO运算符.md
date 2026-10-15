@@ -1,3 +1,16 @@
+---
+type: 概念
+tags:
+  - C
+status:
+target:
+input:
+output:
+review:
+created: 2026-10-15
+updated: 2026-10-15
+related: []
+---
 # IO运算符
 
 [toc]

@@ -15,7 +15,7 @@ if [ ! -d "${LOG_DIR}" ]; then
 fi
 
 # 判断日志文件是否存在
-if [ ! -d "${LOG_FILE}" ]; then
+if [ ! -f "${LOG_FILE}" ]; then
 	touch "${LOG_FILE}" 
 fi
 
@@ -25,7 +25,7 @@ MSG="脚本自身进程 PID:${SCRIPT_PID}"
 # 输出到终端
 echo "${MSG}"
 # 写入日志
-echo "[$(date +'+%Y-%m-%d %H:%M:%S')] ${MSG}" > "${LOG_FILE}"
+echo "[$(date +'+%Y-%m-%d %H:%M:%S')] ${MSG}" >> "${LOG_FILE}"
 
 # 检查Windows 侧Obsidian是否已启动
 # tasklist /nh 列出进程，findstr 查找Obsidian.exe
@@ -42,3 +42,9 @@ OBS_PID=$!
 MSG_OBS="Obsidian 后台子进程 PID（WSL侧）:${OBS_PID}" 
 echo "${MSG_OBS}"
 echo "[$(date +'+%Y-%m-%d %H:%M:%S')] ${MSG_OBS}" >> "${LOG_FILE}"
+
+# 等待 Obsidian 启动完成
+sleep 3
+MSG="Obsidian 启动完成"
+echo "${MSG}"
+echo "[$(date +'+%Y-%m-%d %H:%M:%S')] ${MSG}" >> "${LOG_FILE}"

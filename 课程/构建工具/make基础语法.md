@@ -1,3 +1,17 @@
+---
+type: 概念
+tags:
+  - 工具
+more: 构建工具
+status:
+target:
+input:
+output:
+review:
+created:
+updated: 2026-10-15
+related: []
+---
 # make
 
 [toc]

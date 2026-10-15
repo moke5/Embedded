@@ -1,8 +1,17 @@
-## day01
-
+---
+type: 概念
+tags:
+  - C
+status:
+target:
+input:
+output:
+review:
+created: 2026-10-15
+updated: 2026-10-15
+related: []
+---
 ### printf
-
-<a name="printf"></a>
 
 - 格式化输出数据
 
@@ -73,11 +82,7 @@ flags 有下列几种情况
 ```
 
 
-
-## day02
-
-缓冲区
-
+### framebuffer
 ```c
     #include <unistd.h>
     sleep(2);
@@ -115,9 +120,6 @@ flags 有下列几种情况
 不管是scanf还是getchar发现程序内存储有剩余字符都会直接读取残留的字符而不不是重新接受用户的输入
 
 
-
-## day05
-
 ### sqrt
 
 - 计算平方根值
@@ -143,92 +145,6 @@ flags 有下列几种情况
 
 
 
-### strcpy
-
-- 拷贝字符串
-
-```c
-相关函数 bcopy, memcpy, memccpy, memmove
-头文件 #include <string.h>
-定义函数 char *strcpy(char *dest, const char *src);
-函数说明 strcpy()会将参数 src 字符串拷贝至参数 dest 所指的地址.
-返回值 返回参数 dest 的字符串起始地址.
-附加说明 如果参数 dest 所指的内存空间不够大, 可能会造成缓冲溢出(buffer Overflow)的错误情况, 在编
-写程序时请特别留意, 或者用 strncpy()来取代.
-范例
-    #include <string.h>
-    main()
-    {
-        char a[30] = "string(1)";
-        char b[] = "string(2)";
-        printf("before strcpy() :%s\n", a);
-        printf("after strcpy() :%s\n", strcpy(a, b));
-    }
-执行 before strcpy() :string(1)
-    after strcpy() :string(2)
-```
-
-
-
-## day06
-
-### strcmp
-
-- 比较字符串
-
-```c
-相关函数 bcmp, memcmp, strcasecmp, strncasecmp, strcoll
-头文件 #include <string.h>
-定义函数 int strcmp(const char *s1, const char *s2);
-函数说明 strcmp()用来比较参数 s1 和 s2 字符串. 字符串大小的比较是以 ASCII 码表上的顺序来决定, 此顺序
-亦为字符的值. strcmp()首先将 s1 第一个字符值减去 s2 第一个字符值, 若差值为 0 则再继续比较下个字符, 若
-差值不为 0 则将差值返回. 例如字符串"Ac"和"ba"比较则会返回字符"A"(65)和'b'(98)的差值(－ 33).
-返回值 若参数 s1 和 s2 字符串相同则返回 0. s1 若大于 s2 则返回大于 0 的值. s1 若小于 s2 则返回小于 0 的
-值.
-范例
-    #include <string.h>
-    main()
-    {
-        char *a = "aBcDeF";
-        char *b = "AbCdEf";
-        char *c = "aacdef";
-        char *d = "aBcDeF";
-        printf("strcmp(a, b) : %d\n", strcmp(a, b));
-        printf("strcmp(a, c) : %d\n", strcmp(a, c));
-        printf("strcmp(a, d) : %d\n", strcmp(a, d));
-    }
-执行 strcmp(a, b) : 32
-    strcmp(a, c) :-31
-```
-
-
-
-### strlen
-
-- 返回字符串长度
-
-```c
-相关函数
-头文件 #include <string.h>
-定义函数 size_t strlen (const char *s);
-函数说明 strlen()用来计算指定的字符串 s 的长度, 不包括结束字符"\0".
-返回值 返回字符串 s 的字符数.
-范例 /*取得字符串 str 的长度 */
-    #include <string.h>
-    main()
-    {
-        char *str = "12345678";
-        printf("str length = %d\n", strlen(str));
-    }
-执行 str length = 8
-```
-
-
-
-
-
-## day08
-
 ### malloc
 
 - 配置内存空间
@@ -242,7 +158,6 @@ flags 有下列几种情况
 范例
 void p = malloc(1024); //配置 1k 的内存
 ```
-
 
 
 ### calloc
@@ -289,8 +204,6 @@ main()
 
 
 
-## day09
-
 ### bzero
 
 - 将一段内存内容全部清0
@@ -305,7 +218,6 @@ size_tn);
 附加说明 建议使用 memset 取代
 范例 参考 memset().
 ```
-
 
 
 ### memset
@@ -334,7 +246,6 @@ main()
 ```
 
 
-
 ### puts
 
 ```c
@@ -342,34 +253,6 @@ puts
 puts() writes the string s and a trailing newline to stdout.
 puts() 函数会将字符串 s 以及其后的换行符输出到标准输出设备上。
 ```
-
-
-
-## day10
-
-### strcat
-
-- 连接两字符串
-
-```c
-头文件 #include <string.h>
-定义函数 char *strcat(char *dest, const char *src);
-函数说明 strcat()会将参数 src 字符串拷贝到参数 dest 所指的字符串尾. 第一个参数 dest 要有足够的空间来
-容纳要拷贝的字符串.
-返回值 返回参数 dest 的字符串起始地址
-范例
-	#include <string.h>	
-    main()
-    {
-        char a[30] = "string(1)";
-        char b[] = "string(2)";
-        printf("before strcat() : %s\n", a);
-        printf("after strcat() : %s\n", strcat(a, b));
-    }
-执行 before strcat() : string(1)
-	after strcat() : string(1)string(2)
-```
-
 
 
 ### sprintf
@@ -402,3 +285,147 @@ main()
 ```
 
 执行 >>>This is string A!<<<
+
+## 字符串函数
+
+### strstr
+> 查找字串
+![9string_strstrpng](./img/9string_strstrpng.png)
+
+- 示例：
+
+```c
+char *s = "abcd.txt";
+char *p = strstr(s, ".wps");
+
+if(p == NULL)
+    printf("文件[%s]不是WPS文件\n", s);
+else
+    printf("文件[%s]是WPS文件\n", s);
+```
+
+### strchr()和strtchr()
+> 查找字符
+![9strchr_strrchr](./img/9strchr_strrchr.png)
+
+- 注意：
+  1. 这两个函数的功能，都是在指定的字符串 s 中，试图找到字符 c。
+  2. strchr() 从左往右找，strrchr() 从右往左找。
+  3. 字符串结束标记 ‘\0’ 被认为是字符串的一部分。
+- 示例：
+
+```c
+char *p;
+
+p = strchr("www.qq.com", '.'); // 从左到右找到第一个出现的字符'.'
+printf("%s\n", p);             // 输出 ".qq.com"
+
+p = strrchr("www.qq.com", '.');// 从右到左找到第一个出现的字符'.'
+printf("%s\n", p);             // 输出 ".com"
+```
+
+### strlen()
+> 计算字符串长度
+
+![9stringstrlen](./img/9stringstrlen.png)
+
+- 示例：
+
+```c
+char *s = "www.yueqian.com.cn";
+printf("strlen(s) = %d\n", strlen(s));
+```
+
+### strtok()
+> 字串切割
+![9stringstrtok](./img/9stringstrtok.png)
+
+- 注意：
+  1. 该函数会将改变原始字符串 str，使其所包含的所有分隔符变成结束标记 ‘\0’ 。
+  2. 由于该函数需要更改字符串 str，因此 str 指向的内存必须是可写的。
+  3. 首次调用时 str 指向原始字符串，此后每次调用 str 用 NULL 代替。
+- 示例：
+
+```c
+char s[20] = "www.yueqian.com.cn";
+
+char *p = strtok(s, ".");  // 首次调用时，s 指向需要分割的字符串
+while(p != NULL)
+{
+    printf("%s\n", p);
+    p = strtok(NULL, "."); // 此后每次调用，均使用 NULL 代替。
+}
+```
+
+*注：上述代码的运行结果就是将字符串 s 拆解为"www"、“yueqian”、“com” 和 “cn”*
+
+### strcat()和strncat()
+> 字串拼接
+![9strcatstrncat](./img/9strcatstrncat.png)
+
+- 注意：
+  1. 这两个函数的功能，都是将 src 中的字符串，复制拼接到 dest 的末尾。
+  2. strcat() 没有边界控制，因此可能会由于 src 的过长而导致内存溢出。
+  3. strncat() 有边界控制，最多复制 n+1 个字符（其中最后一个是 ‘\0’ ）到 dest 的末尾。
+- 示例：
+
+```c
+char s1[10] = "abc";
+strcat(s1, "xyz");
+printf("%s\n", s1); // 输出 "abcxyz"
+
+char s2[10] = "abc";
+strcat(s3, "123456789"); // 此处操作内存溢出，可能会发生内存崩溃
+
+
+char s[10]  = "abc";
+strncat(s, "123456789", sizeof(s)-strlen(s)-1);
+printf("%s\n", s); // 输出 "abc123456"，两个字符串被拼接到了一起，且不会溢出
+```
+
+- 注意：strncat()是具备边界检查的安全版本，推荐使用。
+
+### strcpy()和strncpy()
+> 字串拷贝
+![9strcpystrncpy](./img/9strcpystrncpy.png)
+
+- 注意：
+  1. 这两个函数的功能，都是将 src 中的字符串，复制到 dest 中。
+  2. strcpy() 没有边界控制，因此可能会由于 src 的过长而导致内存溢出。
+  3. strncpy() 有边界控制，最多复制 n+1 个字符（其中最后一个是 ‘\0’ ）到 dest 中。
+- 示例：
+
+```c
+char s1[5] = "abc";
+strcpy(s1, "xyz);
+printf("%s\n", s1); // 输出 "xyz"，原有的"abc"被覆盖
+
+char s2[5] = "abc";
+strcpy(s2, "123456789"); // 此处操作内存溢出，可能会发生内存崩溃
+```
+
+
+
+```c
+char s[5] = "abc";
+strncpy(s, "123456789", sizeof(s)-1);
+printf("%s\n", s); // 输出 "1234"，有边界保护，不会溢出
+```
+
+- 注意：strncpy()是具备边界检查的安全版本，推荐使用。
+
+### strcmp()和strncmp()
+> 字串比较
+![8strcmpstrncmp](./img/8strcmpstrncmp.png)
+
+- 注意：
+  - 比较字符串大小，实际上比较的是字符的 ASCII码值的大小。
+  - 从左到右逐个比较两个字符串的每一个字符，当能“决出胜负”时立刻停止比较。
+- 示例：
+
+```c
+printf("%d\n", strcmp("abc", "abc")); // 输出0，两个字符串相等
+printf("%d\n", strcmp("abc", "aBc")); // 输出1，"abc" 大于 "aBc"
+printf("%d\n", strcmp("999", "aaa")); // 输出-1，"999" 小于 "aaa"
+```
+

@@ -1,7 +1,21 @@
+---
+type: 概念
+tags:
+  - C
+  - 工具
+  - 编译器
+status:
+target:
+input:
+output:
+review:
+created: 2026-10-15
+updated: 2026-10-15
+related: []
+---
 # C语言
 
 [toc]
-
 
 
 ## gcc
@@ -50,10 +64,7 @@ gcc main.c hello.c -o main
 
 预处理的输出同行是预处理后的源代码文件，它会被保存成一个临时文件，并作为编译器的输入。预处理器处理后的文件通常会比原始文件大，因为它会展开宏和包含其他文件的内容。
 
-
-
-#### CMD
-
+- cmd
 ```shell
 gcc -E hello.c -o hello.i
 gcc -E main.c -o main.i
@@ -92,9 +103,7 @@ gcc -E main.c -o main.i
 编译阶段，编译器会将经过预处理的源代码文件转换成汇编代码。这个阶段，编译器会将源代码翻译成机器能够理解的中间代码，包括词法分析、语法分析、语义分析和优化等过程。编译器会检查代码的语法和语义，生成对应的汇编代码。编译阶段是整个编译过程中最复杂和耗时的阶段之一，它对源代码进行了深入的分析和转换，确保了程序的正确性和性能。
 
 
-
-#### code
-
+- cmd
 ```shell
 gcc -S hello.i -o hello.s
 gcc -S main.i -o main.s
@@ -113,8 +122,7 @@ gcc -S main.i -o main.s
 
 
 
-#### code
-
+- cmd
 ```shell
 gcc -c mian.s -o main.o
 gcc -c mian.c -o main.s
@@ -354,34 +362,4 @@ gcc mian.o -L ./ -lhello -o main
 #### glibc的动态库和静态库
 
 glibc的动态库和静态库分别位于：/usr/lib/x86-64_64-linux-gnu/目录下的libc.so和libc.a文件中
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
