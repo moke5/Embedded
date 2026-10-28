@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""校验笔记 frontmatter、命名与敏感信息。
+"""校验笔记 frontmatter、命名、链接与敏感信息。
 
 用法：
     python script/notes_lint.py            # 全量扫描
-    python script/notes_lint.py --strict   # 缺少 frontmatter 也算错误
+    python script/notes_lint.py --strict   # 告警按错误计数（退出码 1）
     python script/notes_lint.py --changed  # 只检查暂存区（供 pre-commit 调用）
 
 退出码：0 无错误；1 有错误；2 环境或 git 调用失败。
@@ -13,11 +13,13 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import posixpath
 import re
 import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
+from urllib.parse import unquote
 
 try:
     import yaml
@@ -105,6 +107,102 @@ PLACEHOLDER_RE = re.compile(
     r"(?i)(your|example|placeholder|changeme|redacted|todo|\*\*\*|<[^>]+>|\{[^}]+\}|\.\.\.)"
 )
 
+WIKI_RE = re.compile(r"\[\[([^\[\]]+?)\]\]")
+MD_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
+FENCE_RE = re.compile(r"```.*?```", re.S)
+INLINE_CODE_RE = re.compile(r"`[^`\n]*`")
+EMPTY_HEADING_RE = re.compile(r"^#{1,6}[ \t]*$", re.M)
+H1_RE = re.compile(r"^#\s+\S", re.M)
+LOCAL_LINK_PREFIXES = ("self/", "img/", "temp/", ".obsidian/", ".trash/")
+
+_FILE_INDEX = None
+INDEX_SKIP_DIRS = SKIP_DIRS - {"self", ".skills"}
+
+
+def file_index():
+    """仓库内全部文件路径（跳过缓存与图片目录），用于断链解析。"""
+    global _FILE_INDEX
+    if _FILE_INDEX is None:
+        index = set()
+        for path in ROOT.rglob("*"):
+            if not path.is_file():
+                continue
+            rel = path.relative_to(ROOT)
+            if any(part in INDEX_SKIP_DIRS for part in rel.parts):
+                continue
+            index.add(rel.as_posix())
+        _FILE_INDEX = index
+    return _FILE_INDEX
+
+
+def strip_code(text: str) -> str:
+    return INLINE_CODE_RE.sub("", FENCE_RE.sub("", text))
+
+
+def resolve_wiki(target: str) -> bool:
+    name = target.split("|")[0].split("#")[0].strip().replace("\\", "/")
+    if not name:
+        return True
+    index = file_index()
+    if name in index or name + ".md" in index:
+        return True
+    if any(item.endswith("/" + name) or item.endswith("/" + name + ".md") for item in index):
+        return True
+    return any(Path(item).stem == Path(name).stem for item in index)
+
+
+def resolve_md(dest: str, rel: Path) -> bool:
+    dest = dest.strip()
+    if dest.startswith("<") and dest.endswith(">"):
+        dest = dest[1:-1]
+    dest = dest.split("#")[0].split("?")[0].strip()
+    if not dest or dest.startswith(("http://", "https://", "mailto:", "#")):
+        return True
+    dest = unquote(dest)
+    target = posixpath.normpath(posixpath.join(rel.parent.as_posix(), dest))
+    if target.startswith(("..",)):
+        return True
+    if target.startswith(LOCAL_LINK_PREFIXES):
+        return True
+    index = file_index()
+    return target in index or target + ".md" in index
+
+
+def check_links(rel: Path, text: str, is_new: bool):
+    issues = []
+    if rel.suffix.lower() != ".md":
+        return issues
+    if rel.parts and rel.parts[0] in EXEMPT_TOP_DIRS:
+        return issues
+    severity = "ERROR" if is_new else "WARN"
+    clean = strip_code(text)
+    for match in WIKI_RE.finditer(clean):
+        target = match.group(1).strip()
+        if not target or target.startswith((" ", "=")):
+            continue
+        if not resolve_wiki(target):
+            issues.append((severity, rel, 0, f"断链：[[{target}]]"))
+    for match in MD_LINK_RE.finditer(clean):
+        dest = match.group(1)
+        if not resolve_md(dest, rel):
+            issues.append((severity, rel, 0, f"断链：{dest.strip()}"))
+    return issues
+
+
+def check_headings(rel: Path, text: str):
+    issues = []
+    if rel.suffix.lower() != ".md":
+        return issues
+    if rel.parts and rel.parts[0] in EXEMPT_TOP_DIRS:
+        return issues
+    clean = strip_code(text)
+    for lineno, line in enumerate(clean.splitlines(), 1):
+        if EMPTY_HEADING_RE.match(line):
+            issues.append(("WARN", rel, lineno, "空标题（只有 # 号）"))
+    if not H1_RE.search(clean):
+        issues.append(("WARN", rel, 0, "缺少一级标题"))
+    return issues
+
 def rel_posix(path: Path) -> str:
     return path.as_posix()
 
@@ -187,6 +285,10 @@ def check_frontmatter(rel: Path, text: str, is_new: bool, strict: bool):
             issues.append(("ERROR" if is_new else "WARN", rel, 1, "tags 为空"))
         elif any(not isinstance(tag, str) or not tag.strip() for tag in tags):
             issues.append(("ERROR", rel, 1, "tags 含空值或非字符串"))
+        else:
+            for tag in tags:
+                if re.search(r"[A-Z]", tag):
+                    issues.append(("WARN", rel, 1, f"tags 含大写英文：{tag}"))
 
     created = parse_date(data.get("created"))
     updated = parse_date(data.get("updated"))
@@ -388,7 +490,8 @@ def read_staged(path: str) -> str:
 def category(message: str) -> str:
     prefixes = (
         "缺少必填字段", "缺少 frontmatter", "frontmatter YAML",
-        "tags 为空", "公网 IP", "英文小写文件名", "目录含数字前缀",
+        "tags 为空", "tags 含大写英文", "公网 IP", "英文小写文件名",
+        "目录含数字前缀", "断链", "空标题", "缺少一级标题",
         "related", "target", "review", "updated", "input", "output",
     )
     for prefix in prefixes:
@@ -402,7 +505,7 @@ def main() -> int:
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--changed", action="store_true", help="只检查暂存区")
     group.add_argument("--all", action="store_true", help="全量扫描（默认）")
-    parser.add_argument("--strict", action="store_true", help="缺少 frontmatter 也算错误")
+    parser.add_argument("--strict", action="store_true", help="告警按错误计数")
     parser.add_argument("--quiet", action="store_true", help="只输出汇总")
     args = parser.parse_args()
 
@@ -422,10 +525,16 @@ def main() -> int:
         file_issues = check_frontmatter(rel, text, is_new, args.strict)
         file_issues += scan_secrets(rel, text)
         file_issues += check_name(rel)
+        file_issues += check_links(rel, text, is_new)
+        file_issues += check_headings(rel, text)
         issues.extend(file_issues)
 
-    errors = sum(1 for item in issues if item[0] == "ERROR")
-    warnings = len(issues) - errors
+    if args.strict:
+        errors = len(issues)
+        warnings = 0
+    else:
+        errors = sum(1 for item in issues if item[0] == "ERROR")
+        warnings = len(issues) - errors
 
     if not args.quiet:
         for severity, rel, lineno, message in issues:
