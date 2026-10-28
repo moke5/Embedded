@@ -195,11 +195,19 @@ def check_headings(rel: Path, text: str):
         return issues
     if rel.parts and rel.parts[0] in EXEMPT_TOP_DIRS:
         return issues
-    clean = strip_code(text)
-    for lineno, line in enumerate(clean.splitlines(), 1):
+    in_fence = False
+    has_h1 = False
+    for lineno, line in enumerate(text.splitlines(), 1):
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         if EMPTY_HEADING_RE.match(line):
             issues.append(("WARN", rel, lineno, "空标题（只有 # 号）"))
-    if not H1_RE.search(clean):
+        if H1_RE.match(line):
+            has_h1 = True
+    if not has_h1:
         issues.append(("WARN", rel, 0, "缺少一级标题"))
     return issues
 
