@@ -1,3 +1,11 @@
+---
+type: 课程
+tags: [课程, esp32, freertos]
+status: 进行中
+created: 2026-09-05
+updated: 2026-09-05
+related: []
+---
 # RTOS概述
 
 [toc]

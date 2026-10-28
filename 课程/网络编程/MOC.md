@@ -1,3 +1,11 @@
+---
+type: MOC
+tags: [课程, 网络编程]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-24
+related: []
+---
 # 网络编程 MOC
 
 1. [准备知识](./准备知识.md) — 协议分层、IP/端口、字节序

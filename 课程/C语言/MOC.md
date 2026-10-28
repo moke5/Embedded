@@ -1,3 +1,11 @@
+---
+type: MOC
+tags: [课程, c语言]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-24
+related: []
+---
 # C语言 MOC
 ## 学习路线
 

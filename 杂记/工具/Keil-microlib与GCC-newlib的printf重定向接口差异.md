@@ -1,9 +1,7 @@
 ---
-type: 概念
-tags:
-  - 编译器
-  - 工具
-status:
+type: 对比
+tags: [杂记, 工具, 编译器, keil, gcc, printf]
+status: 进行中
 target:
 input:
 output:

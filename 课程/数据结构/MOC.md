@@ -1,3 +1,11 @@
+---
+type: MOC
+tags: [课程, 数据结构]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-24
+related: []
+---
 # 数据结构 MOC
 
 ## 学习路线（理论）

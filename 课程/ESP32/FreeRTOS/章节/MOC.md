@@ -1,4 +1,14 @@
+---
+type: MOC
+tags: [课程, freertos]
+status: 进行中
+created: 2026-09-05
+updated: 2026-10-25
+related: []
+---
 # MOC
+
+- [FreeRTOS 知识画布](../FreeRTOS.canvas)
 
 
 
@@ -25,4 +35,6 @@
 [12消息队列](消息队列.md)
 
 [13队列集（等待多个内核对象）](队列集（等待多个内核对象）.md)
+
+[FreeRTOS 常用函数接口](../FreeRTOS_常用函数接口.md)
 

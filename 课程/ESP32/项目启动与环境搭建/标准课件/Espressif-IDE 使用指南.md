@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [课程, esp32, 工具]
+status: 进行中
+created: 2026-09-02
+updated: 2026-09-05
+related: []
+---
 # Espressif-IDE 使用指南
 
 [toc]

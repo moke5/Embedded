@@ -1,3 +1,11 @@
+---
+type: MOC
+tags: [课程, linux, 并发]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-24
+related: []
+---
 # 并发编程 MOC
 1. [进程基本API](./进程基本API.md)
 2. [IPC之管道](./IPC之管道.md)

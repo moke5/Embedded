@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [杂记, 环境]
+status: 进行中
+created: 2026-06-18
+updated: 2026-09-02
+related: []
+---
 ## docker
 
 

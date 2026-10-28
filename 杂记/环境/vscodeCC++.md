@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [杂记, 环境]
+status: 进行中
+created: 2026-10-13
+updated: 2026-10-25
+related: []
+---
 # C/C++
 
 [toc]
@@ -18,7 +26,7 @@
                 "USE_HAL_DRIVER",
                 "STM32F103xB"
             ],
-            "compilerPath": "C:\\Users\\xun\\AppData\\Local\\stm32cube\\bundles\\gnu-tools-for-stm32\\14.3.1+st.2\\bin\\arm-none-eabi-gcc.exe", // arm-none-eabi-gcc.exe 的路径
+            "compilerPath": "C:\\Users\\<用户>\\AppData\\Local\\stm32cube\\bundles\\gnu-tools-for-stm32\\14.3.1+st.2\\bin\\arm-none-eabi-gcc.exe", // arm-none-eabi-gcc.exe 的路径
             "cStandard": "gnu17",
             "cppStandard": "gnu++14",
             "intelliSenseMode": "gcc-arm"

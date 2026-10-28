@@ -1,3 +1,11 @@
+---
+type: 课程
+tags: [课程, esp32]
+status: 进行中
+created: 2026-09-05
+updated: 2026-10-13
+related: []
+---
 # I2C-总线通信协议
 
 [toc]

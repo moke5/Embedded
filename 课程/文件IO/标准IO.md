@@ -1,3 +1,11 @@
+---
+type: 课程
+tags: [课程, 文件io]
+status: 进行中
+created: 2026-04-13
+updated: 2026-09-02
+related: []
+---
 # 标准IO
 
 [toc]

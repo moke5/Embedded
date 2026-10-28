@@ -1,3 +1,11 @@
+---
+type: 概念
+tags: [杂记, 环境, windows, 注册表]
+status: 进行中
+created: 2026-04-26
+updated: 2026-09-02
+related: []
+---
 # win + r
 
 > >  ctrl + shift + enter : 以管理员身份运行

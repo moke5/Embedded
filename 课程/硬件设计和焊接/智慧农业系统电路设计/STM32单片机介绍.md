@@ -1,3 +1,11 @@
+---
+type: 课程
+tags: [课程, 硬件]
+status: 进行中
+created: 2026-09-02
+updated: 2026-09-02
+related: []
+---
 # STM32单片机介绍
 
 [toc]

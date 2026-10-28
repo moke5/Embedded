@@ -1,4 +1,12 @@
-# code
+---
+type: 概念
+tags: [杂记, 技术专题]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-25
+related: []
+---
+# STM32驱动分层设计
 
 
 
@@ -79,7 +87,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 ```
 
-这里有个关键教学点：**HAL 的回调分发就是靠比对 Instance 指针**（[stm32f1xx_hal_uart.c:3093](file:///D:/code/stm32P/f103terminal/terminal/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c#L3093) 处 `HAL_UART_RxCpltCallback(huart)` 拿到的就是句柄指针）。你做的是同一件事的下一层——句柄化的驱动天然支持两个 CO2 传感器挂两个串口。
+这里有个关键教学点：**HAL 的回调分发就是靠比对 Instance 指针**（STM32F1 HAL 源码 `Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c` 第 3093 行附近，`HAL_UART_RxCpltCallback(huart)` 拿到的就是句柄指针）。你做的是同一件事的下一层——句柄化的驱动天然支持两个 CO2 传感器挂两个串口。
 
 DHT22 更简单，句柄里就 `port + pin + 两个 float 结果`，半小时能搞定。
 

@@ -1,3 +1,11 @@
+---
+type: MOC
+tags: [课程, linux, 文件io]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-24
+related: []
+---
 # 文件IO MOC
 
 1. [系统IO](./系统IO.md)

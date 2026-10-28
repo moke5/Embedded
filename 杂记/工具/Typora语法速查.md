@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [杂记, 工具]
+status: 进行中
+created: 2026-09-02
+updated: 2026-09-02
+related: []
+---
 # Typora 语法速查
 
 [toc]

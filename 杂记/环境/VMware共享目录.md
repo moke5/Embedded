@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [杂记, 环境]
+status: 进行中
+created: 2026-03-23
+updated: 2026-09-02
+related: []
+---
 临时挂载共享文件夹
 
 ```bash

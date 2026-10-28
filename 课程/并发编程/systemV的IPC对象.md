@@ -1,3 +1,11 @@
+---
+type: 课程
+tags: [课程, 并发]
+status: 进行中
+created: 2026-08-04
+updated: 2026-09-02
+related: []
+---
 # systemV的IPC对象
 
 [toc]

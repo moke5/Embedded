@@ -1,3 +1,11 @@
+---
+type: 概念
+tags: [杂记, 技术专题]
+status: 进行中
+created: 2026-04-26
+updated: 2026-09-02
+related: []
+---
 # sql
 
 ## mysql

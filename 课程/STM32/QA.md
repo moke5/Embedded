@@ -1,3 +1,11 @@
+---
+type: 复习
+tags: [课程, stm32, 复习]
+status: 进行中
+created: 2026-08-11
+updated: 2026-09-02
+related: []
+---
 - 问：老师，使用STM32CubeMx导出的代码是只能用于STM32，能够适用于其他芯片吗，例如GD32
 - 答：不可以。
 

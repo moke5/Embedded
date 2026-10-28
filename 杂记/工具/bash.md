@@ -7,7 +7,7 @@ input: bash 官方手册（man bash）、写脚本时的实际调试
 output: 引号与展开规则表 + 语法速查 + .bashrc 配置说明
 review: 2026-10-20
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-23
 related: ["[[基础命令速查]]", "[[终端中文乱码]]", "[[vim]]"]
 ---
 
@@ -51,6 +51,19 @@ main "$@"
 | 在当前 shell 里执行 | `source 脚本.sh` 或 `. 脚本.sh` | 不新开进程，变量、`cd`、函数都会留在当前终端 |
 
 `source` 和另外两种的区别容易踩：脚本里 `cd` 到别的目录，用 `bash 脚本.sh` 跑完终端还在原地；用 `source` 跑完就真的换了目录，因为它在当前 shell 里执行。
+
+### 脚本自身路径
+
+```bash
+self_path=$(readlink -f "${BASH_SOURCE[0]}")
+self_dir=$(dirname "$self_path")
+```
+
+- `${BASH_SOURCE[0]}`：当前脚本的调用路径；
+- `readlink -f`：规范化为绝对路径；
+- `dirname`：取脚本所在目录。
+
+`realpath`、`readlink -f`、`realpath -m` 等路径命令的适用条件见 [[基础命令速查]]。
 
 ### 核心机制：先展开，再分词
 

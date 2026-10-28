@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"f06b3ba39d0768ec","type":"file","file":"课程/ESP32/FreeRTOS/章节/FreeRTOS介绍.md","x":20,"y":0,"width":400,"height":400},
+		{"id":"ecd786af60181445","type":"text","text":"**1.feature**","x":500,"y":170,"width":169,"height":60},
+		{"id":"f48c069ac27a930a","x":-280,"y":170,"width":196,"height":60,"type":"text","text":"**2.FreeRTOS代码规范**"},
+		{"id":"3b11f5aefb96a886","type":"text","text":"1.实时性能\n2.可移植性\n3.简单易学\n4.资源效率\n5.可扩展性\n6.开源和活跃的社区支持","x":474,"y":280,"width":222,"height":180},
+		{"id":"6e51d47e40566777","x":-362,"y":300,"width":360,"height":260,"type":"text","text":"变量\n**c** – char 字符型变量\n**s** – short 短整型变量\n**l** – long  长整型变量\n**x** – portBASE_TYPE 在 portmacro.h 中定义，便于移植的数据类型转定义（esp32：int32_t）\n**u** – unsigned 无符号整型\n**p** -  pointer 指针"},
+		{"id":"833912ddd81bf182","x":-700,"y":10,"width":270,"height":381,"type":"text","text":"宏\n定义宏所属文件，也即在哪个文件内定义的：\n**port**：比如portable.h中portMAX_DELAY\n**task**：比如task.h中task_ENTER_CRITICAL\n**pd** ：例如projdefs.h中定义的pdTRUE\n**config**：例如 FreeRTOSConfig.h中定义的configUSE_PREEMPTION\n**err**：例如 projdefs.h中定义的errQUEUE_FULL"},
+		{"id":"8682f62dacbdbf7f","x":-315,"y":-53,"width":267,"height":127,"type":"text","text":"函数\n**v** ：void 无返回类型​\n**x** ：返回portBASE_TYPE\n**prv** ：私有函数，模块内使用"}
+	],
+	"edges":[
+		{"id":"5700f1fc8d1c1a26","fromNode":"f06b3ba39d0768ec","fromSide":"right","toNode":"ecd786af60181445","toSide":"left"},
+		{"id":"b71b3970ca8b976c","fromNode":"ecd786af60181445","fromSide":"bottom","toNode":"3b11f5aefb96a886","toSide":"top"},
+		{"id":"3404a3d994709cde","fromNode":"f06b3ba39d0768ec","fromSide":"left","toNode":"f48c069ac27a930a","toSide":"right"},
+		{"id":"fc1f3c01d1ae694d","fromNode":"f48c069ac27a930a","fromSide":"bottom","toNode":"6e51d47e40566777","toSide":"top"},
+		{"id":"0abcf9257d19476e","fromNode":"f48c069ac27a930a","fromSide":"top","toNode":"8682f62dacbdbf7f","toSide":"bottom"},
+		{"id":"dfcc49b5d6e86063","fromNode":"f48c069ac27a930a","fromSide":"left","toNode":"833912ddd81bf182","toSide":"right"}
+	]
+}

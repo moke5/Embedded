@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "updated": "2026-10-20",
+  "capabilities": [
+    {
+      "id": "file-search",
+      "name": "Everything 文件搜索",
+      "summary": "按文件名或路径检索本机 NTFS 卷，返回匹配文件路径",
+      "status": "ready",
+      "adapter": "script/adapters/file-search.ps1",
+      "requires": ["es.exe"],
+      "confirm": false,
+      "tags": ["search", "files", "windows"],
+      "examples": [
+        ".\\script\\local.ps1 run file-search -n 20 -p \"报告\""
+      ]
+    },
+    {
+      "id": "file-open",
+      "name": "WSL 搜索并打开",
+      "summary": "Everything 搜索、在终端选择、用 Windows 应用打开",
+      "status": "partial",
+      "adapter": "script/adapters/file-open.ps1",
+      "requires": ["wsl.exe"],
+      "confirm": false,
+      "tags": ["open", "files", "wsl"],
+      "examples": [
+        ".\\script\\local.ps1 run file-open \"关键词\""
+      ]
+    },
+    {
+      "id": "mqttx",
+      "name": "MQTTX CLI",
+      "summary": "MQTT 连接、发布、订阅与调试",
+      "status": "ready",
+      "adapter": "script/adapters/mqttx.ps1",
+      "requires": ["mqttx"],
+      "confirm": true,
+      "tags": ["mqtt", "iot"],
+      "examples": [
+        ".\\script\\local.ps1 run mqttx pub -h broker.emqx.io -p 1883 -t test/topic -m hello -q 1 --yes"
+      ]
+    }
+  ]
+}

@@ -1,3 +1,11 @@
+---
+type: 课程
+tags: [课程, esp32]
+status: 进行中
+created: 2026-10-13
+updated: 2026-10-13
+related: []
+---
 # I2S协议
 
 [toc]

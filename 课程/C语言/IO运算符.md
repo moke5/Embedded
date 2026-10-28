@@ -2,7 +2,7 @@
 type: 概念
 tags:
   - C
-status:
+status: 进行中
 target:
 input:
 output:

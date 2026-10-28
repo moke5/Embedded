@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [课程, esp32, 工具]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-13
+related: []
+---
 # ESP-IDF+VSCODE环境搭建
 
 [toc]

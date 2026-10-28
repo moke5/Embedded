@@ -1,3 +1,11 @@
+---
+type: 工具
+tags: [课程, 小程序, trae, 工具]
+status: 进行中
+created: 2026-09-02
+updated: 2026-09-02
+related: []
+---
 # Trae
 
 [toc]

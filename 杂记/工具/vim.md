@@ -4,10 +4,10 @@ tags: [vim, linux, 编辑器]
 status: 进行中
 target: 晶体
 input: vim 内置帮助（:help）、日常 Linux 改配置实践
-output: 模式状态图 + 快捷键速查 + .vimrc 配置模板
-review: 2026-10-20
+output: 模式状态图 + 快捷键速查 + .vimrc 配置模板 + root 权限文件保存方法
+review: 2026-11-06
 created: 2026-10-13
-updated: 2026-10-13
+updated: 2026-10-25
 related: ["[[vscode]]", "[[终端中文乱码]]"]
 ---
 
@@ -22,7 +22,7 @@ related: ["[[vscode]]", "[[终端中文乱码]]"]
 
 ### 模式：vim 的运转方式
 
-![[Pasted image 20261013232024.png]]
+![](img/Pasted%20image%2020261013232024.png)
 
 vim 和记事本最大的不同在这一点：打开文件后按键不会直接写进正文，它先被当成命令执行。想打字必须显式切到插入模式。所以记快捷键之前，先把模式关系理清楚。
 
@@ -292,19 +292,95 @@ colorscheme gruvbox
 
 保存后执行 `:PlugInstall` 安装，`:PlugUpdate` 更新，`:PlugClean` 清掉已删除的插件。插件本身按需加，先配好基础选项再逐步加，一次堆一堆插件反而记不住哪个在起作用。
 
-### 需要 root 权限的文件
+### root 权限文件保存
 
-改了 `/etc` 下的配置但忘了用 sudo 打开，保存时会提示只读。可以借 shell 写进去：
+#### 定义与边界
 
-```vim
-:w !sudo tee %       " 用 sudo 把当前内容写到当前文件，之后按提示重新加载
+设 Vim 进程为 $V$，运行用户为 $u$；当前缓冲区为 $B$；目标文件为 $f$，其写权限仅授予 root。普通 `:w` 在 $V$ 的权限下执行写入：
+
+$$
+\operatorname{write}_u(f) = \text{EACCES}
+$$
+
+`:w !{cmd}` 将缓冲区内容通过标准输入交给外部命令 `{cmd}`；`%` 展开为当前文件名；`sudo tee` 以 root 权限接收标准输入并写入 $f$。数据路径为：
+
+$$
+B \xrightarrow{\text{stdin}} \text{sudo tee } f \xrightarrow{\text{truncate/write}} f
+$$
+
+图 1 给出 Vim、sudo/tee 与 root 文件之间的权限边界。
+
+```mermaid
+sequenceDiagram
+    box 普通用户权限域
+        participant V as Vim 进程 V<br/>缓冲区 B
+        participant SH as Shell
+    end
+
+    box 提权进程
+        participant T as sudo tee
+    end
+
+    box root 权限文件
+        participant F as 目标文件 f
+    end
+
+    V->>SH: 执行 :w !sudo tee % 写回命令
+    SH->>T: 请求认证并启动 tee
+    V->>T: B 作为 stdin
+    T->>F: 截断并写入 f
+    F-->>T: 写入结果
+    T-->>SH: 退出状态
+    SH-->>V: 命令输出
+    V->>V: 执行 :e! 重新读取 f
 ```
 
-日常更省事的做法是 `sudo vim` 直接打开，或者用 `vim sudo:file` 让插件处理。
+**图 1：Vim 通过 `sudo tee` 写入 root 文件**
 
+图 1 的不变量为：Vim 本身仍以普通用户运行；提权范围限定在外部 `tee` 进程；写入完成后，Vim 需重新读取磁盘文件以同步缓冲区状态。
+
+#### 操作方式
+
+| 场景 | 命令 | 权限边界 |
+| --- | --- | --- |
+| 尚未打开文件 | `sudoedit <文件>` | 编辑器以普通用户运行，保存时由 sudo 复制回原文件 |
+| 接受整个编辑器以 root 运行 | `sudo vim <文件>` | Vim 进程及其子命令均取得 root 权限 |
+| 已用普通用户打开并完成修改 | `:w !sudo tee % > /dev/null` | 仅外部 `tee` 进程通过 sudo 提权 |
+
+已经打开文件时，按 `Esc` 后执行：
+
+```vim
+:w !sudo tee % > /dev/null
+:e!
+```
+
+- `:w !{cmd}`：把缓冲区送到外部命令的标准输入；
+- `%`：当前文件名；
+- `> /dev/null`：抑制 `tee` 回显到终端的文件内容；
+- `:e!`：重新读取外部命令写入后的磁盘文件。
+
+`:w !{cmd}` 与 `:w!` 语义不同：前者把缓冲区传给外部命令，后者在 Vim 当前权限下强制写文件；`:w!` 不能绕过操作系统的文件权限。
+
+修改系统配置前先备份：
+
+```bash
+sudo cp <文件> <文件>.bak
+```
+
+写入失败需要回滚时：
+
+```bash
+sudo cp <文件>.bak <文件>
+```
+
+验证文件内容：
+
+```bash
+grep '<配置项>' <文件>
+```
 
 ## 四、vim快捷键
-![[Pasted image 20261013231814.png]]
+![](img/Pasted%20image%2020261013231814.png)
 其实经典版是一系列的入门教程键位图的组合结果，下面是不同编辑模式下的键位图。
 
 
@@ -325,6 +401,11 @@ colorscheme gruvbox
   A：整个文件范围。不写范围是当前行，`10,20` 是行区间，`'<,'>` 是上次可视选区。
 - Q：想让 Tab 键插入空格而不是真 Tab，改哪个选项？
   A：`set expandtab`，配套 `tabstop` / `softtabstop` / `shiftwidth` 一起设成同一个宽度。
+
+## 参考资料
+
+- [Vim 命令行手册：`:w !{cmd}` 将缓冲区作为外部命令标准输入](https://vimhelp.org/cmdline.txt.html)
+- [sudo 手册：sudoedit 创建临时副本，编辑后复制回原文件](https://manpages.ubuntu.com/manpages/noble/en/man8/sudo.8.html)
 
 ## 关联
 

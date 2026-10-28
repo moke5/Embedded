@@ -1,3 +1,11 @@
+---
+type: MOC
+tags: [课程, stm32]
+status: 进行中
+created: 2026-09-02
+updated: 2026-10-24
+related: []
+---
 # STM32 MOC
 
 ## 基础

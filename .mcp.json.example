@@ -5,8 +5,8 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "D:/git/embedded",
-        "C:/Users/xun"
+        "<仓库绝对路径>",
+        "<用户目录绝对路径>"
       ]
     },
     "git": {
@@ -15,7 +15,7 @@
         "-y",
         "@modelcontextprotocol/server-git",
         "--repository",
-        "D:/git/embedded"
+        "<仓库绝对路径>"
       ]
     }
   }
