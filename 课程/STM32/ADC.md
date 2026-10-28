@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[DMA]]"]
 ---
 # ADC
 
@@ -1397,3 +1397,6 @@ HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc);
 
 - 返回值：状态码
 
+## 相关笔记
+
+- [[DMA]]

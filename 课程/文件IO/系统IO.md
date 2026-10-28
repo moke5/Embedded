@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 文件io]
 status: 进行中
 created: 2026-02-09
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[文件属性与目录操作]]", "[[标准IO]]"]
 ---
 # **系统IO**
 
@@ -1263,3 +1263,7 @@ int copy_file(MyArgs *args) {
 }
 ```
 
+## 相关笔记
+
+- [[文件属性与目录操作]]
+- [[标准IO]]

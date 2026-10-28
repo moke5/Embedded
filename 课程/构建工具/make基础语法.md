@@ -9,8 +9,8 @@ input:
 output:
 review:
 created: 2026-05-17
-updated: 2026-10-15
-related: []
+updated: 2026-10-29
+related: ["[[Makefile与cmake]]"]
 ---
 # make
 
@@ -965,3 +965,7 @@ Makefile的详细的语法非常多，本章只是一个引子，但对于认识
 vscode-makefile-term
 
 在每个target上方出现执行按钮
+
+## 相关笔记
+
+- [[Makefile与cmake]]

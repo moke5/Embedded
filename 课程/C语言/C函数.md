@@ -8,8 +8,8 @@ input:
 output:
 review:
 created: 2026-10-15
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[字符串函数]]", "[[课程/C语言/要点速查]]"]
 ---
 
 # C 函数
@@ -432,3 +432,7 @@ printf("%d\n", strcmp("abc", "aBc")); // 输出1，"abc" 大于 "aBc"
 printf("%d\n", strcmp("999", "aaa")); // 输出-1，"999" 小于 "aaa"
 ```
 
+## 相关笔记
+
+- [[字符串函数]]
+- [[课程/C语言/要点速查]]

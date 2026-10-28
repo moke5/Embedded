@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 工具]
 status: 进行中
 created: 2026-08-04
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[GitHub项目获取与常用知识]]"]
 ---
 # git
 
@@ -37,5 +37,6 @@ git clone --depth=1 --single-branch --no-tags https://github.com/xxx/xxx.git
 
 `--no-tags`：不下载版本标签，再省一点流量。
 
+## 相关笔记
 
-
+- [[GitHub项目获取与常用知识]]

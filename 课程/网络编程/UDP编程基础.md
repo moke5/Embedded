@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 网络编程]
 status: 进行中
 created: 2026-08-04
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[TCP编程基础]]"]
 ---
 #  UDP编程基础
 
@@ -699,3 +699,7 @@ int main(int argc, char **argv)
         printf("%s\n", inet_ntoa(*(struct in_addr*)((p->h_addr_list)[i])));
 }
 ```
+
+## 相关笔记
+
+- [[TCP编程基础]]

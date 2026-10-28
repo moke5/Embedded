@@ -8,8 +8,8 @@ input:
 output:
 review:
 created: 2026-10-15
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[数据类型]]"]
 ---
 # IO运算符
 
@@ -592,5 +592,6 @@ int main()
 
 ![1sizeof1](./img/1sizeof1.png)
 
+## 相关笔记
 
-
+- [[数据类型]]

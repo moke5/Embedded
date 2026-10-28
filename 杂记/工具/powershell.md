@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 工具, powershell, profile]
 status: 进行中
 created: 2026-05-20
-updated: 2026-10-25
-related: ["[[bash]]"]
+updated: 2026-10-29
+related: ["[[bash]]", "[[bash]]"]
 ---
 # powershell
 
@@ -191,3 +191,6 @@ gcim = Get-CimInstance，用于读取系统硬件 / 系统信息
 Win32_OperatingSystem 是系统操作系统类，LastBootUpTime 记录最后一次开机时间
 ```
 
+## 相关笔记
+
+- [[bash]]

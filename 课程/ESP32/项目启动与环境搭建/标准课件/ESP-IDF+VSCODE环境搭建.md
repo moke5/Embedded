@@ -3,8 +3,8 @@ type: 工具
 tags: [课程, esp32, 工具]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[ESP-IDF 新建工程]]", "[[ESP-IDF指令集]]"]
 ---
 # ESP-IDF+VSCODE环境搭建
 
@@ -388,3 +388,8 @@ void app_main(void) {
 ```
 
  
+
+## 相关笔记
+
+- [[ESP-IDF 新建工程]]
+- [[ESP-IDF指令集]]

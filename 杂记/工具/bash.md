@@ -7,8 +7,8 @@ input: bash 官方手册（man bash）、写脚本时的实际调试
 output: 引号与展开规则表 + 语法速查 + .bashrc 配置说明
 review: 2026-10-20
 created: 2026-10-13
-updated: 2026-10-23
-related: ["[[基础命令速查]]", "[[终端中文乱码]]", "[[vim]]"]
+updated: 2026-10-29
+related: ["[[基础命令速查]]", "[[终端中文乱码]]", "[[vim]]", "[[powershell]]"]
 ---
 
 # bash
@@ -318,3 +318,7 @@ source ~/.bashrc      # 当前终端立即生效
 - [bash快捷键](./bash快捷键.md)：交互式命令行里的行内编辑键位（删除、光标移动、剪切环、历史搜索）。
 - [终端中文乱码](../环境/终端中文乱码.md)：脚本往终端输出中文时的编码问题，和 `locale`、`PYTHONIOENCODING` 有关。
 - [vim](./vim.md)：改 `.bashrc`、写脚本时用得上。
+
+## 相关笔记
+
+- [[powershell]]

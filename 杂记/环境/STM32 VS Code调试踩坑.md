@@ -7,8 +7,8 @@ input: STM32F103C8 + ST-Link V2 克隆版 + VS Code Cortex-Debug
 output: 可用的 OpenOCD 调试配置、两个错误的根因与排查顺序
 review: 2026-11-20
 created: 2026-10-20
-updated: 2026-10-25
-related: ["[[vscode]]"]
+updated: 2026-10-29
+related: ["[[vscode]]", "[[vscodeCC++]]"]
 ---
 # VS Code + ST-Link 调试环境踩坑
 
@@ -218,3 +218,7 @@ Only resetting the Cortex-M core
 - 串口：VS Code Serial Monitor，115200
 
 按此分层，任一环节替换后仍可单独验证，不需要同时改动整条链路。
+
+## 相关笔记
+
+- [[vscodeCC++]]

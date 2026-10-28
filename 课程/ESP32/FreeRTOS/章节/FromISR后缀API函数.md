@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32, freertos]
 status: 进行中
 created: 2026-09-05
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[任务管理]]"]
 ---
 # FromISR后缀API函数
 
@@ -107,3 +107,7 @@ related: []
 **注:pxHigherPriorityTaskWoken参数的使用是可选的。如果不需要，则将pxHigherPriorityTaskWoken设置为NULL。**
 
  
+
+## 相关笔记
+
+- [[任务管理]]

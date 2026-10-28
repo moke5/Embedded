@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[启动过程]]"]
 ---
 # ESP32项目介绍
 
@@ -364,3 +364,7 @@ ESP32 和 STM32 都属于 32 位微控制器。两者的核心差异在于定位
 ﻿[**ESP32 故障排查指南**](https://docs.espressif.com/projects/esptool/en/latest/esp32/troubleshooting.html)﻿
 
  
+
+## 相关笔记
+
+- [[启动过程]]

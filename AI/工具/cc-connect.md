@@ -3,8 +3,8 @@ type: 工具
 tags: [ai, 工具]
 status: 进行中
 created: 2026-10-24
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[Claude Code]]"]
 ---
 # cc-connect 企业微信接入 Claude Code
 
@@ -151,3 +151,7 @@ IP 不在白名单，按日志提示的 IP 添加到企业可信 IP。
   - 每条消息调用一次 claude 命令
   - 读取当前目录的 CLAUDE.md（跟你本地终端一样）
   - 记忆系统（~/.claude/projects/）共享，但每个会话是独立上下文
+
+## 相关笔记
+
+- [[Claude Code]]

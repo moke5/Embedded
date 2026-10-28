@@ -3,11 +3,11 @@ type: 工具
 tags: [杂记, 工具, github, git]
 status: 进行中
 created: 2026-10-25
-updated: 2026-10-25
+updated: 2026-10-29
 input: GitHub 官方文档、Git 文档与本机命令行实践
 output: 项目获取方式对比、认证方式、克隆变体与常见错误排查
 review: 2026-11-25
-related: ["[[git克隆精简]]", "[[ssh]]"]
+related: ["[[git克隆精简]]", "[[ssh]]", "[[git克隆精简]]"]
 ---
 # GitHub 项目获取与常用知识
 
@@ -321,3 +321,7 @@ git log -1 --oneline
 - 仓库很大或网络不稳定：浅克隆、部分克隆、稀疏检出。
 - 本机没有环境：Codespaces。
 - 只是把项目作为依赖：优先使用包管理器或容器镜像，不直接克隆源码。
+
+## 相关笔记
+
+- [[git克隆精简]]

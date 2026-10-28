@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-10-13
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[音频输出]]"]
 ---
 # I2S协议
 
@@ -169,3 +169,7 @@ I2S 驱动例程请参考 peripherals/i2s 目录。
 ![img](./img/58195.png)
 
  
+
+## 相关笔记
+
+- [[音频输出]]

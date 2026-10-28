@@ -7,8 +7,8 @@ input: Anthropic 官方文档与公开常识性定义
 output: AI/AGI/LLM 的层级界定与 LLM 的工作原理
 review: 2026-10-27
 created: 2026-10-20
-updated: 2026-10-25
-related: ["[[AI/MOC|AI MOC]]"]
+updated: 2026-10-29
+related: ["[[AI/MOC|AI MOC]]", "[[资料与术语]]"]
 ---
 # AI、AGI与LLM
 
@@ -103,3 +103,7 @@ flowchart TD
 
 - Anthropic 官方文档：https://docs.anthropic.com
 - Turing, A. M. (1950). Computing Machinery and Intelligence. *Mind*, 59(236), 433–460.
+
+## 相关笔记
+
+- [[资料与术语]]

@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 工具]
 status: 进行中
 created: 2026-06-18
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[vim]]"]
 ---
 # vscode常用功能
 
@@ -38,3 +38,6 @@ local / 本地
 Terminal：Create New Terminal （Local） / 终端：创建新终端（本地）
 ```
 
+## 相关笔记
+
+- [[vim]]

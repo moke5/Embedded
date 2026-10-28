@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-08-11
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[时钟体系]]"]
 ---
 # RTC
 
@@ -514,3 +514,7 @@ uint32_t rt = HAL_RTCEx_BKUPRead(&hrtc,RTC_BKP_DR0)
 ![img](./img/rBJlJmKQlHOAJZzbAAEh-mRg_8c269.png)
 
 1. 智能定时夜灯
+
+## 相关笔记
+
+- [[时钟体系]]

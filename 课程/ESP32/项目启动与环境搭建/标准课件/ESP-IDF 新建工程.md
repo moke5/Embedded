@@ -3,8 +3,8 @@ type: 工具
 tags: [课程, esp32, 工具]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[ESP-IDF+VSCODE环境搭建]]"]
 ---
 # ESP-IDF 新建工程
 
@@ -64,3 +64,7 @@ idf.py build    #编译命令
  
 
  
+
+## 相关笔记
+
+- [[ESP-IDF+VSCODE环境搭建]]

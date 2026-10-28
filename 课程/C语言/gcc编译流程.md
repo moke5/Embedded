@@ -10,8 +10,8 @@ input:
 output:
 review:
 created: 2026-10-15
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[开发环境]]"]
 ---
 # gcc 编译流程
 
@@ -363,3 +363,6 @@ gcc mian.o -L ./ -lhello -o main
 
 glibc的动态库和静态库分别位于：/usr/lib/x86-64_64-linux-gnu/目录下的libc.so和libc.a文件中
 
+## 相关笔记
+
+- [[开发环境]]

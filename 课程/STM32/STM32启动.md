@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[ARM、STM32与HAL库]]", "[[软硬件平台]]"]
 ---
 # STM32启动
 
@@ -446,3 +446,7 @@ __HAL_AFIO_REMAP_SWJ_NOJTAG();
                                                }while(0u)
 ```
 
+## 相关笔记
+
+- [[ARM、STM32与HAL库]]
+- [[软硬件平台]]

@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 工具]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[Typora语法速查]]"]
 ---
 # KaTeX 速查表
 
@@ -149,3 +149,6 @@ T_{update} &= \frac{(PSC+1)(ARR+1)}{f_{CK\_PSC}}
 $$
 ```
 
+## 相关笔记
+
+- [[Typora语法速查]]

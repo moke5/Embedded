@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32, freertos]
 status: 进行中
 created: 2026-09-05
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[任务管理]]"]
 ---
 # FreeRTOS_常用函数接口
 
@@ -683,3 +683,6 @@ BaseType_t xTaskCreateWithCaps(
 
 1. 如果是，则在ISR退出前调用portYIELD_FROM_ISR()请求上下文切换。
 
+## 相关笔记
+
+- [[任务管理]]

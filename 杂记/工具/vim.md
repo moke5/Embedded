@@ -7,8 +7,8 @@ input: vim 内置帮助（:help）、日常 Linux 改配置实践
 output: 模式状态图 + 快捷键速查 + .vimrc 配置模板 + root 权限文件保存方法
 review: 2026-11-06
 created: 2026-10-13
-updated: 2026-10-25
-related: ["[[vscode]]", "[[终端中文乱码]]"]
+updated: 2026-10-29
+related: ["[[vscode]]", "[[终端中文乱码]]", "[[vscode]]"]
 ---
 
 # vim
@@ -412,3 +412,7 @@ grep '<配置项>' <文件>
 - [vscode](./vscode.md)：VS Code 能装 Vim 键位插件，先用 vim 记住的键位在图形界面里也能用。
 - [终端中文乱码](../环境/终端中文乱码.md)：`encoding` / `fileencodings` 设置不对会直接表现为打开文件乱码。
 - [基础命令速查](../Linux/基础命令速查.md)：终端里改文件、看文件常和 vim 搭配出现。
+
+## 相关笔记
+
+- [[vscode]]

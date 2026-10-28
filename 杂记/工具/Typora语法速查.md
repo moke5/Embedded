@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 工具]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[KaTeX公式]]"]
 ---
 # Typora 语法速查
 
@@ -128,3 +128,7 @@ D --> F[condition]
 --code-top-background-color:#f5f5f7;   /* 代码块头部背景颜色 */
 --code-body-background-color:#fafafa;  /* 代码块主体背景颜色 */
 ```
+
+## 相关笔记
+
+- [[KaTeX公式]]

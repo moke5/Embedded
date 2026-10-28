@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32, freertos]
 status: 进行中
 created: 2026-09-05
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[FreeRTOS介绍]]", "[[RTOS基础知识]]"]
 ---
 # RTOS概述
 
@@ -190,3 +190,7 @@ NuttX是一个成熟的实时操作系统，于07年由Gregory Nutt先生正式�
 
 NuttX可运行于各种处理器架构和硬件平台上，包括ARM、MIPS、AVR等其重点遵从特定的标准并且尽星可伸缩良好且可适应从8位到32位单片机环境，在stm32上也能跑。Nuttx主要遵循的标准是 Posix和ANSI标准。
 
+## 相关笔记
+
+- [[FreeRTOS介绍]]
+- [[RTOS基础知识]]

@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-08-11
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[STM32启动]]"]
 ---
 # ARM
 
@@ -899,3 +899,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 
   从这三个小点就可以看出HAL库的可移植性之强大，并且用户可以完全不去理会底层各个寄存器的操作，代码也更有逻辑性。但与此带来的是复杂的代码量，极慢的编译速度，略微低下的效率。
 
+## 相关笔记
+
+- [[STM32启动]]

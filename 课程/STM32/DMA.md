@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[ADC]]", "[[串口通信]]"]
 ---
 # DMA
 
@@ -403,3 +403,7 @@ typedef enum
 
  
 
+## 相关笔记
+
+- [[ADC]]
+- [[串口通信]]

@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 环境]
 status: 进行中
 created: 2026-06-18
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[端口与进程]]", "[[软件安装部署]]"]
 ---
 
 # docker
@@ -199,3 +199,7 @@ winget uninstall Docker.sbx
 sbx ls
 ```
 
+## 相关笔记
+
+- [[端口与进程]]
+- [[软件安装部署]]

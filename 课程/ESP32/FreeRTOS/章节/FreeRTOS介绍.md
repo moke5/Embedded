@@ -9,8 +9,8 @@ input:
 output:
 review:
 created: 2026-09-05
-updated: 2026-10-15
-related: []
+updated: 2026-10-29
+related: ["[[RTOS概述]]"]
 ---
 # FreeRTOS介绍
 
@@ -204,3 +204,6 @@ static TickType_t prvGetNextExpireTime( BaseType_t * const pxListWasEmpty ) PRIV
 
 至于这么严格的代码规范是否值得推崇，提高阅读性。但是在实际开发中这个见仁见智，有些企业比较喜欢Linux代码风格，对于过于复杂的代码规范，会继续原有的代码风格。
 
+## 相关笔记
+
+- [[RTOS概述]]

@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 硬件, pcb]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[PCB布局技巧]]"]
 ---
 # PCB走线技巧
 
@@ -84,5 +84,6 @@ related: []
 
 ![img](./img/55705.png)
 
+## 相关笔记
 
-
+- [[PCB布局技巧]]

@@ -3,8 +3,8 @@ type: 工具
 tags: [课程, esp32, 工具]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[Espressif-IDE 使用指南]]"]
 ---
 # Espressif-IDE环境搭建
 
@@ -115,3 +115,7 @@ Espressif-IDE 安装程序是一款便捷的离线安装工具，它集成了 ES
 若在使用过程中遇到任何问题，查阅官方资料以获取更详细的指导，具体链接为：https://github.com/espressif/idf-eclipse-plugin/blob/master/README_CN.md#Installation﻿
 
  
+
+## 相关笔记
+
+- [[Espressif-IDE 使用指南]]

@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-05
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[GPIO&LED]]"]
 ---
 # PWM 脉冲宽带调制
 
@@ -413,3 +413,7 @@ idf_component_register(SRCS ${ALL_SRCS}
  
 
  
+
+## 相关笔记
+
+- [[GPIO&LED]]

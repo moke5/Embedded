@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 硬件, pcb]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
-related: []
+updated: 2026-10-29
+related: ["[[自定义器件]]"]
 ---
 # 自定义IC芯片元件
 
@@ -109,3 +109,7 @@ related: []
 ![img](./img/52711.png)
 
  
+
+## 相关笔记
+
+- [[自定义器件]]

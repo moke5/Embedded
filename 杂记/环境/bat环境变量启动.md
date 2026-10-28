@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 环境]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[win+r运行机制]]"]
 ---
 # bat 环境变量启动
 
@@ -38,7 +38,6 @@ cmd /d "绝对path"
 
 - `/c`：运行 bat 后自动关闭 CMD 窗口
 
+## 相关笔记
 
-
-
-
+- [[win+r运行机制]]

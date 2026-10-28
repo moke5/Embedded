@@ -3,8 +3,8 @@ type: 工具
 tags: [ai, 工具]
 status: 进行中
 created: 2026-10-24
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[cc-connect]]"]
 ---
 # Claude Code
 
@@ -202,3 +202,6 @@ plan 计划模式
 # echo %ANTHROPIC_API_KEY%
 ```
 
+## 相关笔记
+
+- [[cc-connect]]

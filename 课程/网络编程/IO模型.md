@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 网络编程]
 status: 进行中
 created: 2026-08-04
-updated: 2026-10-13
-related: []
+updated: 2026-10-29
+related: ["[[TCP编程基础]]", "[[常见应用协议]]"]
 ---
 # IO模型
 
@@ -953,3 +953,7 @@ setsockopt(sockfd,SOL_SOCKET,SO_RCVTIMEO,&tv,sizeof(tv));
 - 信号驱动：对UDP套接字很有用，简单易用。
 - 多路复用：对于既不想要创建多线程多进程，又要同时处理多个套接字的场合很有用，在硬件资源特别紧张的场合下特别有用。
 
+## 相关笔记
+
+- [[TCP编程基础]]
+- [[常见应用协议]]

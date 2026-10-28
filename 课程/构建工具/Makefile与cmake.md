@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 构建工具]
 status: 进行中
 created: 2026-07-17
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[make基础语法]]", "[[静态库与动态库]]"]
 ---
 # Makefile 与 cmake
 
@@ -1893,9 +1893,7 @@ int main(int argc,char **argv)
 }
 ```
 
+## 相关笔记
 
-
-
-
-
-
+- [[make基础语法]]
+- [[静态库与动态库]]

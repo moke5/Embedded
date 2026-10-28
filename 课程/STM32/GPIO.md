@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-08-11
-updated: 2026-10-28
-related: ["[[GPIO&LED]]"]
+updated: 2026-10-29
+related: ["[[GPIO&LED]]", "[[阶段实验01-温湿度模块]]"]
 ---
 # GPIO
 
@@ -719,3 +719,4 @@ int main(void)
 ## 相关笔记
 
 - [[GPIO&LED]] — ESP32 侧 GPIO 输出与 LED 驱动
+- [[阶段实验01-温湿度模块]]

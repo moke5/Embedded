@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-05
-updated: 2026-09-05
-related: []
+updated: 2026-10-29
+related: ["[[系统延时]]"]
 ---
 # KEY 按键
 
@@ -266,3 +266,6 @@ idf_component_register(SRCS ${ALL_SRCS}
 
 **练习1：**按下按键灯亮，再按下按键灯灭，如此反复。
 
+## 相关笔记
+
+- [[系统延时]]

@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, 硬件]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[串口通信]]", "[[按键]]"]
 ---
 
 # CO2 传感器
@@ -249,3 +249,8 @@ void app_main(void)
 ![img](./img/56904.png)
 
  
+
+## 相关笔记
+
+- [[串口通信]]
+- [[按键]]
