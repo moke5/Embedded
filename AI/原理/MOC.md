@@ -7,7 +7,7 @@ input: 官方文档与公开课程
 output: Agent 原理的概念笔记
 review:
 created: 2026-10-20
-updated: 2026-10-25
+updated: 2026-10-28
 related: ["[[AI/MOC|AI MOC]]"]
 ---
 # 原理 MOC
@@ -25,13 +25,6 @@ related: ["[[AI/MOC|AI MOC]]"]
 7. RAG检索增强（待建）
 8. 记忆与上下文管理（待建）
 9. 多智能体与子代理（待建）
-
-## 内容索引
-
-- 模型与上下文：[AI、AGI与LLM](./AI、AGI与LLM.md)、Token与上下文窗口（待建）
-- 交互：提示词工程（待建）
-- Agent 核心：Agent是什么、工具调用与函数调用、MCP协议（待建）
-- 增强：RAG检索增强、记忆与上下文管理、多智能体与子代理（待建）
 
 ## 相关 MOC
 
