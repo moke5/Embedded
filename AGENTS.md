@@ -52,7 +52,7 @@ related: ["[[相关笔记]]"]  # 推荐，相关笔记的双链字符串列表
 ---
 ```
 
-- 校验：`python script/notes_lint.py`（全量）；`python script/notes_lint.py --changed`（暂存区，供 pre-commit 调用）。新笔记缺 frontmatter 记为错误，既有笔记仅告警；`--strict` 全部按错误处理。
+- 校验：`python script/notes_lint.py`（全量）；`python script/notes_lint.py --changed`（暂存区，供 pre-commit 调用）；`--strict` 将告警按错误处理。新笔记缺 frontmatter 记为错误，既有笔记仅告警。脚本依赖 Python 3 与 PyYAML（`python -m pip install pyyaml`）。
 
 ## 5. 新建笔记流程
 
@@ -124,9 +124,26 @@ Obsidian 端可用属性面板或 Bases 视图，但 `MOC.md` 静态索引始终
 
 ## 9. 提交约定
 
+### 9.1 分支模型
+
+- `main` 为主分支，只接收完成并通过校验的修复与新增。
+- 每项工作单独建分支；完成后合入 `main`，合入后删除工作分支。
+- 分支前缀：修复 `fix/<主题>`、新增 `feat/<主题>`、文档 `docs/<主题>`、基线整理 `chore/<主题>`；同一分支只放一类改动。
+- 每项修复对应一个提交，提交说明与分支主题一致。
+
+### 9.2 执行步骤
+
+1. 从最新 `main` 建分支：`git switch main`，`git switch -c fix/<主题>`
+2. 修改后校验：`python script/notes_lint.py --strict`
+3. 暂存并提交：`git add -A`，`git commit`（模板见 `.gitmessage`）
+4. 合入主分支：`git switch main`，`git merge --ff-only fix/<主题>`，`git branch -d fix/<主题>`
+5. 推送前征得用户同意；双远程依次推送：`git push gitee main`、`git push origin main`
+
+### 9.3 提交信息
+
 - commit message 用中文，说明修改动机、影响范围和原因
 - 提交模板：`.gitmessage`；本地启用 `git config commit.template .gitmessage`
-- 可选：将 `script/hooks/pre-commit` 复制到 `.git/hooks/pre-commit` 并赋予执行权限，提交前校验暂存区
+- 可选：将 `script/hooks/pre-commit` 复制到 `.git/hooks/pre-commit` 并赋予执行权限，提交前校验暂存区；脚本依赖 Python 3 与 PyYAML
 - 未经用户要求，不主动提交或推送
 
 ## 10. 本机能力优先（硬规则）

@@ -34,6 +34,13 @@
 - Typora 语法（callout、图片尺寸、Mermaid）：[杂记/工具/Typora语法速查.md](./杂记/工具/Typora语法速查.md)
 - 分辨率术语：[杂记/工具/分辨率速查.md](./杂记/工具/分辨率速查.md)
 
+## 分支与提交
+
+- `main` 为主分支，只接收完成并通过校验的内容。
+- 修复用 `fix/<主题>`，新增用 `feat/<主题>`，文档用 `docs/<主题>`；一项工作一个提交，完成后合入 `main`。
+- 提交信息用中文，模板见 `.gitmessage`；提交前运行 `python script/notes_lint.py --changed`。
+- 详细规则见 [AGENTS.md](./AGENTS.md) 第 9 节。
+
 ## AI 知识归档
 
 会话中有价值的知识按 [AGENTS.md](./AGENTS.md) 的规则处理。未经用户明确同意，不写入 `D:/git/AI`。
