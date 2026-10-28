@@ -12,7 +12,7 @@ related: ["[[Espressif-IDE环境搭建]]"]
 
 ## **一、Espressif_IDE 软件介绍**
 
-Espressif_IDE 软件本质上是在 Eclipse 开发环境中安装了 ESP-IDF 插件，集成了编辑、编译、烧录和调试等基础功能，同时附加了安装工具、SDK 配置和 CMake 编辑器等实用工具，极大地简化了开发人员使用标准 Eclipse CDT 开发和调试 ESP32 IoT 应用程序的流程，提升了整体开发体验。
+Espressif_IDE 软件从机制上看是在 Eclipse 开发环境中安装了 ESP-IDF 插件，集成了编辑、编译、烧录和调试等基础功能，同时附加了安装工具、SDK 配置和 CMake 编辑器等实用工具，极大地简化了开发人员使用标准 Eclipse CDT 开发和调试 ESP32 IoT 应用程序的流程，提升了整体开发体验。
 
 ## **二、Espressif_IDE 新建项目工程**
 

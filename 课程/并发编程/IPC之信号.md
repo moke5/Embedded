@@ -144,7 +144,7 @@ gec@ubuntu:~$ kill -l
 
 1、 信号集如何定义？
 
-信号集其实就是一个变量，数据类型是： sigset_t。
+信号集就是一个变量，数据类型是： sigset_t。
 
 定义信号集： sigset_t set
 
