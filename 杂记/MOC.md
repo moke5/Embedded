@@ -3,13 +3,13 @@ type: MOC
 tags: [杂记]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-25
+updated: 2026-10-28
 related: []
 ---
 # 杂记 MOC
 
 > 工具、环境、Linux 使用、技术专题、收藏类零散笔记。
-> 原碎片笔记（bash/web/typora/demo）已合入同主题笔记。
+> 原碎片笔记已合入同主题笔记。
 
 ## 工具
 

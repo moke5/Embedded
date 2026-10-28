@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-28
 related: []
 ---
 # STM32 MOC
@@ -12,7 +12,7 @@ related: []
 
 1. [ARM、STM32与HAL库](./ARM、STM32与HAL库.md)
 2. [软硬件平台](./软硬件平台.md)
-3. [STM32启动](./STM32启动.md) — 启动流程分析（无序号，独立专题）
+3. [STM32启动](./STM32启动.md) — 启动流程分析
 4. [GPIO](./GPIO.md)
 5. [时钟体系](./时钟体系.md)
 6. [中断体系](./中断体系.md)
