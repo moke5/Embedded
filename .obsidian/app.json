@@ -1,0 +1,16 @@
+{
+  "defaultViewMode": "preview",
+  "showLineNumber": true,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "./img",
+  "showUnsupportedFiles": true,
+  "userIgnoreFilters": [
+    "self/",
+    "img/",
+    "*/img/"
+  ],
+  "alwaysUpdateLinks": true,
+  "autoPairMarkdown": true,
+  "autoConvertHtml": false,
+  "promptDelete": false
+}

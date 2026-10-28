@@ -1,0 +1,16 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "type": "text",
+    "status": "text",
+    "target": "text",
+    "created": "date",
+    "updated": "date",
+    "review": "date",
+    "input": "text",
+    "output": "text",
+    "related": "multitext"
+  }
+}

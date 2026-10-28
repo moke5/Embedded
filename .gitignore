@@ -54,8 +54,12 @@ dkms.conf
 # debug information files
 *.dwo
 
-# 忽略整个 Obsidian 配置目录
-.obsidian/
+# Obsidian：入库通用配置，忽略本机布局、图谱状态与第三方主题
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/themes/
+.obsidian/cache/
 
 # Claude Code 配置目录
 .claude/

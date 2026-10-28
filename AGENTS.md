@@ -25,6 +25,7 @@
 | `self/` | 敏感个人信息与凭据，已 gitignore，不入库 |
 | `.skills/` | 仓库本地 Skill；不要求 MOC |
 | `.cursor/` | Cursor 规则文件（本机能力入口）；不要求 MOC |
+| `.obsidian/` | Obsidian 通用配置（应用、插件开关、热键、模板目录、属性类型）；workspace、图谱状态与第三方主题不入库 |
 
 ## 3. 命名规范（硬规则）
 
