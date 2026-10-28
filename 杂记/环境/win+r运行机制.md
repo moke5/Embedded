@@ -3,10 +3,10 @@ type: 概念
 tags: [杂记, 环境, windows, 注册表]
 status: 进行中
 created: 2026-04-26
-updated: 2026-09-02
+updated: 2026-10-28
 related: []
 ---
-# win + r
+# Win+R 运行机制
 
 > >  ctrl + shift + enter : 以管理员身份运行
 >

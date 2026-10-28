@@ -3,9 +3,12 @@ type: 课程
 tags: [课程, 硬件]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-10-28
 related: []
 ---
+
+# CO2 传感器
+
 [toc]
 
 

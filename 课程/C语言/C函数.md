@@ -8,9 +8,12 @@ input:
 output:
 review:
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-28
 related: []
 ---
+
+# C 函数
+
 ### printf
 
 - 格式化输出数据

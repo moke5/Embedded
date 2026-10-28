@@ -3,10 +3,10 @@ type: 练习
 tags: [课程, linux, 内核, 链表, 练习]
 status: 进行中
 created: 2026-01-27
-updated: 2026-09-02
+updated: 2026-10-28
 related: []
 ---
-# kernel_list
+# Linux 内核链表实践
 
 [toc]
 

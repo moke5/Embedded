@@ -3,10 +3,10 @@ type: 工具
 tags: [杂记, 环境]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-10-28
 related: []
 ---
-# 使用不同的环境变量
+# bat 环境变量启动
 
 ## 比如JAVA
 

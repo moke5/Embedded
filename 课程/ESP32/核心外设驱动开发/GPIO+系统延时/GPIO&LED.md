@@ -3,10 +3,10 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-05
-updated: 2026-09-05
+updated: 2026-10-28
 related: []
 ---
-# 01-GPIO & LED
+# GPIO 与 LED
 
 [toc]
 

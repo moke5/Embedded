@@ -10,10 +10,10 @@ input:
 output:
 review:
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-28
 related: []
 ---
-# C语言
+# gcc 编译流程
 
 [toc]
 

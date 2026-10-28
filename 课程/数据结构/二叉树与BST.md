@@ -3,10 +3,10 @@ type: 课程
 tags: [课程, 数据结构]
 status: 进行中
 created: 2026-08-04
-updated: 2026-09-02
+updated: 2026-10-28
 related: []
 ---
-# 树与二叉树
+# 二叉树与 BST
 
 [toc]
 

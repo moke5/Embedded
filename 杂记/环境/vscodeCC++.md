@@ -3,10 +3,10 @@ type: 工具
 tags: [杂记, 环境]
 status: 进行中
 created: 2026-10-13
-updated: 2026-10-25
+updated: 2026-10-28
 related: []
 ---
-# C/C++
+# VS Code C/C++
 
 [toc]
 

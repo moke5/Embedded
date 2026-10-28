@@ -3,10 +3,10 @@ type: 课程
 tags: [课程, 构建工具]
 status: 进行中
 created: 2026-07-17
-updated: 2026-09-02
+updated: 2026-10-28
 related: []
 ---
-# Makefile+cmake
+# Makefile 与 cmake
 
 [toc]
 
