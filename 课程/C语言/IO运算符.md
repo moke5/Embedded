@@ -1,14 +1,14 @@
 ---
 type: 概念
 tags:
-  - C
+  - c
 status: 进行中
 target:
 input:
 output:
 review:
 created: 2026-10-15
-updated: 2026-10-15
+updated: 2026-10-28
 related: []
 ---
 # IO运算符

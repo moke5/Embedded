@@ -1,7 +1,7 @@
 ---
 type: 概念
 tags:
-  - C
+  - c
   - 工具
   - 编译器
 status: 进行中

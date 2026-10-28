@@ -1,7 +1,7 @@
 ---
 type: 概念
 tags:
-  - C
+  - c
 status: 进行中
 target:
 input:

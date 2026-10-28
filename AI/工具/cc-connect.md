@@ -1,9 +1,9 @@
 ---
 type: 工具
-tags: [AI, 工具]
+tags: [ai, 工具]
 status: 进行中
 created: 2026-10-24
-updated: 2026-10-24
+updated: 2026-10-28
 related: []
 ---
 # cc-connect 企业微信接入 Claude Code
