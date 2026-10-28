@@ -4,7 +4,7 @@ tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
 updated: 2026-10-29
-related: ["[[DMA]]"]
+related: ["[[DMA]]", "[[课程/STM32/QA]]"]
 ---
 # ADC
 
@@ -1400,3 +1400,4 @@ HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc);
 ## 相关笔记
 
 - [[DMA]]
+- [[课程/STM32/QA]]

@@ -3,8 +3,8 @@ type: 工具
 tags: [杂记, 环境]
 status: 进行中
 created: 2026-03-23
-updated: 2026-10-28
-related: []
+updated: 2026-10-29
+related: ["[[课程/Linux入门/虚拟机]]"]
 ---
 
 # VMware 共享目录
@@ -36,3 +36,6 @@ Device     Boot   Start      End  Sectors  Size Id Type
 /dev/sda5       1052672 41940991 40888320 19.5G 83 Linux
 ```
 
+## 相关笔记
+
+- [[课程/Linux入门/虚拟机]]

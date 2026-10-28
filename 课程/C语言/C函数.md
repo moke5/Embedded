@@ -9,7 +9,7 @@ output:
 review:
 created: 2026-10-15
 updated: 2026-10-29
-related: ["[[字符串函数]]", "[[课程/C语言/要点速查]]"]
+related: ["[[字符串函数]]", "[[课程/C语言/要点速查]]", "[[杂记/工具/Keil-microlib与GCC-newlib的printf重定向接口差异]]"]
 ---
 
 # C 函数
@@ -436,3 +436,4 @@ printf("%d\n", strcmp("999", "aaa")); // 输出-1，"999" 小于 "aaa"
 
 - [[字符串函数]]
 - [[课程/C语言/要点速查]]
+- [[杂记/工具/Keil-microlib与GCC-newlib的printf重定向接口差异]]

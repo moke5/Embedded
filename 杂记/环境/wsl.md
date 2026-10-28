@@ -4,7 +4,7 @@ tags: [杂记, 环境]
 status: 进行中
 created: 2026-06-18
 updated: 2026-10-29
-related: ["[[终端中文乱码]]"]
+related: ["[[终端中文乱码]]", "[[课程/Linux入门/虚拟机]]"]
 ---
 # WSL
 
@@ -141,3 +141,4 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 ## 相关笔记
 
 - [[终端中文乱码]]
+- [[课程/Linux入门/虚拟机]]

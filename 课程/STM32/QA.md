@@ -4,7 +4,7 @@ tags: [课程, stm32, 复习]
 status: 进行中
 created: 2026-08-11
 updated: 2026-10-29
-related: []
+related: ["[[课程/STM32/ADC]]"]
 ---
 
 # STM32 QA
@@ -328,3 +328,7 @@ if(__HAL_RCC_GET_FLAG(RCC_FLAG_WWDGRST))
 问：老师，对spi flash能够直接写入数据吗？
 
 答：不可以，首先要解除写保护，接着进行扇区擦除后才能写入数据。
+
+## 相关笔记
+
+- [[课程/STM32/ADC]]
