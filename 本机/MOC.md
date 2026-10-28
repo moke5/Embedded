@@ -7,8 +7,8 @@ input: 本机软件实测与系统信息
 output: 本机能力的单一事实来源与调用规范
 review: 2026-11-17
 created: 2026-10-20
-updated: 2026-10-20
-related: ["[[YAML]]", "[[claude]]"]
+updated: 2026-10-28
+related: ["[[YAML]]", "[[Claude Code]]"]
 ---
 # 本机 MOC
 

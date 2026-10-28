@@ -7,7 +7,7 @@ input: 各工具官方文档与安装配置实践
 output: 各 AI 工具的配置与使用速查
 review:
 created: 2026-10-20
-updated: 2026-10-25
+updated: 2026-10-28
 related: ["[[AI/MOC|AI MOC]]"]
 ---
 # 工具 MOC
@@ -16,7 +16,7 @@ related: ["[[AI/MOC|AI MOC]]"]
 
 ## 内容索引
 
-- 命令行 Agent：[claude](./claude.md) — Claude Code 使用与全局 CLAUDE.md 模板
+- 命令行 Agent：[Claude Code](<Claude Code.md>) — Claude Code 使用与全局 CLAUDE.md 模板
 - 消息平台接入：[cc-connect](./cc-connect.md) — 企业微信接入 Claude Code
 - 编辑器集成：cursor（待建）、trae（待建）
 

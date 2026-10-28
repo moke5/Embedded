@@ -10,9 +10,9 @@ input: 官方文档、公开课程与自身使用实践
 output: 一套"原理 → 使用 → 工具 → 实践"的 AI/Agent 学习笔记
 review: 2026-10-21
 created: 2026-10-20
-updated: 2026-10-20
+updated: 2026-10-28
 related:
-  - "[[claude]]"
+  - "[[Claude Code]]"
   - "[[cc-connect]]"
 ---
 # AI MOC
