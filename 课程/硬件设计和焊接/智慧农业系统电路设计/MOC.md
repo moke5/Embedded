@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, 电路]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
+updated: 2026-10-29
 related: []
 ---
 # 智慧农业系统电路设计 MOC
@@ -24,3 +24,7 @@ related: []
 ## 关联设计
 
 - [光敏传感器 PCB 设计](../光敏传感器PCB设计+自定义器件+自定义IC芯片/MOC.md) — 自定义器件与 IC 芯片
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../../MOC.md>)

@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, 数据结构]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # 数据结构 MOC
@@ -30,3 +30,7 @@ related: []
 - [算法练习](./算法练习.md) — 二分查找、选择/插入/快速排序、GCD 手写实现
 - [Linux内核链表实践](./Linux内核链表实践.md) — StudentNode 实例 + 完整工程代码
 - [栈和队列实践](./栈和队列实践.md) — 链表/数组/内核链表三种实现 × 栈与队列
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../MOC.md>)

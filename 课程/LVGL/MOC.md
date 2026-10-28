@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, lvgl]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # LVGL MOC
@@ -24,3 +24,7 @@ related: []
 
 - [基础控件与中文输入法](./基础控件与中文输入法.md) — 画布创建、图片显示、控件编程
 - [样式与界面设计](./样式与界面设计.md) — styles 样式、盒子模型、SquareLine Studio
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../MOC.md>)

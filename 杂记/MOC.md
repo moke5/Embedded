@@ -3,7 +3,7 @@ type: MOC
 tags: [杂记]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
+updated: 2026-10-29
 related: []
 ---
 # 杂记 MOC
@@ -68,3 +68,7 @@ related: []
 
 - [资料链接](./收藏/资料链接.md) — 有道云课程资料、Linux API 手册、培训网络配置
 - [嵌入式英文术语](./收藏/嵌入式英文术语.md) — 固件、同步/异步、优先级、钩子、挂起、触发
+
+## 相关 MOC
+
+- 相邻：[课程 MOC](<../课程/MOC.md>)、[AI MOC](<../AI/MOC.md>)、[本机 MOC](<../本机/MOC.md>)、[项目 MOC](<../项目/MOC.md>)

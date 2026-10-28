@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, pcb]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
+updated: 2026-10-29
 related: []
 ---
 # PCB 进阶 MOC
@@ -26,3 +26,7 @@ related: []
 
 - [四层板入门案例](./四层板入门案例.md)
 - [嘉立创教程](./嘉立创教程.md)
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../../MOC.md>)

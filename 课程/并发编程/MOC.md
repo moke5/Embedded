@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, linux, 并发]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # 并发编程 MOC
@@ -24,3 +24,7 @@ related: []
 
 - [知识图谱](./知识图谱.md) — 并发编程 mermaid 思维导图（原 concurrency.md）
 - [总结](./总结.md)
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../MOC.md>)

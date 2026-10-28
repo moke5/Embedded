@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
+updated: 2026-10-29
 related: []
 ---
 # STM32 MOC
@@ -42,3 +42,7 @@ related: []
 ## 参考
 
 - [QA](./QA.md) — 疑难问题汇总
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../MOC.md>)

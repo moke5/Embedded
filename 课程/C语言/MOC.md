@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, c语言]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # C语言 MOC
@@ -38,3 +38,7 @@ related: []
 - [质数](./习题/质数.md)
 - [字符串函数](./习题/字符串函数.md)
 - [作用域与变量](./习题/作用域与变量.md)
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../MOC.md>)

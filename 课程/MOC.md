@@ -3,7 +3,7 @@ type: MOC
 tags: [课程]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # 课程总 MOC
@@ -37,3 +37,7 @@ related: []
 
 - [LVGL](./LVGL/MOC.md) — 环境搭建 + 教程系列 + 课程实战（2GZFX2603）
 - [微信小程序](./微信小程序/MOC.md) — 开发环境搭建（1GZ2602）
+
+## 相关 MOC
+
+- 相邻：[杂记 MOC](<../杂记/MOC.md>)、[AI MOC](<../AI/MOC.md>)、[本机 MOC](<../本机/MOC.md>)、[项目 MOC](<../项目/MOC.md>)

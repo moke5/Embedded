@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, linux, 文件io]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # 文件IO MOC
@@ -17,3 +17,7 @@ related: []
 ## 速查
 
 - [要点速查](./要点速查.md) — 一切皆文件、VFS、file{} 结构体等核心概念
+
+## 相关 MOC
+
+- 上级：[课程 MOC](<../MOC.md>)

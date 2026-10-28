@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-24
+updated: 2026-10-29
 related: []
 ---
 # ESP32 MOC
@@ -19,7 +19,6 @@ related: []
 - 项目方案延伸（待补充）
 - [FreeRTOS](./FreeRTOS/章节/MOC.md)
 
+## 相关 MOC
 
-
-
-
+- 上级：[课程 MOC](<../MOC.md>)

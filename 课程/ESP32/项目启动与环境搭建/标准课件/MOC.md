@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-28
+updated: 2026-10-29
 related: []
 ---
 # 标准课件 MOC
@@ -20,3 +20,7 @@ related: []
 6. [ESP-IDF 指令集](./ESP-IDF指令集.md)
 7. [Espressif-IDE 环境搭建](./Espressif-IDE环境搭建.md)
 8. [启动过程](./启动过程.md)
+
+## 相关 MOC
+
+- 上级：[ESP32 MOC](<../../MOC.md>)

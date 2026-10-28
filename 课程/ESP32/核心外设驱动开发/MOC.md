@@ -3,7 +3,7 @@ type: MOC
 tags: [课程, esp32, 外设]
 status: 进行中
 created: 2026-10-24
-updated: 2026-10-25
+updated: 2026-10-29
 related: []
 ---
 # 核心外设驱动开发 MOC
@@ -29,3 +29,7 @@ related: []
 
 - [常见错误处理宏](其他/常见错误处理宏.md)
 - [库函数](其他/库函数.md)
+
+## 相关 MOC
+
+- 上级：[ESP32 MOC](<../MOC.md>)
