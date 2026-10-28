@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-08-11
-updated: 2026-10-13
-related: []
+updated: 2026-10-28
+related: ["[[GPIO&LED]]"]
 ---
 # GPIO
 
@@ -716,5 +716,6 @@ int main(void)
 
 2.数显时间继电器
 
+## 相关笔记
 
-
+- [[GPIO&LED]] — ESP32 侧 GPIO 输出与 LED 驱动

@@ -4,7 +4,7 @@ tags: [课程, esp32]
 status: 进行中
 created: 2026-09-05
 updated: 2026-10-28
-related: []
+related: ["[[GPIO]]"]
 ---
 # GPIO 与 LED
 
@@ -405,3 +405,6 @@ idf_component_register(SRCS "led_main.c"
 				)
 ```
 
+## 相关笔记
+
+- [[GPIO]] — STM32 侧 GPIO 模式配置与 HAL 接口

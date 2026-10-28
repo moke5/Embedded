@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
-updated: 2026-09-02
-related: []
+updated: 2026-10-28
+related: ["[[SPI协议]]"]
 ---
 # SPI
 
@@ -1247,23 +1247,6 @@ uint32_t HAL_SPI_GetError(SPI_HandleTypeDef *hspi);
 
  
 
+## 相关笔记
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- [[SPI协议]] — ESP32 侧 SPI 协议与收发流程

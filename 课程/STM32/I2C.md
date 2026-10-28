@@ -4,7 +4,7 @@ tags: [课程, stm32]
 status: 进行中
 created: 2026-09-02
 updated: 2026-10-28
-related: []
+related: ["[[I2C-总线通信协议]]"]
 ---
 # I2C
 
@@ -979,5 +979,6 @@ void OLED_ShowText_Fmt(u8 x, u8 y, char *fmt, ...)
 }
 ```
 
+## 相关笔记
 
-
+- [[I2C-总线通信协议]] — ESP32 侧 I2C 总线协议与时序

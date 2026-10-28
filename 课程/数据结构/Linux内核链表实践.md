@@ -4,7 +4,7 @@ tags: [课程, linux, 内核, 链表, 练习]
 status: 进行中
 created: 2026-01-27
 updated: 2026-10-28
-related: []
+related: ["[[Linux内核链表]]"]
 ---
 # Linux 内核链表实践
 
@@ -869,3 +869,6 @@ pos = n, n = list_entry(n->member.next, typeof(*n), member))
 #endif
 ```
 
+## 相关笔记
+
+- [[Linux内核链表]] — 内核链表 API 与原理

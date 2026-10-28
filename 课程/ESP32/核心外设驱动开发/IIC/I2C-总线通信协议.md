@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-05
-updated: 2026-10-13
-related: []
+updated: 2026-10-28
+related: ["[[I2C]]"]
 ---
 # I2C-总线通信协议
 
@@ -705,3 +705,7 @@ ESP_ERROR_CHECK(i2c_master_bus_add_device(bus_handle, &dev_cfg, &dev_handle));
 - **如果遇到第三方库问题**，可以检查该库是否已提供新驱动支持（例如 esp32-camera 库在 v5.4+ 已提供新版驱动），或主动为它们贡献代码进行迁移 。
 
 - **避免混合使用**新旧驱动。在彻底完成迁移前，请确保整个工程**统一**使用旧驱动，以规避 CONFLICT 错误导致的崩溃 。 
+
+## 相关笔记
+
+- [[I2C]] — STM32 侧 I2C 外设配置与 HAL 接口

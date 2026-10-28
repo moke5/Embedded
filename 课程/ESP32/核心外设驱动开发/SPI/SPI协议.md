@@ -3,8 +3,8 @@ type: 课程
 tags: [课程, esp32]
 status: 进行中
 created: 2026-09-05
-updated: 2026-09-05
-related: []
+updated: 2026-10-28
+related: ["[[SPI]]"]
 ---
 # SPI协议
 
@@ -162,3 +162,7 @@ ESP32-S3芯片集成了四个 SPI 控制器：
  
 
  
+
+## 相关笔记
+
+- [[SPI]] — STM32 侧 SPI 外设配置与 HAL 接口
