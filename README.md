@@ -42,9 +42,10 @@
 - 提交信息用中文，模板见 `.gitmessage`；提交前运行 `python script/notes_lint.py --changed`。
 - 详细规则见 [AGENTS.md](./AGENTS.md) 第 9 节。
 
-## AI 知识归档
+## AI 知识归档与配套仓库
 
-会话中有价值的知识按 [AGENTS.md](./AGENTS.md) 的规则处理。未经用户明确同意，不写入 `D:/git/AI`。
+- 本仓库是个人技术笔记，人工整理为主、AI 辅助；配套的 AI 知识库在 `D:/git/AI`，由各 AI 会话按其 `CLAUDE.md` 自行维护。
+- 两库分工与跨库写入规则见 [AGENTS.md](./AGENTS.md) 第 12 节；本仓库笔记不自动搬运到 AI 库。
 
 
 

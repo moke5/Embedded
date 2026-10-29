@@ -21,7 +21,7 @@ description: 当用户要求把当前对话中的技术知识点沉淀、回写�
 
 - 工作根目录限定为本 Skill 所在仓库根目录，即 `.skills/embedded-knowledge-sync/SKILL.md` 的上两级目录。
 - 只修改 Markdown、YAML、PlantUML/Mermaid 源码和笔记所需图片说明；代码文件只读，除非用户当次明确授权修改代码。
-- 不写入 `D:/git/AI`，不自动归档到其他仓库。
+- 不把本仓库内容写入 `D:/git/AI`；AI 知识库的会话归档按其 `CLAUDE.md` 与 AGENTS.md 第 12 节执行。
 - 不写入私钥、token、服务器公网 IP、账号明细、本机敏感配置；敏感内容引用 `self/` 路径但不展开。
 - 不执行 git commit、push、删除、移动、批量重命名；用户明确要求时另行确认。
 - 内容证据不足、目标归档目录存在多个合理候选，或新建笔记会改变知识结构时，先询问用户。
