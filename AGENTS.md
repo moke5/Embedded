@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> 本文件面向所有进入本仓库的 AI 助手（Claude Code / Codex / Cursor / Trae / 网页端模型等）。
+> 本文件面向所有进入本仓库的 AI 助手（Claude Code / Codex / Cursor / dsh /  OpenCode/ Trae / 网页端模型等）。
 > 开始任何读写前先读完本文件，全程按这里的规定行事。
 
 ## 1. 仓库定位

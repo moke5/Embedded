@@ -1,207 +1,112 @@
 ---
 type: 工具
-tags: [ai, 工具]
+tags: [ai, claude-code, cli, agent]
 status: 进行中
-created: 2026-10-24
-updated: 2026-10-29
-related: ["[[cc-connect]]"]
+target: 晶体
+input: Claude Code 官方文档；本机 claude --help
+output: Claude Code 工具模型、命令速查、记忆与权限边界
+review: 2026-11-15
+created: 2026-11-01
+updated: 2026-11-01
+related: ["[[OpenCode]]", "[[cc-connect]]"]
 ---
-# Claude Code
 
-## 目录
+# Claude Code
 
 [toc]
 
+## 定义与边界
 
+Claude Code 是在终端中运行的 AI 编程代理，支持交互式会话、非交互查询、文件读写、命令执行、MCP 工具接入、会话恢复和项目级记忆。
 
-## claude code
+设工作目录为 $W$，用户请求为 $q$，会话历史为 $H$，工具集合为 $T$。一次响应可表示为：
 
-claude-howto
+$$
+r=f(q,H,W,T)
+$$
 
+其中 $T$ 包含文件工具、Shell 工具、MCP 工具、命令与技能等。工具调用的可执行性由权限配置和操作系统权限共同约束。
 
+## 运行模型
 
-### Claude code run
+```mermaid
+flowchart LR
+    U[用户请求 q] --> C[Claude Code 进程]
+    C --> M[模型推理]
+    M --> D{是否需要工具}
+    D -->|否| R[返回响应 r]
+    D -->|是| P[权限判定]
+    P -->|允许| T[文件 / Shell / MCP / 技能]
+    T --> M
+    P -->|拒绝| M
 
-使用魔塔免费api
-
-启动
-
-```
-ccr code
-```
-
-
-
-如果 `ccr code` 启动不了。
-
-```
-ccr stop
-ccr start
-// 使用的是3456端口
-```
-
-
-
-### CC Switch
-
-> 方便切换模型，不止CC
-
-```
-https://github.com/farion1231/cc-switch/releases
+    style C fill:#eaf3f2,stroke:#289c94
+    style T fill:#f6f8f9,stroke:#289c94
+    style R fill:#f6f8f9,stroke:#289c94
 ```
 
+图 1 的不变量为：模型输出不直接改变文件系统；文件、命令和外部系统变化通过工具调用产生，并受权限系统约束。
 
+## 常用命令
 
-### CLAUDE.md
+| 目的 | 命令 |
+| --- | --- |
+| 启动交互式会话 | `claude` |
+| 启动并给出初始任务 | `claude "任务"` |
+| 非交互一次性查询 | `claude -p "问题"` |
+| 继续当前目录最近会话 | `claude -c` |
+| 按会话 ID 恢复 | `claude -r <session-id>` |
+| 恢复时创建分叉会话 | `claude --fork-session --resume <session-id>` |
+| 管理 MCP 服务 | `claude mcp` |
+| 检查安装与配置状态 | `claude doctor` |
+| 查看完整帮助 | `claude --help` |
 
-全局 CLAUDE.md 在用户总目录Claude Code根目录下 `~/.claude/CLAUDE.mc`
+## 会话内命令
 
-项目级 CLAUDE.md 在项目的根目录下
+在交互式会话中输入 `/` 可列出可用命令。命令用于切换模型、管理权限、清理上下文、执行工作流以及调用技能。MCP 服务暴露的 prompt 也可作为命令出现。
 
+## 项目记忆
 
+Claude Code 的跨会话知识主要通过两类机制承载：
 
-CLAUDE.md太长会被忽略
+| 机制 | 作用 |
+| --- | --- |
+| `CLAUDE.md` | 保存项目指令、约束、命令和工作流 |
+| `AGENTS.md` | 仓库级 AI 助手指令；Claude Code 可读取 |
+| Auto memory | 根据用户纠正和偏好生成的记忆 |
 
-80 ~ 200行
+每次会话开始时，上下文窗口不自动包含全部历史会话；持久化指令通过项目记忆文件和配置加载。
 
+## 权限与副作用边界
 
+Claude Code 可影响的对象包括：
 
-- 全局CLAUDE.md
+- 文件内容；
+- 命令执行结果；
+- Git 工作区；
+- MCP 连接的外部系统；
+- 运行中的本地进程。
 
-```
-## 关于我
-[你的名字 / 身份 / 职业背景，非程序员的话一定要写出来]。
-我用 Claude Code 做 [具体用途 1] 和 [具体用途 2]。
-## 思维原则
-所有决策从问题本质出发，不因「惯例如此」照搬。
-回到问题本身：要解决什么？最直接的路径是什么？从零设计会怎么做？不要谄媚。
-不要夸我的想法好、不要说「这是个很好的问题」、不要开头加「当然可以」。
-给我真实判断，方案有问题直接指出来。发现更好的做法直接说，不用等我问。
-## 约束先行
-无论开发项目还是知识管理项目，第一步永远是建规则：新项目先写 CLAUDE.md，新目录先定结构约定（什么放哪、怎么命名、何时清理）。
-没有规范的工作空间不动手。已有规范的项目，严格遵守其 CLAUDE.md 中的约定。需要调整规范时先改文档、再改实践，不要反过来。
-## 沟通方式
-- 默认中文，代码、命令、变量名用英文
-- 结论先行，再给理由，不要先铺垫背景- 遇到模糊需求，先给最合理的方案，再问要不要调整
-- 不要问「你确定要这样吗」，除非命中下方红线
-## 自主边界（红线，必须先问我）
-以下操作即使在 auto-accept 模式下也必须停下来问我：
-- 删除文件、目录或 git 历史- 修改 .env、密钥、token、CI/CD 配置
-- 数据库 schema 变更或数据迁移- git push、git rebase、git reset --hard、强制推送
-- 安装新的全局依赖或修改系统配置
-- 公开发布（npm publish、部署到生产、发文章等）
-## 通用工程纪律
-- 改完主动跑验证（具体命令见各项目 CLAUDE.md），不要只改不验
-- 不要为了让代码跑起来注释掉报错或加绕过标记，找根本原因
-- 密钥、token、密码不进代码、不进 commit、不进日志
-- 大改动前先在 Plan Mode 出方案，我确认后再动手
-```
+权限规则只能控制代理可调用的工具范围，不能绕过操作系统自身的文件权限。若进程以普通用户运行，对无写权限的路径仍会返回权限错误。
 
+## 验证
 
+1. 执行 `claude --help`，确认本机命令可用；
+2. 执行 `claude doctor`，检查安装、配置和会话状态；
+3. 在仓库中检索 `[[Claude Code]]`，确认双链指向本笔记；
+4. 运行 `python script/notes_lint.py --all`，确认断链警告消失。
 
-### 日常对话的“标准操作流程”
+## 自测
 
-以后每次重要的编程或决策类对话，都按这个流程走：
+- Q：`claude -p` 与 `claude` 的差异是什么？
+  A：`claude` 启动交互式会话；`claude -p` 执行一次性查询并退出。
+- Q：为什么允许工具调用后仍可能出现文件权限错误？
+  A：工具权限控制代理是否能发起操作；操作系统权限控制进程是否能写入目标路径。
 
-1. **开始前**：如果需要历史背景，对 CC 说：
+## 参考资料
 
-    text
-
-    ```
-    读取 Obsidian 里的「个人全局偏好」和最近的相关对话摘要，然后我们开始。
-    ```
-
-    
-
-2. **对话中**：正常执行任务，CC 会结合 `CLAUDE.md` 和你的偏好文件。
-
-3. **结束时**：输入 `/summarize`，CC 自动归档这次对话的决策、产物和下一步。
-
-4. **更新偏好**：如果这次对话里你提到了新的习惯（比如“以后测试用例一律用 describe.each”），CC 会在摘要后询问你是否要更新 `个人全局偏好.md`，你回复“更新”，它就会把新偏好追加进去。
-
-
-
-### command
-
-> 常用命令
-
-
-
-#### 常用模式
-
-> shift + tab 切换
-
-```
-plan 计划模式
-自动模式
-```
-
-
-
-#### 记录
-
-```
-/resume
-```
-
-聊天记录列表
-
-
-
-#### ESC
-
-> 双ESC回退
-
-
-
-#### 提炼并压缩上下文
-
-```
-/compact
-```
-
-
-
-#### 清空上下文
-
-```
-/clear
-```
-
-
-
-### SKILL
-
-```
- .claude/skills/xxx/SKILL.md 
-```
-
-
-
-### MCP
-
-> 通用扩展协议
-
-
-
-### HOOKS
-
-> 自动化的触发机制
-
-
-
-## claude
-
-### claude -key
-
-> claude 用不了，但是账户还在
-
-```
-# 在系统环境变量或本地配置中设置，勿写入仓库
-# set ANTHROPIC_API_KEY=<your-key>
-# echo %ANTHROPIC_API_KEY%
-```
-
-## 相关笔记
-
-- [[cc-connect]]
+- [Claude Code Overview](https://code.claude.com/docs/en/overview)（访问日期：2026-11-01）
+- [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart)（访问日期：2026-11-01）
+- [Claude Code CLI Reference](https://code.claude.com/docs/en/cli-reference)（访问日期：2026-11-01）
+- [Claude Code Commands](https://code.claude.com/docs/en/commands)（访问日期：2026-11-01）
+- [Claude Code Memory](https://code.claude.com/docs/en/memory)（访问日期：2026-11-01）

@@ -3,7 +3,7 @@ type: MOC
 tags: [项目, esp32, mqtt]
 status: 进行中
 created: 2026-10-24
-updated: 2026-10-27
+updated: 2026-10-30
 related: ["[[选题]]"]
 ---
 
@@ -22,13 +22,21 @@ related: ["[[选题]]"]
 
 ## 智慧农业
 
-- [README](./智慧农业/README.md) — 项目模板与本地路径
+- [README](./智慧农业/README.md) — 仓库路径、`ai` 分支 worktree 与云端平台分工
 - [遇到的问题](./智慧农业/遇到的问题.md) — ESP8266 与 STM32 串口透传、调度器、OLED
 - [网关](./智慧农业/网关.md)、[终端](./智慧农业/终端.md)（占位）
+
+## 云端平台
+
+- `javawebP` — 源码在 `D:\code\javawebP`（分支 `main`），部署在阿里云 ECS，见 [配置记录](../杂记/服务器/配置记录.md)；MQTT 契约与设备侧固件对接，见 [智慧农业 README](./智慧农业/README.md)
 
 ## 比赛
 
 - [README](./比赛/README.md) — HC-SR04 测距、ESP32-CAM 调试记录
+
+## 工程化
+
+- [软件工程规范方案](./软件工程规范方案.md) — 工作区、产品 monorepo、版本、Git、代码、环境与跨端契约
 
 ## 通用
 

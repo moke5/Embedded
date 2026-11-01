@@ -20,6 +20,7 @@ related: []
 - [powershell](./工具/powershell.md) — `$PROFILE`、文件大小、网卡开关、开机时间
 - [bash](./工具/bash.md) — 脚本语法、引号与展开、判断循环函数、.bashrc 配置
 - [bash快捷键](./工具/bash快捷键.md) — 命令行编辑：删除、光标移动、剪切环、历史搜索、vi/Emacs 模式
+- [git](./工具/git.md) — 对象模型与三区、配置、分支合并、远程协作、撤销恢复与排错
 - [git克隆精简](./工具/git克隆精简.md) — --depth / --single-branch / --no-tags
 - [GitHub项目获取与常用知识](./工具/GitHub项目获取与常用知识.md) — clone/SSH/gh/ZIP/Release/Fork、认证与排错
 - [分辨率速查](./工具/分辨率速查.md)
@@ -62,6 +63,7 @@ related: []
 - [MQTT](./技术专题/MQTT.md) — EMQX 服务端 + MQTTX 客户端
 - [cc2530](./技术专题/cc2530.md) — ZigBee 芯片
 - [mysql](./技术专题/mysql.md) — 基础 SQL 命令
+- [PostgreSQL](./技术专题/PostgreSQL.md) — 进程体系、MVCC/WAL、psql 操作与 MySQL 对比
 - [YAML](./技术专题/YAML.md) — `.yml`/`.yaml` 后缀、数据模型、语法规则与 JSON/TOML 对比
 
 ## 收藏
