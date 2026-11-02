@@ -3,7 +3,7 @@ type: MOC
 tags: [杂记]
 status: 进行中
 created: 2026-09-02
-updated: 2026-10-29
+updated: 2026-11-03
 related: []
 ---
 # 杂记 MOC
@@ -36,7 +36,7 @@ related: []
 - [终端中文乱码](./环境/终端中文乱码.md) — Linux/Windows 两侧中文乱码的定位与修复（locale、chcp 与 Get-Content 陷阱）
 - [bat环境变量启动](./环境/bat环境变量启动.md) — bat 脚本切换 JAVA_HOME 启动 jar、快捷方式调用
 - [docker](./环境/docker.md)
-- [ssh](./环境/ssh.md) — openssh-server、私钥登录、客户端配置与加固
+- [ssh](./环境/ssh.md) — openssh-server、私钥登录、客户端配置、fail2ban 封禁与加固
 - [VMware共享目录](./环境/VMware共享目录.md) — hgfs 挂载、fdisk 磁盘查看
 - [win+r运行机制](./环境/win+r运行机制.md) — Windows 运行窗口解析优先级规则
 - [端口与进程](./环境/端口与进程.md) — netstat / tasklist / taskkill

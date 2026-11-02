@@ -7,10 +7,10 @@ tags:
 status: 进行中
 target: 晶体
 input: openssh 手册与服务器实操
-output: 服务端安装、密钥登录、私钥选择、私钥口令、格式兼容、客户端别名、权限、空闲超时、加固与传文件
+output: 服务端安装、密钥登录、私钥选择、私钥口令、格式兼容、客户端别名、权限、空闲超时、fail2ban 封禁、加固与传文件
 review: 2026-11-06
 created: 2026-10-18
-updated: 2026-10-25
+updated: 2026-11-03
 related:
   - "[[从零上手]]"
   - "[[SSH连不上]]"
@@ -182,24 +182,137 @@ $P=\epsilon$ 表示生成密钥时未设置口令。此时软件不请求私钥�
 | `known_hosts` | 客户端 `~/.ssh/` | 已确认的主机公钥 $H_p$ | 不保密 |
 | `config` | 客户端 `~/.ssh/` | 主机别名、端口、用户名、私钥路径 | 可能含主机拓扑 |
 
-### 密钥生成与部署
+### 密钥生成
+
+密钥对在客户端生成，私钥 $K_u$ 留在客户端，公钥 $K_p$ 复制到服务器。在服务器上生成密钥对，用于该服务器主动连接其他主机（git、部署），与登录服务器本身无关。
+
+`ssh-keygen` 的必填参数是算法类型 `-t`。参数含义如下：
+
+| 参数 | 作用 | 取值或示例 |
+| --- | --- | --- |
+| `-t` | 密钥算法类型，必填 | `ed25519`、`rsa`、`ecdsa` |
+| `-b` | 密钥位数，RSA 等算法使用 | `-t rsa -b 4096` |
+| `-C` | 公钥注释，写入 `.pub` 末尾，用于标识持有者 | `-C "feng@laptop"` |
+| `-f` | 私钥输出路径，同时决定公钥路径 | `-f ~/.ssh/id_ed25519_aliyun` |
+| `-N` | 私钥口令 $P$，`-N ""` 表示 $P=\epsilon$ | `-N ""` |
+| `-y` | 由私钥导出公钥 | `ssh-keygen -y -f id_ed25519` |
+| `-l` | 输出私钥指纹 | `ssh-keygen -l -f id_ed25519` |
+
+用户名不进入 `-t`。`-t` 只接受算法名；标识持有者用 `-C`；登录用户名由 `ssh <用户>@<IP>` 指定。三者的位置不同，混用会导致命令失败或注释错误。
+
+Linux、macOS、Git Bash：
 
 ```bash
-# 生成 Ed25519 用户密钥对
-ssh-keygen -t ed25519
-
-# 将公钥追加到服务器用户的 authorized_keys
-ssh-copy-id devuser@<IP>
-
-# 使用公钥认证登录
-ssh devuser@<IP>
+ssh-keygen -t ed25519 -C "feng"
 ```
+
+Windows PowerShell：
+
+```powershell
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.ssh" | Out-Null
+ssh-keygen.exe -t ed25519 -C "feng"
+```
+
+交互过程：
+
+1. `Enter file in which to save the key`：直接回车使用默认路径 `~/.ssh/id_ed25519`；需要多套密钥时输入新路径。
+2. `Enter passphrase`：输入私钥口令 $P$；留空则 $P=\epsilon$。
+3. `Enter same passphrase again`：重复输入同一口令。
+
+生成结果：
+
+| 文件 | 内容 | 处理方式 |
+| --- | --- | --- |
+| `id_ed25519` | 私钥 $K_u$ | 留在客户端，权限 600 |
+| `id_ed25519.pub` | 公钥 $K_p$ | 复制到服务器 `authorized_keys` |
+
+常见参数错误：
+
+| 命令 | 结果 | 原因 |
+| --- | --- | --- |
+| `ssh-keygen -t feng` | `unknown key type feng` | `-t` 只接受算法名，`feng` 是用户名 |
+| `ssh-keygen -C feng` | 使用默认算法生成密钥 | 省略 `-t`；`feng` 仅作为注释 |
+| `ssh-keygen -t ed25519 feng` | 报参数错误 | 用户名不能作为位置参数 |
+
+### 公钥部署
+
+Linux、macOS、Git Bash：
+
+```bash
+ssh-copy-id -i ~/.ssh/id_ed25519.pub devuser@<IP>
+```
+
+Windows 无 `ssh-copy-id` 时，通过管道追加公钥：
+
+```powershell
+Get-Content "$env:USERPROFILE\.ssh\id_ed25519.pub" | ssh -p 2222 devuser@<IP> "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+```
+
+部署后验证公钥登录：
+
+```bash
+ssh -i ~/.ssh/id_ed25519 -p 2222 -o IdentitiesOnly=yes devuser@<IP>
+```
+
+确认公钥认证可用后，再关闭服务器密码认证；关闭前保留一个已登录会话，避免配置错误导致失去访问。
 
 允许复制到服务器的是 `.pub` 公钥文件。无 `.pub` 后缀的文件为私钥。公钥丢失时，可由私钥重新导出：
 
 ```bash
 ssh-keygen -y -f ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
 ```
+
+### 多账号与多密钥
+
+密钥对与账号没有绑定关系。sshd 只为本次连接指定的账号检查公钥是否属于该账号的授权集合：
+
+$$
+\operatorname{Auth}(u, K_p)=1 \iff K_p \in A_u
+$$
+
+同一对密钥可以登录多个账号，前提是把同一个公钥追加到每个账号的 `authorized_keys`。一个账号也可以授权多个公钥。私钥文件只是客户端凭证，文件名与用户名没有强制对应关系。
+
+共享私钥的代价是失去按人撤销和审计归属：日志只记录登录账号，无法区分实际操作人；一方私钥泄露时，所有授权该公钥的账号同时失守。推荐按下表生成和部署：
+
+| 场景 | 密钥数量 | 部署位置 |
+| --- | --- | --- |
+| 两个人各用各的账号 | 每人一对 | 各自公钥加入各自账号 |
+| 一个人管理多个账号 | 每个账号一对 | 各公钥加入对应账号 |
+| 同一账号多台设备 | 每台设备一对 | 各公钥加入该账号 |
+
+在已有默认密钥的机器上再次执行不带 `-f` 的 `ssh-keygen`，默认路径仍是 `~/.ssh/id_ed25519`。该文件已存在时，工具提示：
+
+```text
+/home/<用户>/.ssh/id_ed25519 already exists.
+Overwrite (y/n)?
+```
+
+输入 `y` 覆盖原有私钥，依赖旧公钥的账号立即无法登录；输入 `n` 不生成任何文件。`-C` 只修改注释，不改变保存路径，也不会追加第二对密钥。新增密钥必须用 `-f` 指定不同路径。
+
+多套密钥用 `-f` 区分文件，并在 `~/.ssh/config` 中按账号绑定：
+
+```bash
+ssh-keygen -t ed25519 -C "feng@laptop" -f ~/.ssh/id_ed25519_feng
+ssh-keygen -t ed25519 -C "deploy@ci" -f ~/.ssh/id_ed25519_deploy
+```
+
+```text
+Host ali-feng
+    HostName <IP>
+    User feng
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519_feng
+    IdentitiesOnly yes
+
+Host ali-deploy
+    HostName <IP>
+    User deploy
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519_deploy
+    IdentitiesOnly yes
+```
+
+撤销某个密钥时，从对应账号的 `authorized_keys` 中删除该公钥行，立即生效，无需重启 sshd。
 
 ### 显式指定私钥
 
@@ -467,6 +580,107 @@ sudo systemctl restart ssh
 
 外部可达性由系统防火墙与云厂商安全组共同决定；两者均需放行监听端口。排查流程见 [[SSH连不上]] 与 [[端口与进程]]。
 
+## 仅密钥登录与 fail2ban 自动封禁
+
+### 目标约束
+
+设允许认证方法集合为 $A$，观察窗口为 $T$，源地址 $I$ 在窗口内的认证失败次数为 $n(I,T)$，封禁阈值为 $N$。目标条件为：
+
+$$
+A=\{\text{publickey}\}
+$$
+
+$$
+n(I,T)\geq N\Rightarrow \operatorname{ban}(I)
+$$
+
+一次失败即封时取 $N=1$。
+
+### sshd 配置
+
+现代 OpenSSH 使用 drop-in 文件：
+
+```bash
+sudo tee /etc/ssh/sshd_config.d/99-only-pubkey.conf > /dev/null <<'EOF'
+PubkeyAuthentication yes
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+AuthenticationMethods publickey
+PermitRootLogin prohibit-password
+MaxAuthTries 3
+EOF
+sudo sshd -t
+sudo systemctl reload ssh
+```
+
+旧版 OpenSSH 将 `KbdInteractiveAuthentication no` 替换为 `ChallengeResponseAuthentication no`。
+
+### fail2ban 监狱
+
+Debian / Ubuntu 使用 `/var/log/auth.log`；RHEL 系使用 `backend = systemd` 或 `/var/log/secure`。Debian / Ubuntu 配置：
+
+```bash
+sudo tee /etc/fail2ban/jail.d/sshd.local > /dev/null <<'EOF'
+[sshd]
+enabled = true
+port = ssh
+filter = sshd[mode=aggressive]
+logpath = /var/log/auth.log
+maxretry = 1
+findtime = 10m
+bantime = 1h
+EOF
+sudo fail2ban-client -t
+sudo systemctl enable --now fail2ban
+sudo systemctl restart fail2ban
+```
+
+自定义 SSH 端口时，将 `port = ssh` 改为实际端口。固定管理 IP 可在 `[DEFAULT]` 中设置 `ignoreip`。
+
+### 封禁时序
+
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant S as sshd
+    participant L as 认证日志
+    participant F as fail2ban
+    participant W as 防火墙
+
+    C->>S: 发起非公钥认证
+    S-->>C: 拒绝认证
+    S->>L: 记录认证失败或预认证断开
+    L->>F: sshd aggressive 过滤器匹配
+    F->>W: 写入源地址封禁规则
+    W-->>C: 后续连接被丢弃
+```
+
+**图 3：SSH 非公钥认证与 fail2ban 封禁**
+
+图 3 的不变量为：封禁对象是源 IP，封禁动作由防火墙执行；关闭密码认证后，aggressive 模式也会匹配预认证断开和无效用户事件。
+
+### 验证与回滚
+
+验证密码认证关闭：
+
+```bash
+ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no <用户>@<服务器地址>
+```
+
+查看监狱状态：
+
+```bash
+sudo fail2ban-client status sshd
+```
+
+手动解封：
+
+```bash
+sudo fail2ban-client set sshd unbanip <IP>
+```
+
+回滚时删除 `/etc/ssh/sshd_config.d/99-only-pubkey.conf` 与 fail2ban 监狱配置，再分别重载 sshd 和 fail2ban。
+
 ## 传文件
 
 ```bash
@@ -480,6 +694,8 @@ scp -r 目录 devuser@<IP>:/remote/path      # 目录加 -r
 ## 参考资料
 
 - [OpenSSH sshd_config 手册：ClientAliveInterval 与 ClientAliveCountMax](https://manpages.ubuntu.com/manpages/focal/man5/sshd_config.5.html)
+- [fail2ban 官方 jail 配置](https://github.com/fail2ban/fail2ban/blob/master/config/jail.conf)
+- [fail2ban sshd 过滤器](https://github.com/fail2ban/fail2ban/blob/master/config/filter.d/sshd.conf)
 - [堡塔终端客户端使用 ED25519 密钥报错的案例](https://www.bt.cn/bbs/thread-49742-1-1.html)
 - [堡塔终端解析加密私钥时要求 passphrase 的案例](https://www.bt.cn/bbs/thread-142814-1-1.html)
 - [宝塔面板 SSH 基础设置文档](https://docs.bt.cn/user-guide/security/ssh/basic-settings)
