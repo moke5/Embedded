@@ -164,7 +164,7 @@ git config --global credential.helper manager
 git config commit.template .gitmessage
 ```
 
-提交信息规范见 [AGENTS.md](../../AGENTS.md) 第 9.3 节。
+提交信息规范见 [校验与提交规范](../../规范/校验与提交规范.md) 第 4 节。
 
 ## 四、日常流程
 
@@ -553,4 +553,4 @@ git diff --stat
 - [git克隆精简](./git克隆精简.md) — `--depth`、`--single-branch`、`--no-tags`
 - [[ssh]] — 密钥生成、代理与 GitHub 认证
 - [[bash]] — 命令组合、别名与脚本封装
-- [AGENTS.md](../../AGENTS.md) — 本仓库的分支模型、提交信息与校验流程
+- [校验与提交规范](../../规范/校验与提交规范.md) — 本仓库的分支模型、提交信息与校验流程
