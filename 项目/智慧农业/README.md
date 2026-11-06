@@ -1,14 +1,27 @@
 ---
 type: 项目
-tags: [项目, 智慧农业, stm32, esp8266, mqtt]
+layer: L7
+domain: project
+tags:
+- 项目
+- 智慧农业
+- stm32
+- esp8266
+- mqtt
 status: 进行中
 target: 晶体
 input: D:\git\IntelligentAgri-System-ai 源码与 gateway/README.md；D:\code\javawebP 平台源码与 docs/
 output: 两仓库分工、分支与部署状态的单一记录
 review: 2026-11-29
 created: 2026-10-16
-updated: 2026-10-29
-related: ["[[网关]]", "[[终端]]", "[[遇到的问题]]", "[[配置记录]]", "[[MQTT]]"]
+updated: '2026-11-06'
+prereq: []
+related:
+- '[[网关]]'
+- '[[终端]]'
+- '[[遇到的问题]]'
+- '[[配置记录]]'
+- '[[MQTT]]'
 ---
 # 智慧农业系统
 
@@ -20,7 +33,7 @@ related: ["[[网关]]", "[[终端]]", "[[遇到的问题]]", "[[配置记录]]",
 | --- | --- | --- | --- |
 | 设备侧固件 | `D:\git\IntelligentAgri-System` | `main`（工作区当前为 detached HEAD `85ac93b`） | 主 worktree；未跟踪的 `app_led.c/.h`、`tools/` 只存在于此 |
 | 设备侧固件（在用） | `D:\git\IntelligentAgri-System-ai` | `ai`（`aac4bfc`） | **实际开发使用此目录**；与前者是同一仓库的两个 worktree |
-| 云端平台 | `D:\code\javawebP` | `main` | 服务器部署的 Web 监控平台，见 [配置记录](../../杂记/服务器/配置记录.md) |
+| 云端平台 | `D:\code\javawebP` | `main` | 服务器部署的 Web 监控平台，见 [配置记录](../../X-工具与方法/服务器/配置记录.md) |
 
 `git worktree list` 输出：
 

@@ -28,7 +28,7 @@ related: ["[[选题]]"]
 
 ## 云端平台
 
-- `javawebP` — 源码在 `D:\code\javawebP`（分支 `main`），部署在阿里云 ECS，见 [配置记录](../杂记/服务器/配置记录.md)；MQTT 契约与设备侧固件对接，见 [智慧农业 README](./智慧农业/README.md)
+- `javawebP` — 源码在 `D:\code\javawebP`（分支 `main`），部署在阿里云 ECS，见 [配置记录](../X-工具与方法/服务器/配置记录.md)；MQTT 契约与设备侧固件对接，见 [智慧农业 README](./智慧农业/README.md)
 
 ## 比赛
 

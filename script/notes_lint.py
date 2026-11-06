@@ -36,7 +36,11 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = ("type", "tags", "status", "created", "updated")
 TYPES = {
     "概念", "课程", "实验", "踩坑", "读书", "项目", "对比",
-    "自测", "练习", "复习", "MOC", "工具",
+    "自测", "练习", "复习", "速查", "MOC", "工具",
+}
+LAYERS = {"L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7", "X"}
+DOMAINS = {
+    "hardware", "mcu", "rtos", "linux", "network", "gui", "tool", "project",
 }
 STATUSES = {"进行中", "已完成", "待整理"}
 TARGETS = {"流体", "晶体"}
@@ -297,6 +301,27 @@ def check_frontmatter(rel: Path, text: str, is_new: bool, strict: bool):
             for tag in tags:
                 if re.search(r"[A-Z]", tag):
                     issues.append(("WARN", rel, 1, f"tags 含大写英文：{tag}"))
+
+    layer = data.get("layer")
+    if layer not in (None, ""):
+        if not isinstance(layer, str) or layer not in LAYERS:
+            issues.append(("ERROR", rel, 1, f"layer 取值无效：{layer!r}"))
+
+    domain = data.get("domain")
+    if domain not in (None, ""):
+        if not isinstance(domain, str) or domain not in DOMAINS:
+            issues.append(("ERROR", rel, 1, f"domain 取值无效：{domain!r}"))
+
+    prereq = data.get("prereq")
+    if prereq not in (None, []):
+        if not isinstance(prereq, list):
+            issues.append(("ERROR", rel, 1, "prereq 应为字符串列表，例如 [\"[[笔记]]\"]"))
+        else:
+            for item in prereq:
+                if not isinstance(item, str):
+                    issues.append(("ERROR", rel, 1, "prereq 含非字符串项"))
+                elif not RELATED_RE.match(item.strip()):
+                    issues.append(("WARN", rel, 1, f"prereq 项不是 [[双链]]：{item!r}"))
 
     created = parse_date(data.get("created"))
     updated = parse_date(data.get("updated"))

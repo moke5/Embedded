@@ -36,5 +36,5 @@ related: ["[[YAML]]", "[[Claude Code]]"]
 
 ## 相关 MOC
 
-- [AI MOC](../AI/MOC.md)
-- [杂记 MOC](../杂记/MOC.md)
+- [AI MOC](../X-工具与方法/AI/MOC.md)
+- [X 工具与方法 MOC](../X-工具与方法/MOC.md)
